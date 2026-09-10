@@ -1,0 +1,72 @@
+{
+  "Mexico": {
+    "reason": "México es una potencia regional por su gran peso demográfico y económico, su amplia base manufacturera y su posición estratégica entre América del Norte, América Latina y el Pacífico. Es una de las quince mayores economías del mundo y la segunda de América Latina, con una economía manufacturera profundamente integrada en las cadenas globales de valor. Su cercanía e integración comercial con Estados Unidos aumentan su capacidad para influir en los asuntos económicos y políticos del hemisferio.",
+    "long_reason": "México es una potencia regional por su gran peso demográfico y económico, su amplia base manufacturera y su posición estratégica entre América del Norte, América Latina y el Pacífico. Es una de las quince mayores economías del mundo y la segunda de América Latina, con una economía manufacturera profundamente integrada en las cadenas globales de valor. Su cercanía e integración comercial con Estados Unidos aumentan su capacidad para influir en los asuntos económicos y políticos del hemisferio.",
+    "influence": "América del Norte, América Central y espacios latinoamericanos.",
+    "strengths": "Exportaciones manufactureras, bonos demográficos, industria automotriz, cultura, peso diplomático",
+    "strategic": "Industria, comercio, frontera con Estados Unidos, cadenas de suministro y conexión entre Norteamérica y América Latina."
+  },
+  "Japan": {
+    "reason": "Japón mantiene una posición central en Asia por el tamaño y sofisticación de su economía, su capacidad industrial y tecnológica y su importante capacidad diplomática y de seguridad. Su influencia se extiende por el Indo-Pacífico mediante cooperación económica, tecnológica y de seguridad. En 2026 Japón está impulsando una estrategia de Indo-Pacífico que prioriza cadenas de suministro, energía, materiales críticos, tecnologías avanzadas y estabilidad regional. También participa activamente en el QUAD junto con Estados Unidos, India y Australia.",
+    "long_reason": "Japón mantiene una posición central en Asia por el tamaño y sofisticación de su economía, su capacidad industrial y tecnológica y su importante capacidad diplomática y de seguridad. Su influencia se extiende por el Indo-Pacífico mediante cooperación económica, tecnológica y de seguridad. En 2026 Japón está impulsando una estrategia de Indo-Pacífico que prioriza cadenas de suministro, energía, materiales críticos, tecnologías avanzadas y estabilidad regional. También participa activamente en el QUAD junto con Estados Unidos, India y Australia.",
+    "influence": "Asia Oriental e Indo-Pacífico.",
+    "strengths": "Innovación tecnológica avanzada, fuerte sector financiero e industrial, armada moderna, diplomacia del capital",
+    "strategic": "Tecnología, industria, comercio, cadenas de suministro y seguridad marítima."
+  },
+  "India": {
+    "reason": "India es la principal potencia del sur de Asia por su enorme población, rápido crecimiento económico, capacidad militar y tecnológica y creciente peso diplomático. Su posición en el océano Índico le proporciona una importancia estratégica excepcional y su participación simultánea en agrupaciones como el QUAD y BRICS refleja una política de autonomía estratégica. En el ejercicio fiscal 2025/26 su economía creció 7,6 %, manteniéndose como la principal gran economía de más rápido crecimiento según el Banco Mundial.",
+    "long_reason": "India es la principal potencia del sur de Asia por su enorme población, rápido crecimiento económico, capacidad militar y tecnológica y creciente peso diplomático. Su posición en el océano Índico le proporciona una importancia estratégica excepcional y su participación simultánea en agrupaciones como el QUAD y BRICS refleja una política de autonomía estratégica. En el ejercicio fiscal 2025/26 su economía creció 7,6 %, manteniéndose como la principal gran economía de más rápido crecimiento según el Banco Mundial.",
+    "influence": "Asia del Sur, océano Índico e Indo-Pacífico.",
+    "strengths": "Demografía colosal, sector tecnológico, capacidad nuclear y militar, crecimiento económico, mercado interno",
+    "strategic": "Población, economía, tecnología, defensa, océano Índico y autonomía estratégica."
+  },
+  "Brazil": {
+    "reason": "Brasil es la principal potencia regional de América del Sur por la combinación de su enorme territorio, población, economía, recursos naturales y capacidad diplomática. Es el país más grande de América Latina y posee una economía diversificada en la que destacan los servicios, la agricultura y la industria. Su participación en mecanismos como MERCOSUR, BRICS y G20 amplía su capacidad de actuación internacional, mientras que su territorio, recursos naturales y posición en el Atlántico Sur le otorgan un peso estratégico singular en Sudamérica.",
+    "long_reason": "Brasil es la principal potencia regional de América del Sur por la combinación de su enorme territorio, población, economía, recursos naturales y capacidad diplomática. Es el país más grande de América Latina y posee una economía diversificada en la que destacan los servicios, la agricultura y la industria. Su participación en mecanismos como MERCOSUR, BRICS y G20 amplía su capacidad de actuación internacional, mientras que su territorio, recursos naturales y posición en el Atlántico Sur le otorgan un peso estratégico singular en Sudamérica.",
+    "influence": "América del Sur y cooperación latinoamericana.",
+    "strengths": "Economía, territorio, recursos naturales, energía, población, comercio, diplomacia",
+    "strategic": "Economía, territorio, recursos naturales, agricultura, energía, diplomacia y Atlántico Sur."
+  },
+  "Turkey": {
+    "reason": "Turquía ejerce una influencia regional importante gracias a su posición entre Europa, Asia y Medio Oriente, su capacidad militar, su economía y su actividad diplomática. Los estrechos turcos constituyen la única vía marítima que conecta el mar Negro con el Mediterráneo y los mares abiertos, lo que les proporciona una importancia económica y militar excepcional. Esta posición permite a Turquía desempeñar un papel relevante en el mar Negro, el Mediterráneo oriental, el Cáucaso y Medio Oriente.",
+    "long_reason": "Turquía ejerce una influencia regional importante gracias a su posición entre Europa, Asia y Medio Oriente, su capacidad militar, su economía y su actividad diplomática. Los estrechos turcos constituyen la única vía marítima que conecta el mar Negro con el Mediterráneo y los mares abiertos, lo que les proporciona una importancia económica y militar excepcional. Esta posición permite a Turquía desempeñar un papel relevante en el mar Negro, el Mediterráneo oriental, el Cáucaso y Medio Oriente.",
+    "influence": "Mar Negro, Mediterráneo oriental, Cáucaso, Balcanes y Medio Oriente.",
+    "strengths": "Posición geográfica inigualable, gran industria de defensa (drones), ejército OTAN, control de tránsito marítimo",
+    "strategic": "Estrechos turcos, posición geográfica, defensa, comercio y energía."
+  },
+  "Saudi Arabia": {
+    "reason": "Arabia Saudita es una potencia regional por su enorme peso energético, económico, financiero y diplomático en Medio Oriente. Su posición dentro del mercado petrolero mundial le proporciona una capacidad de influencia que trasciende la península arábiga. Al mismo tiempo, el país está transformando su economía mediante Vision 2030, con inversiones en infraestructura, servicios, logística y nuevas actividades productivas. Su posición en el Golfo y su importancia para los mercados energéticos hacen que cualquier alteración regional tenga repercusiones internacionales.",
+    "long_reason": "Arabia Saudita es una potencia regional por su enorme peso energético, económico, financiero y diplomático en Medio Oriente. Su posición dentro del mercado petrolero mundial le proporciona una capacidad de influencia que trasciende la península arábiga. Al mismo tiempo, el país está transformando su economía mediante Vision 2030, con inversiones en infraestructura, servicios, logística y nuevas actividades productivas. Su posición en el Golfo y su importancia para los mercados energéticos hacen que cualquier alteración regional tenga repercusiones internacionales.",
+    "influence": "Península Arábiga, Golfo y mundo árabe.",
+    "strengths": "Reservas energéticas masivas, fondo soberano trillonario, peso religioso, modernización acelerada",
+    "strategic": "Energía, inversión, logística, posición geográfica y diplomacia regional."
+  },
+  "Egypt": {
+    "reason": "Egipto mantiene un peso regional excepcional por su población, sus capacidades militares, su posición geográfica y el papel estratégico del Canal de Suez. Su territorio conecta África, Asia y Europa y su economía combina agricultura, industria y servicios. El Canal de Suez convierte al país en un nodo fundamental de las rutas marítimas internacionales. Además, Egipto desempeña un papel diplomático relevante en el Norte de África, el mundo árabe y el Mediterráneo oriental.",
+    "long_reason": "Egipto mantiene un peso regional excepcional por su población, sus capacidades militares, su posición geográfica y el papel estratégico del Canal de Suez. Su territorio conecta África, Asia y Europa y su economía combina agricultura, industria y servicios. El Canal de Suez convierte al país en un nodo fundamental de las rutas marítimas internacionales. Además, Egipto desempeña un papel diplomático relevante en el Norte de África, el mundo árabe y el Mediterráneo oriental.",
+    "influence": "Norte de África, mundo árabe y Mediterráneo oriental.",
+    "strengths": "Control del Canal de Suez, gran poder militar regional, influencia cultural histórica, peso demográfico",
+    "strategic": "Canal de Suez, posición geográfica, población, fuerzas armadas y diplomacia regional."
+  },
+  "Indonesia": {
+    "reason": "Indonesia es la principal potencia económica y demográfica del Sudeste Asiático. Es la mayor economía de la región y el cuarto país más poblado del mundo, además de estar formado por más de 17.000 islas. Su ubicación entre los océanos Índico y Pacífico le proporciona una enorme importancia para el comercio marítimo y la seguridad regional. También posee un papel creciente en las cadenas de suministro de minerales críticos, especialmente el níquel, fundamental para industrias como el acero y las baterías.",
+    "long_reason": "Indonesia es la principal potencia económica y demográfica del Sudeste Asiático. Es la mayor economía de la región y el cuarto país más poblado del mundo, además de estar formado por más de 17.000 islas. Su ubicación entre los océanos Índico y Pacífico le proporciona una enorme importancia para el comercio marítimo y la seguridad regional. También posee un papel creciente en las cadenas de suministro de minerales críticos, especialmente el níquel, fundamental para industrias como el acero y las baterías.",
+    "influence": "Sudeste Asiático, ASEAN e Indo-Pacífico.",
+    "strengths": "Población masiva, reservas de minerales críticos (níquel), economía emergente acelerada, geografía archipelágica",
+    "strategic": "Población, economía, rutas marítimas, minerales críticos y posición entre dos océanos."
+  },
+  "South Africa": {
+    "reason": "Sudáfrica es una de las principales potencias de África por el tamaño y diversificación de su economía, su infraestructura, su sistema financiero, sus recursos minerales y su capacidad diplomática. El Banco Mundial la identifica como la segunda economía de África y como uno de los principales centros de transporte y logística del continente. Su posición en el extremo sur de África también la conecta con importantes rutas marítimas internacionales. Su participación en instituciones multilaterales amplía su capacidad de representación y negociación regional.",
+    "long_reason": "Sudáfrica es una de las principales potencias de África por el tamaño y diversificación de su economía, su infraestructura, su sistema financiero, sus recursos minerales y su capacidad diplomática. El Banco Mundial la identifica como la segunda economía de África y como uno de los principales centros de transporte y logística del continente. Su posición en el extremo sur de África también la conecta con importantes rutas marítimas internacionales. Su participación en instituciones multilaterales amplía su capacidad de representación y negociación regional.",
+    "influence": "África Austral y espacios de cooperación continental.",
+    "strengths": "Sector financiero robusto, infraestructura avanzada, riqueza mineral estratégica, peso diplomático multilateral",
+    "strategic": "Minería, finanzas, logística, industria, comercio y diplomacia."
+  },
+  "Nigeria": {
+    "reason": "Nigeria es una potencia regional por su enorme población, su peso económico, sus recursos energéticos y su influencia política y cultural en África Occidental. Con unos 237,5 millones de habitantes en 2025, es el país más poblado de África. Su economía alcanzó unos US$290.8 mil millones de PIB en 2025 y el crecimiento se mantuvo sólido, impulsado especialmente por los servicios. Nigeria también ocupa un lugar central en la cooperación política, económica y de seguridad de África Occidental a través de la CEDEAO.",
+    "long_reason": "Nigeria es una potencia regional por su enorme población, su peso económico, sus recursos energéticos y su influencia política y cultural en África Occidental. Con unos 237,5 millones de habitantes en 2025, es el país más poblado de África. Su economía alcanzó unos US$290.8 mil millones de PIB en 2025 y el crecimiento se mantuvo sólido, impulsado especialmente por los servicios. Nigeria también ocupa un lugar central en la cooperación política, económica y de seguridad de África Occidental a través de la CEDEAO.",
+    "influence": "África Occidental y Golfo de Guinea.",
+    "strengths": "Demografía desmesurada, inmensas reservas de hidrocarburos, industria cultural, mercado joven en expansión",
+    "strategic": "Población, energía, mercado interno, servicios, seguridad regional y peso diplomático."
+  }
+}

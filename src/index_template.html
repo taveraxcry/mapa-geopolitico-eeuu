@@ -1,0 +1,3912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Atlas Geopolítico Digital Interactivo — Visualización de relaciones de poder en el sistema internacional">
+<title>Atlas Geopolítico Digital Interactivo</title>
+<style>
+/* ===== CSS RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-card: rgba(17, 24, 39, 0.85);
+  --bg-glass: rgba(255,255,255,0.06);
+  --border-glass: rgba(255,255,255,0.1);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-blue: #3b82f6;
+  --accent-blue-glow: rgba(59,130,246,0.3);
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-violet: #8b5cf6;
+  --accent-orange: #f97316;
+  --usa-blue: #2563eb;
+  --ally-color: #22c55e;
+  --partner-color: #06b6d4;
+  --competitor-color: #f59e0b;
+  --adversary-color: #ef4444;
+  --neutral-color: #64748b;
+  --ocean-color: #0c1929;
+  --land-default: #1e293b;
+  --land-hover: #334155;
+  --border-color: rgba(148,163,184,0.2);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.5);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Offline fonts and flags removed */
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ===== HEADER ===== */
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: rgba(10, 14, 26, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+  gap: 16px;
+}
+
+#header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+#header .logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+#header .logo-text {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, #fff, var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+/* Search */
+#search-container {
+  position: relative;
+  flex: 0 1 320px;
+  min-width: 180px;
+}
+
+#search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+#search-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px var(--accent-blue-glow);
+}
+
+#search-input::placeholder { color: var(--text-muted); }
+
+.search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+#search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1001;
+  box-shadow: var(--shadow-lg);
+}
+
+#search-results.active { display: block; }
+
+.search-result-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  transition: var(--transition-fast);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.search-result-item:hover { background: var(--bg-glass); }
+
+.search-result-item .flag { font-size: 18px; border-radius: 2px; }
+.search-result-item .name { flex: 1; }
+.search-result-item .relation-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Category pills */
+#categories {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+#categories::-webkit-scrollbar { display: none; }
+
+.cat-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-glass);
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cat-pill:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-primary);
+}
+
+.cat-pill.active {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+}
+
+/* ===== CONTINENT NAV ===== */
+#continent-nav {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  z-index: 900;
+  background: rgba(10, 14, 26, 0.85);
+  backdrop-filter: blur(16px);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid var(--border-glass);
+}
+
+.cont-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+  font-family: inherit;
+}
+
+.cont-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+.cont-btn.active { background: var(--accent-blue); color: white; }
+
+/* ===== MAP CONTAINER ===== */
+#map-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ocean-color);
+}
+
+#map-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+.country-path {
+  fill: var(--land-default);
+  stroke: rgba(148,163,184,0.4);
+  stroke-width: 0.8px;
+  cursor: pointer;
+  transition: fill 0.2s ease, stroke-width 0.2s ease;
+}
+
+.country-path:hover {
+  fill: var(--land-hover);
+  stroke: rgba(148,163,184,0.8);
+  stroke-width: 1.5px;
+}
+
+.country-path.selected {
+  stroke: var(--accent-cyan);
+  stroke-width: 2px;
+}
+
+.country-path.usa { fill: var(--usa-blue); }
+.country-path.usa:hover { fill: #3b82f6; }
+
+.country-path.cat-ally { fill: #166534; }
+.country-path.cat-partner { fill: #155e75; }
+.country-path.cat-competitor { fill: #92400e; }
+.country-path.cat-adversary { fill: #991b1b; }
+.country-path.cat-nato { fill: #1e40af; }
+.country-path.cat-brics { fill: #7c2d12; }
+.country-path.cat-conflict { fill: #881337; }
+.country-path.cat-strategic { fill: #6b21a8; }
+
+/* Graticule */
+.graticule {
+  fill: none;
+  stroke: rgba(148,163,184,0.06);
+  stroke-width: 0.5;
+}
+
+/* ===== TOOLTIP ===== */
+#tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  max-width: 280px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+#tooltip.visible { opacity: 1; }
+
+#tooltip .tt-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+#tooltip .tt-flag { font-size: 18px; border-radius: 2px; }
+#tooltip .tt-name { font-weight: 600; font-size: 14px; }
+#tooltip .tt-relation {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* ===== INFO PANEL ===== */
+#info-panel {
+  position: fixed;
+  top: 56px;
+  right: -420px;
+  width: 400px;
+  height: calc(100vh - 56px);
+  background: rgba(10, 14, 26, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid var(--border-glass);
+  z-index: 800;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+#info-panel.open { right: 0; }
+
+#info-panel::-webkit-scrollbar { width: 5px; }
+#info-panel::-webkit-scrollbar-track { background: transparent; }
+#info-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+.panel-header {
+  position: sticky;
+  top: 0;
+  background: rgba(10, 14, 26, 0.95);
+  backdrop-filter: blur(16px);
+  padding: 20px;
+  border-bottom: 1px solid var(--border-glass);
+  z-index: 1;
+}
+
+.panel-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-glass);
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.panel-close:hover { background: rgba(255,255,255,0.15); color: white; }
+
+.panel-flag { font-size: 32px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.panel-country-name {
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 8px;
+  letter-spacing: -0.5px;
+}
+
+.panel-capital {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.panel-relation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: 0.3px;
+}
+
+.panel-body { padding: 16px 20px 40px; }
+
+.panel-section {
+  margin-bottom: 20px;
+}
+
+.panel-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panel-section-content {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.panel-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  color: var(--text-secondary);
+}
+
+.panel-stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 13px;
+}
+
+.panel-stat-label { color: var(--text-muted); }
+.panel-stat-value { color: var(--text-primary); font-weight: 600; }
+
+.compare-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--accent-blue);
+  background: rgba(59,130,246,0.08);
+  color: var(--accent-blue);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition-fast);
+  margin-top: 8px;
+}
+
+.compare-btn:hover {
+  background: rgba(59,130,246,0.15);
+}
+
+/* ===== COMPARATOR ===== */
+#comparator {
+  position: fixed;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-120%);
+  width: 90%;
+  max-width: 900px;
+  max-height: 80vh;
+  background: rgba(10, 14, 26, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  z-index: 1500;
+  overflow-y: auto;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#comparator.open {
+  transform: translateX(-50%) translateY(20px);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.comparator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.comparator-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.comparator-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-glass);
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comparator-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.comparator-col {
+  padding: 20px 24px;
+}
+
+.comparator-col:first-child {
+  border-right: 1px solid var(--border-glass);
+}
+
+.comparator-col .comp-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.comparator-col .comp-flag { font-size: 32px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.comparator-col .comp-name { font-size: 16px; font-weight: 700; margin-top: 4px; }
+.comparator-col .comp-relation {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.comp-stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.comp-stat-label { color: var(--text-muted); }
+.comp-stat-value { color: var(--text-primary); font-weight: 600; }
+
+/* ===== LEGEND ===== */
+#map-legend {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(10, 14, 26, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  z-index: 800;
+  min-width: 180px;
+  font-size: 12px;
+}
+
+.legend-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.legend-item:hover { opacity: 0.8; }
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-label { color: var(--text-secondary); }
+
+/* ===== CONTROLS ===== */
+#controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 800;
+}
+
+.ctrl-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  background: rgba(10, 14, 26, 0.9);
+  backdrop-filter: blur(16px);
+  color: var(--text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  font-family: inherit;
+}
+
+.ctrl-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-primary);
+}
+
+/* ===== CONNECTIONS ===== */
+.connection-line {
+  fill: none;
+  stroke-width: 1.5;
+  opacity: 0.6;
+  stroke-dasharray: 8 4;
+  animation: dashFlow 1.5s linear infinite;
+}
+
+@keyframes dashFlow {
+  to { stroke-dashoffset: -12; }
+}
+
+/* Lens CSS removed */
+  filter: drop-shadow(0 0 20px rgba(59,130,246,0.3))
+          drop-shadow(0 0 40px rgba(6,182,212,0.15));
+}
+
+/* ===== LOADING ===== */
+#loading {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+
+#loading.fade-out { opacity: 0; pointer-events: none; }
+
+.loader-ring {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(59,130,246,0.15);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loader-text {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ===== OVERLAY ===== */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#overlay.active { opacity: 1; pointer-events: auto; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  #header .logo-text { display: none; }
+  #categories { display: none; }
+  #info-panel {
+    top: auto;
+    bottom: -70vh;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 70vh;
+    border-left: none;
+    border-top: 1px solid var(--border-glass);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+  #info-panel.open { bottom: 0; right: auto; }
+  #map-legend { bottom: 10px; left: 10px; font-size: 11px; padding: 10px 14px; }
+  #continent-nav { top: 58px; gap: 2px; padding: 3px; }
+  .cont-btn { padding: 4px 10px; font-size: 10px; }
+  .comparator-body { grid-template-columns: 1fr; }
+  .comparator-col:first-child { border-right: none; border-bottom: 1px solid var(--border-glass); }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in { animation: fadeInUp 0.3s ease forwards; }
+
+/* Lens CSS removed */
+
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Cargando Atlas Geopolítico…</div>
+</div>
+
+<!-- Header -->
+<header id="header">
+  <div class="logo">
+    <div class="logo-icon">🌍</div>
+    <div class="logo-text">Atlas Geopolítico</div>
+  </div>
+
+  <div id="search-container">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Buscar país o región…" autocomplete="off">
+    <div id="search-results"></div>
+  </div>
+
+  <div id="categories">
+    <div class="cat-pill active" data-cat="all">🌍 Mundo</div>
+    <div class="cat-pill" data-cat="potencias">💪 Potencias regionales</div>
+    <div class="cat-pill" data-cat="aliados">🤝 Aliados</div>
+    <div class="cat-pill" data-cat="rivales">⚔️ Rivales</div>
+    <div class="cat-pill" data-cat="conflictos">💥 Conflictos</div>
+    <div class="cat-pill" data-cat="organizaciones">🏛️ Organizaciones</div>
+    <div class="cat-pill" data-cat="bloques">💰 Bloques económicos</div>
+    <div class="cat-pill" data-cat="zonas">🌐 Zonas de influencia</div>
+    <div class="cat-pill" data-cat="territorios">⚓ Territorios estratégicos</div>
+  </div>
+</header>
+
+<!-- Continent Navigation -->
+<nav id="continent-nav">
+  <button class="cont-btn active" data-continent="world">🌍 Mundo</button>
+  <button class="cont-btn" data-continent="north-america">N. América</button>
+  <button class="cont-btn" data-continent="south-america">S. América</button>
+  <button class="cont-btn" data-continent="europe">Europa</button>
+  <button class="cont-btn" data-continent="africa">África</button>
+  <button class="cont-btn" data-continent="asia">Asia</button>
+  <button class="cont-btn" data-continent="oceania">Oceanía</button>
+  <button class="cont-btn" data-continent="middle-east">Medio Oriente</button>
+</nav>
+
+<!-- Map Container -->
+<div id="map-container"></div>
+
+<!-- Tooltip -->
+<div id="tooltip">
+  <div class="tt-header">
+    <span class="tt-flag" id="tt-flag"></span>
+    <span class="tt-name"></span>
+  </div>
+  <div class="tt-relation"></div>
+</div>
+
+<!-- Info Panel -->
+<div id="info-panel">
+  <div class="panel-header">
+    <button class="panel-close" onclick="closePanel()">✕</button>
+    <div class="panel-flag" id="panel-flag"></div>
+    <div class="panel-country-name" id="panel-name"></div>
+    <div class="panel-capital" id="panel-capital"></div>
+    <div class="panel-relation-badge" id="panel-relation"></div>
+  </div>
+  <div class="panel-body" id="panel-body"></div>
+</div>
+
+<!-- Comparator -->
+<div id="overlay" onclick="closeComparator()"></div>
+<div id="comparator">
+  <div class="comparator-header">
+    <div class="comparator-title">⚖️ Comparar Países</div>
+    <button class="comparator-close" onclick="closeComparator()">✕</button>
+  </div>
+  <div class="comparator-body" id="comparator-body"></div>
+</div>
+
+<!-- Legend -->
+<div id="map-legend">
+  <div class="legend-title">Relación con EE.UU.</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--usa-blue)"></div><span class="legend-label">Estados Unidos</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--ally-color)"></div><span class="legend-label">Aliado</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--partner-color)"></div><span class="legend-label">Socio</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--competitor-color)"></div><span class="legend-label">Competidor</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--adversary-color)"></div><span class="legend-label">Adversario</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--neutral-color)"></div><span class="legend-label">Neutral</span></div>
+</div>
+
+<!-- Controls -->
+<div id="controls">
+  <button class="ctrl-btn" onclick="zoomIn()" title="Acercar">+</button>
+  <button class="ctrl-btn" onclick="zoomOut()" title="Alejar">−</button>
+  <button class="ctrl-btn" onclick="resetView()" title="Restablecer">↻</button>
+  <button class="ctrl-btn" onclick="toggleFullscreen()" title="Pantalla completa">⛶</button>
+</div>
+
+<!-- Lens HTML removed -->
+</div>
+
+<!-- Scripts -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/topojson-client@3"></script>
+<!-- WORLD_DATA -->
+<script>
+// ============================================================
+// GEOPOLITICAL DATABASE
+// ============================================================
+const GEO_DB = {
+  // Country data keyed by TopoJSON name
+  countries: {
+    "United States of America": {
+      name_es: "Estados Unidos", flag: "us", capital: "Washington, D.C.",
+      continent: "north-america", region: "América del Norte",
+      relation: "self", relation_es: "—",
+      population: "334M", gdp: "$28.78T", gdp_pc: "$86,601",
+      orgs: ["OTAN","QUAD","AUKUS","Five Eyes","USMCA","IPEF","APEP","P5 (CS-ONU)","G7","G20"],
+      description: "Superpotencia hegemónica del sistema internacional. Mayor economía y poder militar del mundo. El dólar USD representa el 57.13% de las reservas oficiales de divisas asignadas globalmente (Q1 2026, FMI COFER). Líder de la alianza occidental y arquitecto del orden liberal internacional de posguerra.",
+      allies: ["United Kingdom","Canada","Australia","Japan","South Korea","Germany","France","Italy"],
+      potencia_regional: {
+        tipo_poder: "Potencia global con predominio regional en AmÃ©rica y liderazgo estratÃ©gico en el sistema internacional.",
+        region_poder: "AmÃ©rica del Norte, AmÃ©rica Latina y el Caribe; influencia global.",
+        long_reason: "Es una potencia global con capacidades econÃ³micas, militares, tecnolÃ³gicas, diplomÃ¡ticas y financieras de alcance mundial. En el hemisferio occidental mantiene una posiciÃ³n estratÃ©gica privilegiada y una extensa red de alianzas y asociaciones.",
+        influence: "AmÃ©rica del Norte, Caribe, AmÃ©rica Latina y, a escala mundial, Europa, Indo-PacÃ­fico y Medio Oriente.",
+        strengths: "economÃ­a, dÃ³lar y sistema financiero, tecnologÃ­a, fuerzas armadas, inteligencia, alianzas, universidades, innovaciÃ³n y capacidad diplomÃ¡tica.",
+        strategic: "Su posiciÃ³n geogrÃ¡fica, capacidad militar y redes de alianzas le permiten proyectar poder en mÃºltiples regiones simultÃ¡neamente."
+      },
+      keywords: ["superpotencia","hegemonía","dólar","OTAN","nuclear"]
+    },
+    "Canada": {
+      name_es: "Canadá", flag: "ca", capital: "Ottawa",
+      continent: "north-america", region: "América del Norte",
+      relation: "ally", relation_es: "Aliado principal",
+      population: "40M", gdp: "$2.14T", gdp_pc: "$53,247",
+      orgs: ["OTAN","Five Eyes","USMCA","G7","G20","APEP"],
+      description: "Aliado más cercano y mayor socio comercial de EE.UU. Miembro fundador de la OTAN y de Five Eyes. Relación bilateral definida por la frontera más larga del mundo y profunda integración económica a través del USMCA.",
+      allies: ["United States of America","United Kingdom","France","Australia"],
+      keywords: ["OTAN","Five Eyes","USMCA","frontera"]
+    },
+    "Mexico": {
+      name_es: "México", flag: "mx", capital: "Ciudad de México",
+      continent: "north-america", region: "América del Norte",
+      relation: "partner", relation_es: "Socio estratégico",
+      population: "130M", gdp: "$1.79T", gdp_pc: "$13,800",
+      orgs: ["USMCA","APEP","G20","OEA"],
+      description: "Socio comercial clave bajo el USMCA. Relación compleja que abarca comercio, migración y seguridad. Segundo mayor socio comercial de EE.UU. Cooperación en lucha contra el narcotráfico y gestión migratoria.",
+      allies: ["United States of America","Canada"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de AmÃ©rica del Norte y MesoamÃ©rica.",
+        region_poder: "AmÃ©rica del Norte, CentroamÃ©rica y espacio mesoamericano.",
+        long_reason: "Su economÃ­a, poblaciÃ³n, ubicaciÃ³n junto a Estados Unidos, industria manufacturera y vÃ­nculos comerciales le proporcionan una influencia regional considerable.",
+        influence: "AmÃ©rica del Norte, MesoamÃ©rica y AmÃ©rica Latina.",
+        strengths: "manufactura, comercio, poblaciÃ³n, energÃ­a, ubicaciÃ³n geogrÃ¡fica y vÃ­nculos con Estados Unidos.",
+        strategic: "Frontera con Estados Unidos, cadenas de suministro norteamericanas, migraciÃ³n, comercio y conexiÃ³n entre NorteamÃ©rica y AmÃ©rica Latina."
+      },
+      keywords: ["USMCA","frontera","comercio","migración"]
+    },
+    "United Kingdom": {
+      name_es: "Reino Unido", flag: "gb", capital: "Londres",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado principal",
+      population: "67M", gdp: "$3.50T", gdp_pc: "$52,236",
+      orgs: ["OTAN","AUKUS","Five Eyes","P5 (CS-ONU)","G7","G20"],
+      description: "\"Relación especial\" con EE.UU. Aliado más cercano en Europa. Potencia nuclear y miembro permanente del Consejo de Seguridad de la ONU. Pilar del AUKUS para el Indo-Pacífico y de Five Eyes para inteligencia.",
+      allies: ["United States of America","France","Canada","Australia","Japan"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal europea con proyecciÃ³n global.",
+        region_poder: "Europa y AtlÃ¡ntico Norte, con proyecciÃ³n Indo-PacÃ­fica.",
+        long_reason: "Posee capacidades militares avanzadas, armas nucleares, una importante red diplomÃ¡tica, servicios financieros y alianzas estratÃ©gicas.",
+        influence: "Europa, AtlÃ¡ntico Norte e Indo-PacÃ­fico.",
+        strengths: "defensa, inteligencia, finanzas, diplomacia, tecnologÃ­a, capacidades navales y armas nucleares.",
+        strategic: "NATO, AtlÃ¡ntico Norte y creciente participaciÃ³n en el Indo-PacÃ­fico."
+      },
+      keywords: ["OTAN","AUKUS","Five Eyes","nuclear","P5"]
+    },
+    "France": {
+      name_es: "Francia", flag: "fr", capital: "París",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "68M", gdp: "$3.13T", gdp_pc: "$46,315",
+      orgs: ["OTAN","P5 (CS-ONU)","UE","G7","G20"],
+      description: "Aliado de la OTAN con política exterior independiente. Potencia nuclear y miembro del P5. Presencia militar global significativa, especialmente en África. Motor político de la Unión Europea junto con Alemania.",
+      allies: ["United States of America","Germany","United Kingdom","Italy","Spain"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal europea con capacidades globales.",
+        region_poder: "Europa, MediterrÃ¡neo, Ãfrica y territorios franceses de ultramar.",
+        long_reason: "Combina economÃ­a, fuerzas armadas, capacidad nuclear, diplomacia, asiento permanente en el Consejo de Seguridad y presencia territorial en distintos ocÃ©anos.",
+        influence: "Europa, MediterrÃ¡neo, Ãfrica, Indo-PacÃ­fico y territorios de ultramar.",
+        strengths: "capacidad nuclear, fuerzas armadas, diplomacia, industria, tecnologÃ­a y territorios de ultramar.",
+        strategic: "Su presencia europea, africana e indo-pacÃ­fica le permite proyectar influencia mÃ¡s allÃ¡ del continente europeo."
+      },
+      keywords: ["OTAN","nuclear","P5","UE"]
+    },
+    "Germany": {
+      name_es: "Alemania", flag: "de", capital: "Berlín",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "84M", gdp: "$4.46T", gdp_pc: "$53,042",
+      orgs: ["OTAN","UE","G7","G20"],
+      description: "Mayor economía de Europa y pilar de la OTAN. Aliado clave de EE.UU. en Europa. Ha incrementado significativamente su gasto en defensa tras la invasión rusa de Ucrania (2022). Motor económico de la Unión Europea.",
+      allies: ["United States of America","France","United Kingdom","Poland","Italy"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de Europa con fuerte capacidad econÃ³mica.",
+        region_poder: "Europa Central y UniÃ³n Europea.",
+        long_reason: "Es una de las principales economÃ­as europeas y posee enorme peso industrial, comercial y polÃ­tico dentro de la UniÃ³n Europea.",
+        influence: "Europa y UniÃ³n Europea.",
+        strengths: "industria, exportaciones, tecnologÃ­a, finanzas, diplomacia y peso institucional europeo.",
+        strategic: "Su posiciÃ³n econÃ³mica influye directamente en las decisiones y orientaciones estratÃ©gicas de Europa."
+      },
+      keywords: ["OTAN","UE","economía","defensa"]
+    },
+    "Japan": {
+      name_es: "Japón", flag: "jp", capital: "Tokio",
+      continent: "asia", region: "Asia Oriental",
+      relation: "ally", relation_es: "Aliado tratado bilateral",
+      population: "124M", gdp: "$4.23T", gdp_pc: "$34,017",
+      orgs: ["QUAD","IPEF","G7","G20"],
+      description: "Aliado clave en el Indo-Pacífico con tratado de defensa bilateral desde 1951. Miembro del QUAD. Alberga la mayor presencia militar de EE.UU. en Asia (~54,000 tropas). Potencia tecnológica crucial en semiconductores.",
+      allies: ["United States of America","Australia","India","South Korea"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal y potencia econÃ³mica-tecnolÃ³gica del Indo-PacÃ­fico.",
+        region_poder: "Asia Oriental e Indo-PacÃ­fico.",
+        long_reason: "Posee una economÃ­a avanzada, tecnologÃ­a de alto nivel, capacidades industriales, influencia financiera y una importante alianza estratÃ©gica con Estados Unidos.",
+        influence: "JapÃ³n, PacÃ­fico occidental y Asia Oriental.",
+        strengths: "tecnologÃ­a, industria, economÃ­a, innovaciÃ³n, diplomacia y capacidades de defensa.",
+        strategic: "Su posiciÃ³n frente a China, Corea del Norte, TaiwÃ¡n y las rutas marÃ­timas del PacÃ­fico occidental le otorga gran importancia estratÃ©gica."
+      },
+      keywords: ["QUAD","Indo-Pacífico","semiconductores","bases militares"]
+    },
+    "South Korea": {
+      name_es: "Corea del Sur", flag: "kr", capital: "Seúl",
+      continent: "asia", region: "Asia Oriental",
+      relation: "ally", relation_es: "Aliado tratado bilateral",
+      population: "52M", gdp: "$1.71T", gdp_pc: "$33,147",
+      orgs: ["IPEF","G20"],
+      description: "Aliado con tratado de defensa mutua desde 1953. EE.UU. mantiene ~28,500 tropas en la península coreana. Potencia tecnológica en semiconductores (Samsung, SK Hynix). Frontera directa con Corea del Norte.",
+      allies: ["United States of America","Japan","Australia"],
+      keywords: ["bases militares","semiconductores","Corea del Norte","alianza"]
+    },
+    "Australia": {
+      name_es: "Australia", flag: "au", capital: "Canberra",
+      continent: "oceania", region: "Oceanía",
+      relation: "ally", relation_es: "Aliado principal",
+      population: "26M", gdp: "$1.79T", gdp_pc: "$68,338",
+      orgs: ["AUKUS","QUAD","Five Eyes","IPEF","G20"],
+      description: "Aliado crucial en el Indo-Pacífico. Miembro de AUKUS (submarinos nucleares), QUAD y Five Eyes. Socio de defensa e inteligencia de primer nivel. Ubicación geoestratégica clave frente a la expansión china en el Pacífico.",
+      allies: ["United States of America","Japan","United Kingdom","New Zealand","India"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal / potencia media del Indo-PacÃ­fico.",
+        region_poder: "Australia, PacÃ­fico Sur, Sudeste AsiÃ¡tico e Ãndico.",
+        long_reason: "Aunque no es una superpotencia, Australia posee importantes capacidades econÃ³micas, militares, diplomÃ¡ticas y de defensa, ademÃ¡s de una posiciÃ³n estratÃ©gica excepcional en el Indo-PacÃ­fico. <br><small><i>Lowy clasifica actualmente a Australia como potencia media en Asia y la sitÃºa entre los actores regionales mÃ¡s relevantes por sus redes de defensa y su influencia diplomÃ¡tica. (<a href='https://power.lowyinstitute.org/countries/australia/?utm_source=chatgpt.com' target='_blank' style='color:var(--accent-blue)'>Lowy Institute Asia Power Index 2025</a>)</i></small>",
+        influence: "PacÃ­fico Sur, Sudeste AsiÃ¡tico, Indo-PacÃ­fico y ocÃ©ano Ãndico.",
+        strengths: "defensa, alianzas, recursos minerales, economÃ­a, diplomacia, territorio marÃ­timo y cooperaciÃ³n de seguridad.",
+        strategic: "AUKUS, alianzas con Estados Unidos y otros socios, rutas marÃ­timas, minerales crÃ­ticos y seguridad del PacÃ­fico."
+      },
+      keywords: ["AUKUS","QUAD","Five Eyes","Indo-Pacífico"]
+    },
+    "New Zealand": {
+      name_es: "Nueva Zelanda", flag: "nz", capital: "Wellington",
+      continent: "oceania", region: "Oceanía",
+      relation: "ally", relation_es: "Aliado Five Eyes",
+      population: "5.1M", gdp: "$248B", gdp_pc: "$48,802",
+      orgs: ["Five Eyes","IPEF"],
+      description: "Miembro de Five Eyes y aliado tradicional. Relación de defensa bajo el tratado ANZUS (aunque con tensiones históricas sobre armas nucleares). Política exterior independiente pero alineada con Occidente.",
+      allies: ["United States of America","Australia","United Kingdom","Canada"],
+      keywords: ["Five Eyes","ANZUS","Pacífico"]
+    },
+    "India": {
+      name_es: "India", flag: "in", capital: "Nueva Delhi",
+      continent: "asia", region: "Asia del Sur",
+      relation: "partner", relation_es: "Socio estratégico",
+      population: "1,440M", gdp: "$3.94T", gdp_pc: "$2,731",
+      orgs: ["QUAD","IPEF","BRICS","G20"],
+      description: "Socio estratégico en ascenso. Miembro del QUAD pero también de BRICS. Practíca \"multi-alineamiento\" — relaciones con EE.UU. y Rusia simultáneamente. País más poblado del mundo. Potencia tecnológica emergente y contrapeso a China en Asia.",
+      allies: ["United States of America","Japan","France","Australia"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal con creciente proyecciÃ³n global.",
+        region_poder: "Asia del Sur e Indo-PacÃ­fico.",
+        long_reason: "India combina poblaciÃ³n, crecimiento econÃ³mico, capacidades militares, tecnologÃ­a, industria y una posiciÃ³n estratÃ©gica central en el ocÃ©ano Ãndico.",
+        influence: "Asia del Sur, ocÃ©ano Ãndico e Indo-PacÃ­fico.",
+        strengths: "poblaciÃ³n, economÃ­a, tecnologÃ­a, industria, fuerzas armadas, espacio y diplomacia.",
+        strategic: "Es un actor fundamental para el equilibrio de poder entre China, Estados Unidos y las demÃ¡s potencias del Indo-PacÃ­fico."
+      },
+      keywords: ["QUAD","BRICS","multi-alineamiento","democracia","nuclear"]
+    },
+    "China": {
+      name_es: "China", flag: "cn", capital: "Pekín",
+      continent: "asia", region: "Asia Oriental",
+      relation: "competitor", relation_es: "Competidor estratégico",
+      population: "1,425M", gdp: "$18.53T", gdp_pc: "$13,136",
+      orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
+      description: "Principal competidor estratégico de EE.UU. Segunda economía mundial. Competencia en tecnología (IA, semiconductores, 5G), militar (mayor armada del mundo) y geopolítica (Mar de China Meridional, Taiwán, Iniciativa de la Franja y la Ruta). Miembro del P5.",
+      allies: ["Russia"],
+      potencia_regional: {
+        tipo_poder: "Potencia global con predominio regional en Asia Oriental e Indo-PacÃ­fico.",
+        region_poder: "Asia Oriental, Mar de China Meridional, TaiwÃ¡n, Asia-PacÃ­fico e Indo-PacÃ­fico.",
+        long_reason: "China combina una enorme capacidad econÃ³mica e industrial con una creciente capacidad tecnolÃ³gica, militar, comercial y diplomÃ¡tica. Su influencia es especialmente intensa en Asia Oriental y el Indo-PacÃ­fico. <br><small><i>La investigaciÃ³n de 2026 describe a China como potencia global y seÃ±ala su creciente capacidad para modificar el equilibrio estratÃ©gico del Indo-PacÃ­fico. (<a href='https://www.swp-berlin.org/10.18449/2026RP08/?utm_source=chatgpt.com' target='_blank' style='color:var(--accent-blue)'>Stiftung Wissenschaft y Politik (SWP)</a>)</i></small>",
+        influence: "Asia Oriental, Sudeste AsiÃ¡tico, Asia Central y amplias redes comerciales globales.",
+        strengths: "manufactura, comercio, tecnologÃ­a, infraestructura, finanzas, poblaciÃ³n, poder naval y misiles, cadenas de suministro y capacidad diplomÃ¡tica.",
+        strategic: "Su posiciÃ³n frente a TaiwÃ¡n, el Mar de China Meridional y las principales rutas marÃ­timas del Indo-PacÃ­fico la convierte en uno de los centros principales de poder del sistema internacional."
+      },
+      keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"]
+    },
+    "Russia": {
+      name_es: "Rusia", flag: "ru", capital: "Moscú",
+      continent: "europe", region: "Europa del Este / Asia del Norte",
+      relation: "adversary", relation_es: "Adversario",
+      population: "144M", gdp: "$2.02T", gdp_pc: "$14,403",
+      orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
+      description: "Adversario principal tras la invasión de Ucrania (2022). Mayor arsenal nuclear del mundo. Miembro del P5. Sanciones occidentales masivas. Alianza estratégica creciente con China. Proveedor de energía (gas, petróleo) y desestabilizador en Europa.",
+      allies: ["China","North Korea","Iran"],
+      potencia_regional: {
+        tipo_poder: "Potencia global con predominio regional en Eurasia.",
+        region_poder: "Europa Oriental, CÃ¡ucaso, Asia Central y Ãrtico.",
+        long_reason: "Rusia posee capacidades militares estratÃ©gicas, recursos energÃ©ticos, territorio continental enorme y capacidad diplomÃ¡tica que le permiten ejercer influencia mucho mÃ¡s allÃ¡ de sus fronteras inmediatas. <br><small><i>La literatura de 2026 continÃºa ubicando a Rusia entre los actores capaces de proyectar poder a escala global, aunque con una concentraciÃ³n especialmente fuerte de sus intereses estratÃ©gicos en Eurasia. (<a href='https://www.swp-berlin.org/10.18449/2026RP08/?utm_source=chatgpt.com' target='_blank' style='color:var(--accent-blue)'>Stiftung Wissenschaft y Politik (SWP)</a>)</i></small>",
+        influence: "Europa Oriental, CÃ¡ucaso, Asia Central, Ãrtico y espacios estratÃ©gicos de Medio Oriente.",
+        strengths: "arsenal nuclear, fuerzas armadas, energÃ­a, territorio, recursos naturales, industria militar y capacidad de proyecciÃ³n estratÃ©gica.",
+        strategic: "Control de espacios euroasiÃ¡ticos, rutas energÃ©ticas, acceso al Ãrtico y posiciÃ³n geogrÃ¡fica entre Europa y Asia."
+      },
+      keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"]
+    },
+    "Iran": {
+      name_es: "Irán", flag: "ir", capital: "Teherán",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "adversary", relation_es: "Adversario",
+      population: "88M", gdp: "$401B", gdp_pc: "$4,556",
+      orgs: ["BRICS","OPEP"],
+      description: "Adversario desde la Revolución Islámica de 1979. Programa nuclear controvertido. Apoya milicias proxy (Hezbollah, Houthis, milicias en Irak). Tensiones por el Estrecho de Ormuz (21% del petróleo mundial transita allí). Miembro de BRICS desde 2024.",
+      allies: ["Russia","China","Syria"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de Medio Oriente.",
+        region_poder: "Golfo PÃ©rsico, Medio Oriente y Asia Occidental.",
+        long_reason: "Su territorio, poblaciÃ³n, recursos energÃ©ticos, capacidades militares y redes polÃ­ticas regionales le permiten ejercer influencia considerable en Medio Oriente.",
+        influence: "Golfo PÃ©rsico, Irak, Siria, LÃ­bano, Yemen y Asia Occidental.",
+        strengths: "energÃ­a, posiciÃ³n geogrÃ¡fica, misiles, capacidades militares, poblaciÃ³n y redes regionales.",
+        strategic: "Estrecho de Ormuz, energÃ­a mundial y posiciÃ³n entre Asia Central, Golfo PÃ©rsico y Medio Oriente."
+      },
+      keywords: ["adversario","nuclear","proxy","Ormuz","sanciones"]
+    },
+    "North Korea": {
+      name_es: "Corea del Norte", flag: "kp", capital: "Pyongyang",
+      continent: "asia", region: "Asia Oriental",
+      relation: "adversary", relation_es: "Adversario",
+      population: "26M", gdp: "$~18B", gdp_pc: "$~700",
+      orgs: [],
+      description: "Estado altamente aislado con arsenal nuclear. Amenaza directa a aliados de EE.UU. (Corea del Sur, Japón). Programa de misiles balísticos intercontinentales. Apoyo militar a Rusia en la guerra de Ucrania.",
+      allies: ["China","Russia"],
+      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"]
+    },
+    "Taiwan": {
+      name_es: "Taiwán", flag: "tw", capital: "Taipéi",
+      continent: "asia", region: "Asia Oriental",
+      relation: "partner", relation_es: "Socio no oficial",
+      population: "24M", gdp: "$790B", gdp_pc: "$33,907",
+      orgs: [],
+      description: "Socio no oficial pero estratégicamente vital. EE.UU. mantiene la política de \"ambigüedad estratégica\" sobre defensa de Taiwán. TSMC produce ~90% de los chips avanzados del mundo. China reclama soberanía sobre Taiwán — uno de los flashpoints más peligrosos del mundo.",
+      allies: ["United States of America","Japan"],
+      keywords: ["semiconductores","TSMC","ambigüedad estratégica","China"]
+    },
+    "Colombia": {
+      name_es: "Colombia", flag: "co", capital: "Bogotá",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio estratégico (MNNA)",
+      population: "52M", gdp: "$363B", gdp_pc: "$6,981",
+      orgs: ["APEP","OTAN (socio global, NO miembro)","OEA"],
+      description: "Major Non-NATO Ally (MNNA) y socio global de la OTAN — NO es miembro de la OTAN sino socio de cooperación. Aliado tradicional de EE.UU. en América Latina. Plan Colombia (2000-2015) definió la relación de cooperación en seguridad. Único socio global de la OTAN en América Latina.",
+      allies: ["United States of America"],
+      keywords: ["MNNA","socio OTAN","Plan Colombia","narcotráfico","América Latina"]
+    },
+    "Brazil": {
+      name_es: "Brasil", flag: "br", capital: "Brasilia",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio regional",
+      population: "216M", gdp: "$2.17T", gdp_pc: "$10,042",
+      orgs: ["BRICS","G20","MERCOSUR"],
+      description: "Mayor economía de América Latina y potencia regional. Miembro fundador de BRICS. Practíca política exterior independiente. Relación pragmática con EE.UU. Aspirante a un asiento permanente en el Consejo de Seguridad de la ONU.",
+      allies: ["Argentina"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de AmÃ©rica del Sur.",
+        region_poder: "AmÃ©rica del Sur y AtlÃ¡ntico Sur.",
+        long_reason: "Es el Estado con mayor territorio, poblaciÃ³n y peso econÃ³mico de SudamÃ©rica y posee una importante capacidad diplomÃ¡tica regional y global.",
+        influence: "AmÃ©rica del Sur, AtlÃ¡ntico Sur y espacios multilaterales.",
+        strengths: "territorio, poblaciÃ³n, agricultura, recursos naturales, energÃ­a, industria, mercado interno y diplomacia.",
+        strategic: "AmazonÃ­a, AtlÃ¡ntico Sur, alimentos, minerales, energÃ­a y liderazgo sudamericano."
+      },
+      keywords: ["BRICS","potencia regional","Amazon","MERCOSUR"]
+    },
+    "Argentina": {
+      name_es: "Argentina", flag: "ar", capital: "Buenos Aires",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "46M", gdp: "$641B", gdp_pc: "$13,709",
+      orgs: ["G20","MERCOSUR"],
+      description: "Relación fluctuante con EE.UU. según orientación política del gobierno. Major Non-NATO Ally designado en 1998. Bajo la administración Milei (2023-), acercamiento significativo a EE.UU. y Occidente.",
+      allies: ["Brazil","Chile"],
+      keywords: ["MNNA","MERCOSUR","Milei"]
+    },
+    "Chile": {
+      name_es: "Chile", flag: "cl", capital: "Santiago",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "19M", gdp: "$335B", gdp_pc: "$17,156",
+      orgs: ["APEP","APEC","OCDE"],
+      description: "Socio económico estable. Mayor productor de cobre del mundo (mineral crítico). Miembro de la OCDE y APEC. Economía de mercado abierta con tratados de libre comercio extensos.",
+      allies: ["United States of America","Argentina"],
+      keywords: ["cobre","minería","OCDE","comercio"]
+    },
+    "Peru": {
+      name_es: "Perú", flag: "pe", capital: "Lima",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "34M", gdp: "$268B", gdp_pc: "$7,775",
+      orgs: ["APEP","APEC"],
+      description: "Socio comercial con TLC vigente con EE.UU. desde 2009. Cooperación en lucha contra el narcotráfico. Rico en minerales críticos (cobre, litio, plata).",
+      allies: ["United States of America","Chile","Colombia"],
+      keywords: ["minería","TLC","APEP"]
+    },
+    "Venezuela": {
+      name_es: "Venezuela", flag: "ve", capital: "Caracas",
+      continent: "south-america", region: "América del Sur",
+      relation: "adversary", relation_es: "Adversario",
+      population: "28M", gdp: "$~100B", gdp_pc: "$~3,600",
+      orgs: ["OPEP"],
+      description: "Relaciones rotas desde el gobierno de Chávez/Maduro. Sanciones extensivas de EE.UU. Crisis humanitaria y migratoria masiva. Mayores reservas probadas de petróleo del mundo. Apoyo de Rusia, China e Irán.",
+      allies: ["Cuba","Russia","China","Iran"],
+      keywords: ["sanciones","petróleo","Maduro","crisis"]
+    },
+    "Cuba": {
+      name_es: "Cuba", flag: "cu", capital: "La Habana",
+      continent: "north-america", region: "Caribe",
+      relation: "adversary", relation_es: "Adversario",
+      population: "11M", gdp: "$~107B", gdp_pc: "$~9,500",
+      orgs: ["BRICS (socio)"],
+      description: "Embargo comercial de EE.UU. desde 1962. Estado socialista de partido único. Breve deshielo bajo Obama (2014-2016) revertido posteriormente. Base naval de Guantánamo operada por EE.UU.",
+      allies: ["Venezuela","Russia","China"],
+      keywords: ["embargo","socialismo","Guantánamo"]
+    },
+    "Italy": {
+      name_es: "Italia", flag: "it", capital: "Roma",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "59M", gdp: "$2.25T", gdp_pc: "$38,200",
+      orgs: ["OTAN","UE","G7","G20"],
+      description: "Aliado de la OTAN y miembro del G7. Bases militares de EE.UU. en su territorio (Aviano, Sigonella). Tercera economía de la eurozona. Posición estratégica en el Mediterráneo.",
+      allies: ["United States of America","France","Germany","Spain"],
+      keywords: ["OTAN","G7","Mediterráneo","bases militares"]
+    },
+    "Spain": {
+      name_es: "España", flag: "es", capital: "Madrid",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "48M", gdp: "$1.58T", gdp_pc: "$33,090",
+      orgs: ["OTAN","UE"],
+      description: "Aliado de la OTAN. Bases de EE.UU. en Rota y Morón. Posición estratégica en el Mediterráneo occidental y puerta a África del Norte.",
+      allies: ["United States of America","France","Italy","Portugal"],
+      keywords: ["OTAN","Mediterráneo","bases militares"]
+    },
+    "Poland": {
+      name_es: "Polonia", flag: "pl", capital: "Varsovia",
+      continent: "europe", region: "Europa Central",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "38M", gdp: "$842B", gdp_pc: "$22,393",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN en la línea del frente oriental. Ha incrementado masivamente su gasto en defensa (4% del PIB). Alberga fuerzas de la OTAN cerca de la frontera con Rusia/Bielorrusia. Rol clave en el apoyo a Ucrania.",
+      allies: ["United States of America","United Kingdom","Ukraine"],
+      keywords: ["OTAN","defensa","frontera oriental","Ucrania"]
+    },
+    "Turkey": {
+      name_es: "Turquía", flag: "tr", capital: "Ankara",
+      continent: "middle-east", region: "Eurasia",
+      relation: "ally", relation_es: "Aliado OTAN (complejo)",
+      population: "85M", gdp: "$1.11T", gdp_pc: "$13,110",
+      orgs: ["OTAN","G20"],
+      description: "Aliado OTAN pero con relación cada vez más compleja. Compra de sistemas S-400 a Rusia generó fricciones. Control del Estrecho del Bósforo. Posición geoestratégica única entre Europa, Asia y Medio Oriente.",
+      allies: ["Azerbaijan"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal euroasiÃ¡tica.",
+        region_poder: "Anatolia, MediterrÃ¡neo Oriental, Mar Negro, CÃ¡ucaso y Medio Oriente.",
+        long_reason: "Su posiciÃ³n geogrÃ¡fica conecta Europa, Asia y Medio Oriente y le proporciona una capacidad estratÃ©gica excepcional. <br><small><i>Estudios recientes destacan precisamente el enfoque regional de TÃ¼rkiye hacia Medio Oriente y los Balcanes. (<a href='https://www.swp-berlin.org/10.18449/2026RP08/?utm_source=chatgpt.com' target='_blank' style='color:var(--accent-blue)'>Stiftung Wissenschaft y Politik (SWP)</a>)</i></small>",
+        influence: "TurquÃ­a, Mar Negro, CÃ¡ucaso, Balcanes, MediterrÃ¡neo Oriental y Medio Oriente.",
+        strengths: "fuerzas armadas, industria de defensa, posiciÃ³n geogrÃ¡fica, diplomacia y capacidad de mediaciÃ³n.",
+        strategic: "Estrechos del BÃ³sforo y Dardanelos, acceso a mares estratÃ©gicos y pertenencia a NATO."
+      },
+      keywords: ["OTAN","Bósforo","S-400","Erdogan","geoestratégica"]
+    },
+    "Israel": {
+      name_es: "Israel", flag: "il", capital: "Jerusalén*",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "ally", relation_es: "Aliado principal",
+      population: "9.8M", gdp: "$525B", gdp_pc: "$53,195",
+      orgs: [],
+      description: "Aliado principal en Medio Oriente. Recibe la mayor asistencia militar de EE.UU. (~$3.8B/año). Potencia tecnológica y de defensa. Conflicto con Palestina define la dinámica regional. Capacidad nuclear no declarada.",
+      allies: ["United States of America"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de Medio Oriente con capacidades tecnolÃ³gicas y militares avanzadas.",
+        region_poder: "Levante y MediterrÃ¡neo Oriental.",
+        long_reason: "Su capacidad militar, tecnolÃ³gica, de inteligencia y sus alianzas internacionales le proporcionan una influencia estratÃ©gica muy superior a su tamaÃ±o territorial y demogrÃ¡fico.",
+        influence: "Israel, Levante, MediterrÃ¡neo Oriental y seguridad de Medio Oriente.",
+        strengths: "tecnologÃ­a, defensa, inteligencia, innovaciÃ³n, capacidades militares y alianzas.",
+        strategic: "MediterrÃ¡neo Oriental, seguridad regional, tecnologÃ­a militar y relaciones con Estados Unidos."
+      },
+      keywords: ["aliado","defensa","tecnología","Palestina","nuclear"]
+    },
+    "Saudi Arabia": {
+      name_es: "Arabia Saudita", flag: "sa", capital: "Riad",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "partner", relation_es: "Socio estratégico",
+      population: "36M", gdp: "$1.07T", gdp_pc: "$29,922",
+      orgs: ["BRICS","OPEP","G20"],
+      description: "Socio estratégico basado en petróleo y seguridad. Pacto del petrodólar. Mayor comprador de armas de EE.UU. Ingresó a BRICS en 2024. Diversificación económica con Visión 2030. Rivalidad con Irán define la geopolítica regional.",
+      allies: ["United States of America","United Arab Emirates"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del Golfo y Medio Oriente.",
+        region_poder: "PenÃ­nsula ArÃ¡biga, Golfo PÃ©rsico y mundo Ã¡rabe.",
+        long_reason: "Su peso energÃ©tico, econÃ³mico, financiero y diplomÃ¡tico le permite ejercer una influencia significativa en Medio Oriente.",
+        influence: "Golfo, PenÃ­nsula ArÃ¡biga, mundo Ã¡rabe y relaciones con grandes potencias.",
+        strengths: "petrÃ³leo, inversiÃ³n, finanzas, diplomacia, posiciÃ³n geogrÃ¡fica y capacidad econÃ³mica.",
+        strategic: "EnergÃ­a mundial, Mar Rojo, Golfo PÃ©rsico y relaciones estratÃ©gicas con Estados Unidos, China y otros actores."
+      },
+      keywords: ["petróleo","petrodólar","OPEP","BRICS","armas"]
+    },
+    "United Arab Emirates": {
+      name_es: "Emiratos Árabes Unidos", flag: "ae", capital: "Abu Dabi",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "partner", relation_es: "Socio estratégico",
+      population: "10M", gdp: "$509B", gdp_pc: "$50,602",
+      orgs: ["BRICS","OPEP"],
+      description: "Socio estratégico creciente. Base naval de EE.UU. en Jebel Ali. Hub financiero y logístico global. Miembro de BRICS desde 2024. Acuerdos de Abraham (2020) normalizaron relaciones con Israel.",
+      allies: ["United States of America","Saudi Arabia","Israel"],
+      keywords: ["base naval","comercio","Abraham","BRICS"]
+    },
+    "Egypt": {
+      name_es: "Egipto", flag: "eg", capital: "El Cairo",
+      continent: "africa", region: "Norte de África",
+      relation: "partner", relation_es: "Socio (MNNA)",
+      population: "105M", gdp: "$398B", gdp_pc: "$3,800",
+      orgs: ["BRICS"],
+      description: "Major Non-NATO Ally. Control del Canal de Suez (12% del comercio marítimo mundial). Recibe ~$1.3B/año en asistencia militar de EE.UU. Miembro de BRICS desde 2024.",
+      allies: ["United States of America","Saudi Arabia"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del Norte de Ãfrica y Medio Oriente.",
+        region_poder: "Norte de Ãfrica, MediterrÃ¡neo Oriental y Mar Rojo.",
+        long_reason: "Su poblaciÃ³n, posiciÃ³n geogrÃ¡fica, fuerzas armadas y control del Canal de Suez le proporcionan un peso estratÃ©gico excepcional.",
+        influence: "Norte de Ãfrica, MediterrÃ¡neo Oriental, Mar Rojo y mundo Ã¡rabe.",
+        strengths: "posiciÃ³n geogrÃ¡fica, poblaciÃ³n, fuerzas armadas, Canal de Suez y diplomacia.",
+        strategic: "Canal de Suez, conexiÃ³n entre MediterrÃ¡neo y Mar Rojo y rutas comerciales entre Europa y Asia."
+      },
+      keywords: ["MNNA","Suez","asistencia militar","BRICS"]
+    },
+    "Indonesia": {
+      name_es: "Indonesia", flag: "id", capital: "Yakarta",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "partner", relation_es: "Socio",
+      population: "277M", gdp: "$1.42T", gdp_pc: "$5,108",
+      orgs: ["BRICS","IPEF","G20","ASEAN"],
+      description: "Mayor país musulmán del mundo por población. Ubicación estratégica en el Estrecho de Malaca. Miembro de BRICS e IPEF simultáneamente. Economía emergente del G20.",
+      allies: ["Australia","Japan"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del Sudeste AsiÃ¡tico.",
+        region_poder: "Sudeste AsiÃ¡tico e Indo-PacÃ­fico.",
+        long_reason: "Es el paÃ­s mÃ¡s poblado del Sudeste AsiÃ¡tico, posee una economÃ­a importante y controla una posiciÃ³n geogrÃ¡fica fundamental entre los ocÃ©anos Ãndico y PacÃ­fico. <br><small><i>Indonesia es seÃ±alada en investigaciones recientes como un actor cuyo poder y objetivos tienen un fuerte componente regional e indo-pacÃ­fico. (<a href='https://www.swp-berlin.org/10.18449/2026RP08/?utm_source=chatgpt.com' target='_blank' style='color:var(--accent-blue)'>Stiftung Wissenschaft y Politik (SWP)</a>)</i></small>",
+        influence: "ASEAN, Sudeste AsiÃ¡tico, estrechos marÃ­timos e Indo-PacÃ­fico.",
+        strengths: "poblaciÃ³n, economÃ­a, ubicaciÃ³n marÃ­tima, recursos naturales y diplomacia.",
+        strategic: "Estrechos de Malaca, Sunda y Lombok; conexiÃ³n entre los ocÃ©anos Ãndico y PacÃ­fico."
+      },
+      keywords: ["Malaca","ASEAN","BRICS","IPEF","musulmán"]
+    },
+    "Philippines": {
+      name_es: "Filipinas", flag: "ph", capital: "Manila",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "ally", relation_es: "Aliado tratado bilateral",
+      population: "115M", gdp: "$437B", gdp_pc: "$3,905",
+      orgs: ["IPEF","ASEAN"],
+      description: "Aliado con tratado de defensa mutua. Disputas territoriales con China en el Mar de China Meridional. Acuerdos de acceso militar expandidos (EDCA). Posición estratégica en la primera cadena de islas.",
+      allies: ["United States of America","Japan","Australia"],
+      keywords: ["alianza","Mar de China","EDCA","cadena de islas"]
+    },
+    "Vietnam": {
+      name_es: "Vietnam", flag: "vn", capital: "Hanói",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "partner", relation_es: "Socio integral",
+      population: "100M", gdp: "$449B", gdp_pc: "$4,476",
+      orgs: ["IPEF","BRICS (socio)","ASEAN"],
+      description: "Relación transformada: de enemigos a socios integrales (2023). Disputas con China en el Mar de China Meridional crean intereses compartidos. Centro manufacturero creciente. Balanza entre EE.UU. y China.",
+      allies: ["Japan","South Korea"],
+      keywords: ["socio integral","manufactura","Mar de China"]
+    },
+    "Thailand": {
+      name_es: "Tailandia", flag: "th", capital: "Bangkok",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "ally", relation_es: "Aliado tratado bilateral",
+      population: "72M", gdp: "$515B", gdp_pc: "$7,233",
+      orgs: ["IPEF","BRICS (socio)","ASEAN"],
+      description: "Aliado con tratado desde 1954. Relación compleja con creciente influencia china. Hub turístico y manufacturero del Sudeste Asiático.",
+      allies: ["United States of America","Japan"],
+      keywords: ["alianza","ASEAN","manufactura"]
+    },
+    "Singapore": {
+      name_es: "Singapur", flag: "sg", capital: "Singapur",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "partner", relation_es: "Socio cercano",
+      population: "6M", gdp: "$497B", gdp_pc: "$87,884",
+      orgs: ["IPEF","ASEAN"],
+      description: "Centro financiero global. Permite rotación de fuerzas de EE.UU. Control del Estrecho de Malaca (25% del comercio marítimo mundial). Uno de los PIB per cápita más altos del mundo.",
+      allies: ["United States of America","Australia","Malaysia"],
+      keywords: ["finanzas","Malaca","comercio","defensa"]
+    },
+    "Malaysia": {
+      name_es: "Malasia", flag: "my", capital: "Kuala Lumpur",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "partner", relation_es: "Socio",
+      population: "34M", gdp: "$399B", gdp_pc: "$11,993",
+      orgs: ["IPEF","BRICS (socio)","ASEAN"],
+      description: "Socio comercial con intereses compartidos en el Estrecho de Malaca. Disputas territoriales con China en el Mar de China Meridional. Hub de semiconductores.",
+      allies: ["Singapore","Indonesia"],
+      keywords: ["Malaca","ASEAN","semiconductores"]
+    },
+    "Ukraine": {
+      name_es: "Ucrania", flag: "ua", capital: "Kiev",
+      continent: "europe", region: "Europa del Este",
+      relation: "partner", relation_es: "Socio (asistencia masiva)",
+      population: "37M", gdp: "$~180B", gdp_pc: "$~4,900",
+      orgs: [],
+      description: "Receptor de asistencia militar y financiera masiva de EE.UU. desde la invasión rusa de 2022. Aspirante a la OTAN y la UE. El conflicto en Ucrania ha redefinido la seguridad europea y revitalizado la alianza transatlántica.",
+      allies: ["United States of America","Poland","United Kingdom","Germany"],
+      keywords: ["guerra","Rusia","asistencia","OTAN","UE"]
+    },
+    "Norway": {
+      name_es: "Noruega", flag: "no", capital: "Oslo",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "5.5M", gdp: "$554B", gdp_pc: "$100,028",
+      orgs: ["OTAN"],
+      description: "Aliado OTAN fundador. Frontera con Rusia en el Ártico. Mayor productor de petróleo y gas de Europa occidental. Fondo soberano más grande del mundo ($1.7T).",
+      allies: ["United States of America","United Kingdom","Sweden","Denmark"],
+      keywords: ["OTAN","Ártico","petróleo","fondo soberano"]
+    },
+    "Sweden": {
+      name_es: "Suecia", flag: "se", capital: "Estocolmo",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN (nuevo)",
+      population: "10.5M", gdp: "$599B", gdp_pc: "$56,361",
+      orgs: ["OTAN","UE"],
+      description: "Nuevo miembro de la OTAN (2024) tras abandonar décadas de no-alineamiento por la amenaza rusa. Industria de defensa avanzada (Saab, Gripen). Control del Mar Báltico.",
+      allies: ["United States of America","Finland","Norway","Denmark"],
+      keywords: ["OTAN","Báltico","defensa","nuevo miembro"]
+    },
+    "Finland": {
+      name_es: "Finlandia", flag: "fi", capital: "Helsinki",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN (nuevo)",
+      population: "5.6M", gdp: "$300B", gdp_pc: "$54,008",
+      orgs: ["OTAN","UE"],
+      description: "Nuevo miembro de la OTAN (2023). Frontera de 1,340 km con Rusia — la más larga de cualquier miembro OTAN. Abandonó la neutralidad tras la invasión rusa de Ucrania.",
+      allies: ["United States of America","Sweden","Estonia","Norway"],
+      keywords: ["OTAN","frontera con Rusia","nuevo miembro"]
+    },
+    "Estonia": {
+      name_es: "Estonia", flag: "ee", capital: "Tallin",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "1.3M", gdp: "$41B", gdp_pc: "$31,173",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN en la frontera con Rusia. Líder en ciberdefensa y gobierno digital. Vulnerable por proximidad a Rusia y población ruso-parlante.",
+      allies: ["United States of America","Finland","Latvia","Lithuania"],
+      keywords: ["OTAN","ciberdefensa","frontera","Báltico"]
+    },
+    "Latvia": {
+      name_es: "Letonia", flag: "lv", capital: "Riga",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "1.8M", gdp: "$44B", gdp_pc: "$23,700",
+      orgs: ["OTAN","UE"],
+      description: "Estado báltico aliado de la OTAN. Alberga batallón multinacional de la OTAN. Vulnerable por proximidad a Rusia y Bielorrusia.",
+      allies: ["United States of America","Estonia","Lithuania"],
+      keywords: ["OTAN","Báltico","batallón"]
+    },
+    "Lithuania": {
+      name_es: "Lituania", flag: "lt", capital: "Vilna",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "2.7M", gdp: "$77B", gdp_pc: "$28,369",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN. Corredor de Suwalki conecta con el enclave ruso de Kaliningrado — uno de los puntos más vulnerables de la OTAN.",
+      allies: ["United States of America","Poland","Estonia","Latvia"],
+      keywords: ["OTAN","Suwalki","Kaliningrado"]
+    },
+    "Romania": {
+      name_es: "Rumanía", flag: "ro", capital: "Bucarest",
+      continent: "europe", region: "Europa del Este",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "19M", gdp: "$351B", gdp_pc: "$18,530",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN con escudo antimisiles Aegis Ashore de EE.UU. en Deveselu. Frontera con Ucrania y el Mar Negro.",
+      allies: ["United States of America","Poland","Bulgaria"],
+      keywords: ["OTAN","antimisiles","Mar Negro"]
+    },
+    "Bulgaria": {
+      name_es: "Bulgaria", flag: "bg", capital: "Sofía",
+      continent: "europe", region: "Europa del Este",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "6.5M", gdp: "$115B", gdp_pc: "$16,800",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN en la región del Mar Negro. Base aérea conjunta con EE.UU. Posición estratégica en los Balcanes.",
+      allies: ["United States of America","Romania","Greece"],
+      keywords: ["OTAN","Mar Negro","Balcanes"]
+    },
+    "Greece": {
+      name_es: "Grecia", flag: "gr", capital: "Atenas",
+      continent: "europe", region: "Europa del Sur",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "10.4M", gdp: "$238B", gdp_pc: "$22,914",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN fundador. Base naval de la Bahía de Souda en Creta. Rivalidad histórica con Turquía dentro de la OTAN. Control de rutas marítimas en el Mediterráneo oriental.",
+      allies: ["United States of America","France","Israel","Cyprus"],
+      keywords: ["OTAN","Mediterráneo","Creta","base naval"]
+    },
+    "Netherlands": {
+      name_es: "Países Bajos", flag: "nl", capital: "La Haya",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "17.7M", gdp: "$1.09T", gdp_pc: "$61,770",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN fundador. Sede de la Corte Internacional de Justicia y la CPI. ASML (monopolio en litografía EUV para semiconductores avanzados). Puerto de Rotterdam — mayor de Europa.",
+      allies: ["United States of America","Belgium","Germany"],
+      keywords: ["OTAN","ASML","semiconductores","Rotterdam"]
+    },
+    "Belgium": {
+      name_es: "Bélgica", flag: "be", capital: "Bruselas",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "11.7M", gdp: "$624B", gdp_pc: "$53,376",
+      orgs: ["OTAN","UE"],
+      description: "Sede de la OTAN (Bruselas) y de las instituciones de la UE. Aliado fundador de la OTAN. SHAPE (Cuartel Supremo Aliado en Europa) ubicado en Mons.",
+      allies: ["United States of America","France","Netherlands","Luxembourg"],
+      keywords: ["OTAN sede","UE","SHAPE"]
+    },
+    "Denmark": {
+      name_es: "Dinamarca", flag: "dk", capital: "Copenhague",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "5.9M", gdp: "$404B", gdp_pc: "$68,037",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN fundador. Control de Groenlandia (interés estratégico de EE.UU. por recursos y posición ártica). Estrechos daneses controlan acceso al Báltico.",
+      allies: ["United States of America","Norway","Sweden","Germany"],
+      keywords: ["OTAN","Groenlandia","Ártico","Báltico"]
+    },
+    "Portugal": {
+      name_es: "Portugal", flag: "pt", capital: "Lisboa",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "10.3M", gdp: "$287B", gdp_pc: "$27,996",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN fundador. Base de Lajes en las Azores — ubicación atlántica estratégica. Alianza más antigua del mundo (Tratado de Windsor con UK, 1386).",
+      allies: ["United States of America","Spain","United Kingdom","Brazil"],
+      keywords: ["OTAN","Azores","Atlántico"]
+    },
+    "Iceland": {
+      name_es: "Islandia", flag: "is", capital: "Reikiavik",
+      continent: "europe", region: "Europa del Norte",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "383K", gdp: "$31B", gdp_pc: "$79,261",
+      orgs: ["OTAN"],
+      description: "Aliado OTAN fundador sin ejército propio. Posición estratégica en la brecha GIUK (Groenlandia-Islandia-Reino Unido) para control del Atlántico Norte.",
+      allies: ["United States of America","Norway","Denmark"],
+      keywords: ["OTAN","GIUK","Atlántico Norte","sin ejército"]
+    },
+    "Czechia": {
+      name_es: "Chequia", flag: "cz", capital: "Praga",
+      continent: "europe", region: "Europa Central",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "10.8M", gdp: "$330B", gdp_pc: "$30,500",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN desde 1999. Industria de defensa activa. Centro geográfico de Europa.",
+      allies: ["United States of America","Poland","Germany","Slovakia"],
+      keywords: ["OTAN","defensa","Europa Central"]
+    },
+    "Slovakia": {
+      name_es: "Eslovaquia", flag: "sk", capital: "Bratislava",
+      continent: "europe", region: "Europa Central",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "5.4M", gdp: "$127B", gdp_pc: "$23,500",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN. Vecino de Ucrania. Donó sistema de defensa aérea S-300 a Ucrania.",
+      allies: ["United States of America","Czechia","Poland"],
+      keywords: ["OTAN","Ucrania"]
+    },
+    "Hungary": {
+      name_es: "Hungría", flag: "hu", capital: "Budapest",
+      continent: "europe", region: "Europa Central",
+      relation: "ally", relation_es: "Aliado OTAN (divergente)",
+      population: "9.6M", gdp: "$212B", gdp_pc: "$22,000",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN pero con postura divergente bajo Viktor Orbán. Mantiene relaciones con Rusia y China. Frecuentes vetos en decisiones de la UE sobre Ucrania.",
+      allies: [],
+      keywords: ["OTAN","Orbán","divergente"]
+    },
+    "Croatia": {
+      name_es: "Croacia", flag: "hr", capital: "Zagreb",
+      continent: "europe", region: "Europa del Sur",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "3.8M", gdp: "$82B", gdp_pc: "$21,600",
+      orgs: ["OTAN","UE"],
+      description: "Miembro de la OTAN desde 2009 y de la UE. Adoptó el euro en 2023. Posición en los Balcanes y costa adriática.",
+      allies: ["United States of America","Slovenia","Italy"],
+      keywords: ["OTAN","Balcanes","Adriático"]
+    },
+    "Slovenia": {
+      name_es: "Eslovenia", flag: "si", capital: "Liubliana",
+      continent: "europe", region: "Europa Central",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "2.1M", gdp: "$68B", gdp_pc: "$32,300",
+      orgs: ["OTAN","UE"],
+      description: "Miembro de la OTAN y la UE. Economía pequeña pero desarrollada en el cruce de Europa Central y los Balcanes.",
+      allies: ["United States of America","Italy","Croatia","Austria"],
+      keywords: ["OTAN","UE","Balcanes"]
+    },
+    "Montenegro": {
+      name_es: "Montenegro", flag: "me", capital: "Podgorica",
+      continent: "europe", region: "Balcanes",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "0.6M", gdp: "$7.4B", gdp_pc: "$12,100",
+      orgs: ["OTAN"],
+      description: "Miembro de la OTAN desde 2017. Costa adriática estratégica. Aspirante a la UE.",
+      allies: ["United States of America","Croatia"],
+      keywords: ["OTAN","Adriático","Balcanes"]
+    },
+    "Albania": {
+      name_es: "Albania", flag: "al", capital: "Tirana",
+      continent: "europe", region: "Balcanes",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "2.7M", gdp: "$22B", gdp_pc: "$8,000",
+      orgs: ["OTAN"],
+      description: "Miembro de la OTAN desde 2009. Posición estratégica en el Adriático y los Balcanes. Aspirante a la UE.",
+      allies: ["United States of America","Kosovo","Turkey"],
+      keywords: ["OTAN","Balcanes","Adriático"]
+    },
+    "Macedonia": {
+      name_es: "Macedonia del Norte", flag: "mk", capital: "Skopje",
+      continent: "europe", region: "Balcanes",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "1.8M", gdp: "$14B", gdp_pc: "$7,600",
+      orgs: ["OTAN"],
+      description: "Miembro más reciente de la OTAN antes de Finlandia y Suecia (2020). Cambió su nombre para resolver disputa con Grecia.",
+      allies: ["United States of America","Bulgaria","Albania"],
+      keywords: ["OTAN","Balcanes"]
+    },
+    "Luxembourg": {
+      name_es: "Luxemburgo", flag: "lu", capital: "Luxemburgo",
+      continent: "europe", region: "Europa Occidental",
+      relation: "ally", relation_es: "Aliado OTAN",
+      population: "660K", gdp: "$86B", gdp_pc: "$131,384",
+      orgs: ["OTAN","UE"],
+      description: "Aliado OTAN fundador. PIB per cápita más alto del mundo. Centro financiero de la UE. Sede de instituciones europeas.",
+      allies: ["United States of America","Belgium","France","Germany"],
+      keywords: ["OTAN","finanzas","UE"]
+    },
+    "Ireland": {
+      name_es: "Irlanda", flag: "ie", capital: "Dublín",
+      continent: "europe", region: "Europa Occidental",
+      relation: "partner", relation_es: "Socio (neutral)",
+      population: "5.1M", gdp: "$533B", gdp_pc: "$103,685",
+      orgs: ["UE"],
+      description: "Militarmente neutral (no OTAN). Lazos culturales profundos con EE.UU. (44M de estadounidenses de ascendencia irlandesa). Hub tecnológico europeo para empresas de EE.UU.",
+      allies: ["United Kingdom"],
+      keywords: ["neutral","tecnología","diáspora"]
+    },
+    "Switzerland": {
+      name_es: "Suiza", flag: "ch", capital: "Berna",
+      continent: "europe", region: "Europa Occidental",
+      relation: "partner", relation_es: "Socio (neutral)",
+      population: "8.8M", gdp: "$884B", gdp_pc: "$99,994",
+      orgs: [],
+      description: "Neutralidad permanente. Centro financiero global. Sede de organismos internacionales (ONU en Ginebra, CICR, OMC, OMC). Adoptó sanciones contra Rusia rompiendo precedente.",
+      allies: [],
+      keywords: ["neutral","finanzas","organismos internacionales"]
+    },
+    "Austria": {
+      name_es: "Austria", flag: "at", capital: "Viena",
+      continent: "europe", region: "Europa Central",
+      relation: "partner", relation_es: "Socio (neutral)",
+      population: "9.1M", gdp: "$516B", gdp_pc: "$56,802",
+      orgs: ["UE"],
+      description: "Constitucionalmente neutral (no OTAN). Miembro de la UE. Sede de la OIEA y la OPEP en Viena.",
+      allies: ["Germany","Switzerland"],
+      keywords: ["neutral","UE","OIEA","OPEP sede"]
+    },
+    "Pakistan": {
+      name_es: "Pakistán", flag: "pk", capital: "Islamabad",
+      continent: "asia", region: "Asia del Sur",
+      relation: "partner", relation_es: "Socio (complejo)",
+      population: "230M", gdp: "$374B", gdp_pc: "$1,658",
+      orgs: ["OCS"],
+      description: "Relación compleja. Major Non-NATO Ally (designación cuestionada). Nuclear. Refugio de grupos extremistas. Alianza con China (corredor económico CPEC). Rivalidad con India.",
+      allies: ["China","Turkey","Saudi Arabia"],
+      keywords: ["nuclear","MNNA","China","extremismo"]
+    },
+    "Afghanistan": {
+      name_es: "Afganistán", flag: "af", capital: "Kabul",
+      continent: "asia", region: "Asia del Sur",
+      relation: "adversary", relation_es: "Sin relaciones (Talibán)",
+      population: "42M", gdp: "$~14B", gdp_pc: "$~370",
+      orgs: [],
+      description: "Gobierno talibán desde agosto 2021 tras retirada de EE.UU. No reconocido internacionalmente. Dos décadas de guerra de EE.UU. (2001-2021). Crisis humanitaria.",
+      allies: [],
+      keywords: ["Talibán","retirada","guerra","crisis"]
+    },
+    "Iraq": {
+      name_es: "Irak", flag: "iq", capital: "Bagdad",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "partner", relation_es: "Socio (posconflicto)",
+      population: "43M", gdp: "$267B", gdp_pc: "$6,200",
+      orgs: ["OPEP"],
+      description: "Relación definida por las guerras de 2003 y la lucha contra ISIS. Presencia militar residual de EE.UU. Influencia iraní significativa. Inestabilidad política crónica.",
+      allies: [],
+      keywords: ["posconflicto","ISIS","petróleo","Irán influencia"]
+    },
+    "Syria": {
+      name_es: "Siria", flag: "sy", capital: "Damasco",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "adversary", relation_es: "Adversario",
+      population: "22M", gdp: "$~11B", gdp_pc: "$~530",
+      orgs: [],
+      description: "Guerra civil desde 2011. Presencia militar de EE.UU. en el noreste (con fuerzas kurdas SDF). Apoyo ruso e iraní al régimen de Assad. Sanciones extensivas.",
+      allies: ["Russia","Iran"],
+      keywords: ["guerra civil","Assad","sanciones","kurdos"]
+    },
+    "Jordan": {
+      name_es: "Jordania", flag: "jo", capital: "Amán",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "ally", relation_es: "Aliado (MNNA)",
+      population: "11M", gdp: "$50B", gdp_pc: "$4,636",
+      orgs: [],
+      description: "Major Non-NATO Ally. Aliado estable en una región volátil. Recibe asistencia significativa de EE.UU. Acuerdo de paz con Israel (1994). Refugia millones de sirios.",
+      allies: ["United States of America","Saudi Arabia","Israel"],
+      keywords: ["MNNA","estabilidad","refugiados"]
+    },
+    "Lebanon": {
+      name_es: "Líbano", flag: "lb", capital: "Beirut",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "partner", relation_es: "Socio (frágil)",
+      population: "5.5M", gdp: "$~22B", gdp_pc: "$~3,900",
+      orgs: [],
+      description: "Estado frágil con crisis económica severa. Hezbollah como actor estatal y militar. Asistencia militar de EE.UU. a las fuerzas armadas libanesas.",
+      allies: [],
+      keywords: ["Hezbollah","crisis","sectarismo"]
+    },
+    "Kuwait": {
+      name_es: "Kuwait", flag: "kw", capital: "Kuwait",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "ally", relation_es: "Aliado (MNNA)",
+      population: "4.3M", gdp: "$164B", gdp_pc: "$38,400",
+      orgs: ["OPEP"],
+      description: "Major Non-NATO Ally. Liberado por EE.UU. en la Guerra del Golfo (1991). Gran presencia militar de EE.UU. (~13,000 tropas). Rica en petróleo.",
+      allies: ["United States of America","Saudi Arabia"],
+      keywords: ["MNNA","Guerra del Golfo","petróleo","bases"]
+    },
+    "Qatar": {
+      name_es: "Catar", flag: "qa", capital: "Doha",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "partner", relation_es: "Socio estratégico",
+      population: "3M", gdp: "$235B", gdp_pc: "$83,891",
+      orgs: ["OPEP"],
+      description: "Base aérea de Al Udeid — mayor instalación militar de EE.UU. en Medio Oriente. Mayor exportador de GNL del mundo. Mediador diplomático (Talibán, Hamas).",
+      allies: ["United States of America","Turkey"],
+      keywords: ["Al Udeid","GNL","mediador","base militar"]
+    },
+    "Bahrain": {
+      name_es: "Baréin", flag: "bh", capital: "Manama",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "ally", relation_es: "Aliado (MNNA)",
+      population: "1.5M", gdp: "$44B", gdp_pc: "$29,100",
+      orgs: [],
+      description: "Major Non-NATO Ally. Sede de la Quinta Flota de EE.UU. Acuerdos de Abraham con Israel (2020). Posición estratégica en el Golfo Pérsico.",
+      allies: ["United States of America","Saudi Arabia","United Arab Emirates"],
+      keywords: ["Quinta Flota","MNNA","Abraham","Golfo"]
+    },
+    "Oman": {
+      name_es: "Omán", flag: "om", capital: "Mascate",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "partner", relation_es: "Socio",
+      population: "4.6M", gdp: "$104B", gdp_pc: "$22,600",
+      orgs: [],
+      description: "Socio discreto. Control parcial del Estrecho de Ormuz. Mediador neutral en conflictos regionales. Relaciones con Irán e Israel simultáneamente.",
+      allies: ["United States of America","United Kingdom"],
+      keywords: ["Ormuz","mediador","neutral regional"]
+    },
+    "South Africa": {
+      name_es: "Sudáfrica", flag: "za", capital: "Pretoria",
+      continent: "africa", region: "África Austral",
+      relation: "partner", relation_es: "Socio",
+      population: "60M", gdp: "$399B", gdp_pc: "$6,688",
+      orgs: ["BRICS","G20"],
+      description: "Mayor economía de África subsahariana. Miembro fundador de BRICS. Relación pragmática con EE.UU. Críticas a la política exterior de EE.UU. Minerales críticos (platino, manganeso, cromo).",
+      allies: ["Brazil","India","China"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del Ãfrica austral con proyecciÃ³n diplomÃ¡tica continental.",
+        region_poder: "Ãfrica austral y continente africano.",
+        long_reason: "Posee una de las economÃ­as mÃ¡s diversificadas de Ãfrica, importantes recursos minerales, capacidad industrial y peso diplomÃ¡tico dentro del continente.",
+        influence: "Ãfrica austral, UniÃ³n Africana y espacios multilaterales.",
+        strengths: "minerÃ­a, industria, economÃ­a, infraestructura, diplomacia y posiciÃ³n geogrÃ¡fica.",
+        strategic: "Recursos minerales, rutas marÃ­timas alrededor del Cabo y liderazgo diplomÃ¡tico africano."
+      },
+      keywords: ["BRICS","minerales","ANC","pragmático"]
+    },
+    "Nigeria": {
+      name_es: "Nigeria", flag: "ng", capital: "Abuya",
+      continent: "africa", region: "África Occidental",
+      relation: "partner", relation_es: "Socio",
+      population: "224M", gdp: "$477B", gdp_pc: "$2,163",
+      orgs: ["BRICS (socio)","OPEP"],
+      description: "País más poblado de África. Mayor productor de petróleo de África. Cooperación antiterrorista (Boko Haram). Potencia regional en África Occidental.",
+      allies: [],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de Ãfrica Occidental.",
+        region_poder: "Ãfrica Occidental y Golfo de Guinea.",
+        long_reason: "Su enorme poblaciÃ³n, economÃ­a, recursos energÃ©ticos y peso diplomÃ¡tico la convierten en uno de los actores centrales de Ãfrica Occidental.",
+        influence: "Ãfrica Occidental, Golfo de Guinea y organismos africanos.",
+        strengths: "poblaciÃ³n, petrÃ³leo y gas, mercado interno, economÃ­a, fuerzas armadas y diplomacia regional.",
+        strategic: "Seguridad del Golfo de Guinea, energÃ­a, poblaciÃ³n y estabilidad de Ãfrica Occidental."
+      },
+      keywords: ["petróleo","Boko Haram","potencia regional"]
+    },
+    "Ethiopia": {
+      name_es: "Etiopía", flag: "et", capital: "Adís Abeba",
+      continent: "africa", region: "Cuerno de África",
+      relation: "partner", relation_es: "Socio",
+      population: "126M", gdp: "$156B", gdp_pc: "$1,228",
+      orgs: ["BRICS"],
+      description: "Segundo país más poblado de África. Sede de la Unión Africana. Miembro de BRICS desde 2024. Guerra civil en Tigray (2020-2022) tensó relaciones con EE.UU.",
+      allies: [],
+      keywords: ["Unión Africana","BRICS","Tigray"]
+    },
+    "Kenya": {
+      name_es: "Kenia", flag: "ke", capital: "Nairobi",
+      continent: "africa", region: "África Oriental",
+      relation: "partner", relation_es: "Socio",
+      population: "55M", gdp: "$113B", gdp_pc: "$2,080",
+      orgs: [],
+      description: "Socio clave de EE.UU. en África Oriental. Cooperación antiterrorista (Al-Shabaab). Centro económico y tecnológico de África Oriental.",
+      allies: ["United States of America","United Kingdom"],
+      keywords: ["antiterrorismo","Al-Shabaab","tecnología"]
+    },
+    "Morocco": {
+      name_es: "Marruecos", flag: "ma", capital: "Rabat",
+      continent: "africa", region: "Norte de África",
+      relation: "ally", relation_es: "Aliado (MNNA)",
+      population: "37M", gdp: "$141B", gdp_pc: "$3,795",
+      orgs: [],
+      description: "Major Non-NATO Ally. Primer país en reconocer la independencia de EE.UU. (1777). Acuerdos de Abraham con Israel (2020). Control del Estrecho de Gibraltar.",
+      allies: ["United States of America","France","Israel"],
+      keywords: ["MNNA","Abraham","Gibraltar","historia"]
+    },
+    "Tunisia": {
+      name_es: "Túnez", flag: "tn", capital: "Túnez",
+      continent: "africa", region: "Norte de África",
+      relation: "ally", relation_es: "Aliado (MNNA)",
+      population: "12M", gdp: "$46B", gdp_pc: "$3,800",
+      orgs: [],
+      description: "Major Non-NATO Ally. Cooperación en seguridad y antiterrorismo. Origen de la Primavera Árabe (2011).",
+      allies: ["United States of America","France"],
+      keywords: ["MNNA","Primavera Árabe"]
+    },
+    "Algeria": {
+      name_es: "Argelia", flag: "dz", capital: "Argel",
+      continent: "africa", region: "Norte de África",
+      relation: "neutral", relation_es: "Neutral",
+      population: "45M", gdp: "$195B", gdp_pc: "$4,300",
+      orgs: [],
+      description: "No alineado. Relaciones distantes con EE.UU. Comprador de armamento ruso. Mayor país de África por superficie. Productor de gas natural.",
+      allies: ["Russia"],
+      keywords: ["no alineado","gas","Rusia","armamento"]
+    },
+    "Libya": {
+      name_es: "Libia", flag: "ly", capital: "Trípoli",
+      continent: "africa", region: "Norte de África",
+      relation: "neutral", relation_es: "Neutral (inestable)",
+      population: "7M", gdp: "$45B", gdp_pc: "$6,500",
+      orgs: ["OPEP"],
+      description: "Estado fallido dividido. Intervención de la OTAN en 2011 derrocó a Gadafi. Dos gobiernos rivales. Rico en petróleo. Ruta de migración hacia Europa.",
+      allies: [],
+      keywords: ["inestable","petróleo","migración","estado fallido"]
+    },
+    "Sudan": {
+      name_es: "Sudán", flag: "sd", capital: "Jartum",
+      continent: "africa", region: "África Oriental",
+      relation: "neutral", relation_es: "Neutral (conflicto)",
+      population: "47M", gdp: "$~34B", gdp_pc: "$~720",
+      orgs: [],
+      description: "Guerra civil desde abril 2023 entre ejército y RSF. Crisis humanitaria masiva. Retirado de lista de estados patrocinadores del terrorismo en 2020.",
+      allies: [],
+      keywords: ["guerra civil","crisis humanitaria"]
+    },
+    "S. Sudan": {
+      name_es: "Sudán del Sur", flag: "ss", capital: "Yuba",
+      continent: "africa", region: "África Oriental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "11M", gdp: "$~5B", gdp_pc: "$~400",
+      orgs: [],
+      description: "Estado más joven del mundo (2011). EE.UU. apoyó su independencia. Inestabilidad crónica y guerra civil. Rico en petróleo.",
+      allies: [],
+      keywords: ["independencia","petróleo","inestabilidad"]
+    },
+    "Dem. Rep. Congo": {
+      name_es: "Rep. Dem. del Congo", flag: "cd", capital: "Kinshasa",
+      continent: "africa", region: "África Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "102M", gdp: "$64B", gdp_pc: "$631",
+      orgs: [],
+      description: "Enormes recursos minerales (cobalto ~70% mundial, coltán, cobre). Conflicto en el este. Minerales críticos para transición energética y tecnología.",
+      allies: [],
+      keywords: ["cobalto","minerales","conflicto","coltán"]
+    },
+    "Tanzania": {
+      name_es: "Tanzania", flag: "tz", capital: "Dodoma",
+      continent: "africa", region: "África Oriental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "65M", gdp: "$79B", gdp_pc: "$1,200",
+      orgs: [],
+      description: "Relación creciente con EE.UU. País africano de rápido crecimiento económico.",
+      allies: [],
+      keywords: ["crecimiento","África Oriental"]
+    },
+    "Somalia": {
+      name_es: "Somalia", flag: "so", capital: "Mogadiscio",
+      continent: "africa", region: "Cuerno de África",
+      relation: "partner", relation_es: "Socio (antiterrorismo)",
+      population: "18M", gdp: "$~8B", gdp_pc: "$~450",
+      orgs: [],
+      description: "Cooperación antiterrorista contra Al-Shabaab. Presencia militar de EE.UU. Posición estratégica en el Cuerno de África y Golfo de Adén.",
+      allies: [],
+      keywords: ["Al-Shabaab","antiterrorismo","Golfo de Adén"]
+    },
+    "Greenland": {
+      name_es: "Groenlandia", flag: "gl", capital: "Nuuk",
+      continent: "north-america", region: "Ártico",
+      relation: "partner", relation_es: "Territorio estratégico (Dinamarca)",
+      population: "57K", gdp: "$~3B", gdp_pc: "$~52,000",
+      orgs: [],
+      description: "Territorio autónomo de Dinamarca. Base aérea de Thule/Pituffik de EE.UU. Interés estratégico por recursos minerales y posición ártica. Ruta del Paso del Noroeste.",
+      allies: ["Denmark","United States of America"],
+      keywords: ["Ártico","base Thule","minerales","Paso del Noroeste"]
+    },
+    "Ecuador": {
+      name_es: "Ecuador", flag: "ec", capital: "Quito",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "18M", gdp: "$118B", gdp_pc: "$6,500",
+      orgs: ["APEP","OPEP"],
+      description: "Economía dolarizada. Cooperación en seguridad. Miembro de APEP. Crisis de seguridad interna por narcotráfico.",
+      allies: ["United States of America","Colombia"],
+      keywords: ["dolarizado","APEP","narcotráfico"]
+    },
+    "Panama": {
+      name_es: "Panamá", flag: "pa", capital: "Panamá",
+      continent: "north-america", region: "América Central",
+      relation: "partner", relation_es: "Socio (estratégico)",
+      population: "4.4M", gdp: "$77B", gdp_pc: "$17,500",
+      orgs: ["APEP"],
+      description: "Canal de Panamá: 6% del comercio marítimo mundial y ruta estratégica clave. EE.UU. administró el canal hasta 1999. Centro financiero offshore. Economía dolarizada.",
+      allies: ["United States of America","Colombia"],
+      keywords: ["Canal de Panamá","comercio marítimo","finanzas"]
+    },
+    "Costa Rica": {
+      name_es: "Costa Rica", flag: "cr", capital: "San José",
+      continent: "north-america", region: "América Central",
+      relation: "partner", relation_es: "Socio",
+      population: "5.2M", gdp: "$69B", gdp_pc: "$13,300",
+      orgs: ["APEP"],
+      description: "Sin ejército desde 1948. Democracia estable. Hub de inversión tecnológica de EE.UU. en Centroamérica. Miembro de APEP.",
+      allies: ["United States of America"],
+      keywords: ["democracia","sin ejército","tecnología"]
+    },
+    "Dominican Rep.": {
+      name_es: "República Dominicana", flag: "do", capital: "Santo Domingo",
+      continent: "north-america", region: "Caribe",
+      relation: "partner", relation_es: "Socio",
+      population: "11M", gdp: "$114B", gdp_pc: "$10,300",
+      orgs: ["APEP"],
+      description: "Socio comercial cercano. DR-CAFTA. Gran diáspora dominicana en EE.UU. Turismo y zonas francas.",
+      allies: ["United States of America"],
+      keywords: ["CAFTA","diáspora","turismo"]
+    },
+    "Guatemala": {
+      name_es: "Guatemala", flag: "gt", capital: "Guatemala",
+      continent: "north-america", region: "América Central",
+      relation: "partner", relation_es: "Socio",
+      population: "18M", gdp: "$102B", gdp_pc: "$5,700",
+      orgs: [],
+      description: "Cooperación migratoria y antinarcóticos. Mayor economía de Centroamérica. Origen significativo de migración hacia EE.UU.",
+      allies: [],
+      keywords: ["migración","Centroamérica"]
+    },
+    "Honduras": {
+      name_es: "Honduras", flag: "hn", capital: "Tegucigalpa",
+      continent: "north-america", region: "América Central",
+      relation: "partner", relation_es: "Socio",
+      population: "10M", gdp: "$32B", gdp_pc: "$3,100",
+      orgs: [],
+      description: "Base militar de Soto Cano (EE.UU.). Cooperación antinarcóticos. Triángulo Norte de migración.",
+      allies: [],
+      keywords: ["Soto Cano","migración","narcotráfico"]
+    },
+    "El Salvador": {
+      name_es: "El Salvador", flag: "sv", capital: "San Salvador",
+      continent: "north-america", region: "América Central",
+      relation: "partner", relation_es: "Socio",
+      population: "6.3M", gdp: "$33B", gdp_pc: "$5,200",
+      orgs: [],
+      description: "Relación cambiante bajo Bukele. Economía dolarizada. Adopción de Bitcoin como moneda legal. Reducción drástica del crimen.",
+      allies: [],
+      keywords: ["Bukele","Bitcoin","dolarizado"]
+    },
+    "Nicaragua": {
+      name_es: "Nicaragua", flag: "ni", capital: "Managua",
+      continent: "north-america", region: "América Central",
+      relation: "adversary", relation_es: "Adversario",
+      population: "7M", gdp: "$~17B", gdp_pc: "$~2,400",
+      orgs: [],
+      description: "Régimen de Ortega. Sanciones de EE.UU. Represión de oposición. Relaciones con Rusia, China e Irán. Canal interoceánico propuesto con inversión china.",
+      allies: ["Russia","Venezuela","Cuba"],
+      keywords: ["sanciones","Ortega","autoritarismo"]
+    },
+    "Uruguay": {
+      name_es: "Uruguay", flag: "uy", capital: "Montevideo",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "3.4M", gdp: "$77B", gdp_pc: "$22,300",
+      orgs: ["APEP","MERCOSUR"],
+      description: "Democracia estable. Socio comercial. Miembro de APEP. Orientación pro-occidental.",
+      allies: ["Argentina","Brazil"],
+      keywords: ["democracia","APEP","MERCOSUR"]
+    },
+    "Paraguay": {
+      name_es: "Paraguay", flag: "py", capital: "Asunción",
+      continent: "south-america", region: "América del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "7.4M", gdp: "$44B", gdp_pc: "$5,900",
+      orgs: ["MERCOSUR"],
+      description: "Uno de los pocos países que reconoce a Taiwán en lugar de China. Aliado diplomático importante.",
+      allies: ["Taiwan"],
+      keywords: ["Taiwán","reconocimiento"]
+    },
+    "Bolivia": {
+      name_es: "Bolivia", flag: "bo", capital: "La Paz/Sucre",
+      continent: "south-america", region: "América del Sur",
+      relation: "neutral", relation_es: "Neutral (distante)",
+      population: "12M", gdp: "$45B", gdp_pc: "$3,700",
+      orgs: ["BRICS (socio)"],
+      description: "Relaciones distantes. Expulsó al embajador de EE.UU. en 2008. Grandes reservas de litio. Socio de BRICS.",
+      allies: ["Venezuela","Cuba"],
+      keywords: ["litio","distante","socialismo"]
+    },
+    "Mongolia": {
+      name_es: "Mongolia", flag: "mn", capital: "Ulán Bator",
+      continent: "asia", region: "Asia Central",
+      relation: "partner", relation_es: "Socio (\"tercer vecino\")",
+      population: "3.4M", gdp: "$~20B", gdp_pc: "$~5,800",
+      orgs: [],
+      description: "Política del \"tercer vecino\" — busca relaciones con EE.UU. y democracias para balancear a China y Rusia. Rica en minerales (cobre, carbón, tierras raras).",
+      allies: ["United States of America","Japan"],
+      keywords: ["tercer vecino","minerales","democracia"]
+    },
+    "Myanmar": {
+      name_es: "Myanmar", flag: "mm", capital: "Naipyidó",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "adversary", relation_es: "Adversario (junta)",
+      population: "54M", gdp: "$~65B", gdp_pc: "$~1,200",
+      orgs: ["ASEAN"],
+      description: "Sanciones tras golpe militar de 2021. Crisis humanitaria y guerra civil. Sanciones extensivas de EE.UU. Influencia china significativa.",
+      allies: ["China","Russia"],
+      keywords: ["golpe","sanciones","guerra civil","Rohingya"]
+    },
+    "Cambodia": {
+      name_es: "Camboya", flag: "kh", capital: "Phnom Penh",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "neutral", relation_es: "Neutral (pro-China)",
+      population: "17M", gdp: "$32B", gdp_pc: "$1,900",
+      orgs: ["ASEAN"],
+      description: "Fuerte influencia china. Base naval de Ream con presencia china. Relaciones tensas con EE.UU. por derechos humanos.",
+      allies: ["China"],
+      keywords: ["pro-China","base naval","Ream"]
+    },
+    "Laos": {
+      name_es: "Laos", flag: "la", capital: "Vientián",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "neutral", relation_es: "Neutral",
+      population: "7.5M", gdp: "$~14B", gdp_pc: "$~1,900",
+      orgs: ["ASEAN"],
+      description: "Estado socialista. Fuerte influencia china (Iniciativa de la Franja y la Ruta). País más bombardeado per cápita de la historia (Guerra de Vietnam).",
+      allies: ["China","Vietnam"],
+      keywords: ["socialista","pro-China","bombas sin explotar"]
+    },
+    "Brunei": {
+      name_es: "Brunéi", flag: "bn", capital: "Bandar Seri Begawan",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "partner", relation_es: "Socio",
+      population: "450K", gdp: "$~15B", gdp_pc: "$~33,000",
+      orgs: ["IPEF","ASEAN"],
+      description: "Pequeño sultanato rico en petróleo. Disputas en Mar de China Meridional. Miembro del IPEF.",
+      allies: ["United Kingdom","Malaysia"],
+      keywords: ["petróleo","Mar de China"]
+    },
+    "Fiji": {
+      name_es: "Fiyi", flag: "fj", capital: "Suva",
+      continent: "oceania", region: "Oceanía",
+      relation: "partner", relation_es: "Socio",
+      population: "930K", gdp: "$~5B", gdp_pc: "$~5,600",
+      orgs: ["IPEF"],
+      description: "Socio en el Pacífico. Competencia entre EE.UU. y China por influencia en el Pacífico insular. Miembro del IPEF.",
+      allies: ["Australia","New Zealand"],
+      keywords: ["Pacífico","IPEF","competencia"]
+    },
+    "Papua New Guinea": {
+      name_es: "Papúa Nueva Guinea", flag: "pg", capital: "Port Moresby",
+      continent: "oceania", region: "Oceanía",
+      relation: "partner", relation_es: "Socio",
+      population: "10M", gdp: "$~32B", gdp_pc: "$~3,200",
+      orgs: [],
+      description: "Acuerdos de acceso militar con EE.UU. (2023). Competencia con China por influencia. Rica en minerales y gas natural.",
+      allies: ["Australia","United States of America"],
+      keywords: ["acceso militar","Pacífico","minerales"]
+    },
+    "Kazakhstan": {
+      name_es: "Kazajistán", flag: "kz", capital: "Astaná",
+      continent: "asia", region: "Asia Central",
+      relation: "partner", relation_es: "Socio",
+      population: "19M", gdp: "$261B", gdp_pc: "$13,400",
+      orgs: ["OCS","BRICS (socio)"],
+      description: "Mayor economía de Asia Central. Rico en uranio, petróleo y minerales. Equilibra relaciones entre Rusia, China y Occidente. Socio de BRICS.",
+      allies: ["Russia","China","Turkey"],
+      keywords: ["uranio","petróleo","equilibrismo","OCS"]
+    },
+    "Uzbekistan": {
+      name_es: "Uzbekistán", flag: "uz", capital: "Taskent",
+      continent: "asia", region: "Asia Central",
+      relation: "partner", relation_es: "Socio",
+      population: "36M", gdp: "$92B", gdp_pc: "$2,550",
+      orgs: ["OCS","BRICS (socio)"],
+      description: "País más poblado de Asia Central. Reformas económicas recientes. Busca diversificar relaciones más allá de Rusia. Socio de BRICS.",
+      allies: [],
+      keywords: ["reformas","Asia Central"]
+    },
+    "Turkmenistan": {
+      name_es: "Turkmenistán", flag: "tm", capital: "Asjabad",
+      continent: "asia", region: "Asia Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "6.3M", gdp: "$~58B", gdp_pc: "$~9,300",
+      orgs: [],
+      description: "Neutralidad permanente reconocida por la ONU. Grandes reservas de gas natural. Régimen autoritario aislado.",
+      allies: [],
+      keywords: ["neutral","gas","aislado"]
+    },
+    "Tajikistan": {
+      name_es: "Tayikistán", flag: "tj", capital: "Dusambé",
+      continent: "asia", region: "Asia Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "10M", gdp: "$~12B", gdp_pc: "$~1,200",
+      orgs: ["OCS"],
+      description: "Base militar rusa. Frontera con Afganistán. Cooperación antiterrorista con EE.UU.",
+      allies: ["Russia","China"],
+      keywords: ["Rusia base","Afganistán frontera"]
+    },
+    "Kyrgyzstan": {
+      name_es: "Kirguistán", flag: "kg", capital: "Biskek",
+      continent: "asia", region: "Asia Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "7M", gdp: "$~12B", gdp_pc: "$~1,700",
+      orgs: ["OCS"],
+      description: "Cerró la base aérea de Manas (EE.UU.) en 2014. Bases rusa y china. Democracia más vibrante de Asia Central.",
+      allies: ["Russia"],
+      keywords: ["Manas","Rusia","democracia"]
+    },
+    "Georgia": {
+      name_es: "Georgia", flag: "ge", capital: "Tiflis",
+      continent: "europe", region: "Cáucaso",
+      relation: "partner", relation_es: "Socio",
+      population: "3.7M", gdp: "$30B", gdp_pc: "$8,100",
+      orgs: [],
+      description: "Aspirante a la OTAN y UE. Rusia ocupa 20% de su territorio (Abjasia, Osetia del Sur). Guerra con Rusia en 2008. Protestas pro-europeas.",
+      allies: ["United States of America","Ukraine"],
+      keywords: ["OTAN aspirante","Rusia","ocupación"]
+    },
+    "Armenia": {
+      name_es: "Armenia", flag: "am", capital: "Ereván",
+      continent: "middle-east", region: "Cáucaso",
+      relation: "neutral", relation_es: "Neutral (en transición)",
+      population: "2.8M", gdp: "$24B", gdp_pc: "$8,600",
+      orgs: [],
+      description: "En transición estratégica. Alejándose de Rusia tras la inacción rusa en Nagorno-Karabaj. Acercamiento a Occidente y EE.UU.",
+      allies: ["France"],
+      keywords: ["Karabaj","transición","Rusia alejamiento"]
+    },
+    "Azerbaijan": {
+      name_es: "Azerbaiyán", flag: "az", capital: "Bakú",
+      continent: "middle-east", region: "Cáucaso",
+      relation: "partner", relation_es: "Socio",
+      population: "10.2M", gdp: "$78B", gdp_pc: "$7,700",
+      orgs: [],
+      description: "Rico en petróleo y gas (corredor energético alternativo a Rusia para Europa). Retomó Nagorno-Karabaj en 2023. Relación con Turquía (\"una nación, dos estados\").",
+      allies: ["Turkey","Israel"],
+      keywords: ["petróleo","Karabaj","Turquía","energía"]
+    },
+    "Belarus": {
+      name_es: "Bielorrusia", flag: "by", capital: "Minsk",
+      continent: "europe", region: "Europa del Este",
+      relation: "adversary", relation_es: "Adversario",
+      population: "9.2M", gdp: "$~73B", gdp_pc: "$~7,900",
+      orgs: ["BRICS (socio)"],
+      description: "Estado aliado de Rusia bajo Lukashenko. Sanciones de EE.UU. y UE. Permitió la invasión rusa de Ucrania desde su territorio. Armas nucleares tácticas rusas desplegadas.",
+      allies: ["Russia","China"],
+      keywords: ["Lukashenko","sanciones","Rusia aliado","nucleares tácticas"]
+    },
+    "Moldova": {
+      name_es: "Moldavia", flag: "md", capital: "Chisinau",
+      continent: "europe", region: "Europa del Este",
+      relation: "partner", relation_es: "Socio",
+      population: "2.6M", gdp: "$~16B", gdp_pc: "$~6,200",
+      orgs: [],
+      description: "Aspirante a la UE. Transnistria ocupada con fuerzas rusas. Vulnerable a desestabilización rusa. Apoyo de EE.UU. y UE.",
+      allies: ["Romania","Ukraine"],
+      keywords: ["UE aspirante","Transnistria","Rusia","vulnerable"]
+    },
+    "Serbia": {
+      name_es: "Serbia", flag: "rs", capital: "Belgrado",
+      continent: "europe", region: "Balcanes",
+      relation: "neutral", relation_es: "Neutral",
+      population: "6.6M", gdp: "$75B", gdp_pc: "$11,300",
+      orgs: [],
+      description: "Equilibrio entre Rusia/China y Occidente. No impone sanciones a Rusia. Compra armas chinas y rusas. Disputa con Kosovo. Aspirante a la UE.",
+      allies: ["Russia","China"],
+      keywords: ["equilibrismo","Kosovo","Rusia","China"]
+    },
+    "Kosovo": {
+      name_es: "Kosovo", flag: "xk", capital: "Pristina",
+      continent: "europe", region: "Balcanes",
+      relation: "partner", relation_es: "Socio",
+      population: "1.8M", gdp: "$~10B", gdp_pc: "$~5,600",
+      orgs: [],
+      description: "Independencia apoyada por EE.UU. (2008). Base militar Camp Bondsteel. No reconocido universalmente. Disputas con Serbia. Fuerzas de la OTAN (KFOR).",
+      allies: ["United States of America","Albania"],
+      keywords: ["independencia","Bondsteel","KFOR","Serbia"]
+    },
+    "Bosnia and Herz.": {
+      name_es: "Bosnia y Herzegovina", flag: "ba", capital: "Sarajevo",
+      continent: "europe", region: "Balcanes",
+      relation: "partner", relation_es: "Socio",
+      population: "3.2M", gdp: "$~26B", gdp_pc: "$~8,000",
+      orgs: [],
+      description: "Acuerdos de Dayton (1995) mediados por EE.UU. terminaron la guerra. EUFOR mantiene presencia. Aspirante a la UE y OTAN.",
+      allies: ["Turkey","Croatia"],
+      keywords: ["Dayton","EUFOR","OTAN aspirante"]
+    },
+    "Palestine": {
+      name_es: "Palestina", flag: "ps", capital: "Ramala",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "neutral", relation_es: "Neutral (complejidad)",
+      population: "5.4M", gdp: "$~18B", gdp_pc: "$~3,300",
+      orgs: [],
+      description: "Estado observador en la ONU. Conflicto con Israel define la cuestión. EE.UU. tradicionalmente apoya solución de dos estados pero con fuerte alineación con Israel.",
+      allies: [],
+      keywords: ["conflicto","dos estados","Israel","ONU observador"]
+    },
+    "Yemen": {
+      name_es: "Yemen", flag: "ye", capital: "Saná",
+      continent: "middle-east", region: "Medio Oriente",
+      relation: "neutral", relation_es: "Neutral (conflicto)",
+      population: "34M", gdp: "$~21B", gdp_pc: "$~600",
+      orgs: [],
+      description: "Guerra civil. Hutíes (apoyados por Irán) controlan el norte. Ataques hutíes a navegación en el Mar Rojo y Estrecho de Bab el-Mandeb. Operaciones militares de EE.UU. contra hutíes.",
+      allies: [],
+      keywords: ["hutíes","Mar Rojo","Bab el-Mandeb","Irán proxy"]
+    },
+    "Eritrea": {
+      name_es: "Eritrea", flag: "er", capital: "Asmara",
+      continent: "africa", region: "Cuerno de África",
+      relation: "adversary", relation_es: "Adversario",
+      population: "3.6M", gdp: "$~2.6B", gdp_pc: "$~700",
+      orgs: [],
+      description: "\"Corea del Norte de África\". Aislado. Sanciones. Apoyo a Rusia. Servicio militar indefinido.",
+      allies: ["Russia"],
+      keywords: ["aislado","sanciones","servicio militar"]
+    },
+    "Djibouti": {
+      name_es: "Yibuti", flag: "dj", capital: "Yibuti",
+      continent: "africa", region: "Cuerno de África",
+      relation: "partner", relation_es: "Socio (base militar)",
+      population: "1.1M", gdp: "$~4B", gdp_pc: "$~3,600",
+      orgs: [],
+      description: "Base militar Camp Lemonnier (única base permanente de EE.UU. en África). Estrecho de Bab el-Mandeb. También alberga base militar china y otras.",
+      allies: ["United States of America","France","China"],
+      keywords: ["Camp Lemonnier","Bab el-Mandeb","base"]
+    },
+    "Timor-Leste": {
+      name_es: "Timor Oriental", flag: "tl", capital: "Dili",
+      continent: "asia", region: "Sudeste Asiático",
+      relation: "partner", relation_es: "Socio",
+      population: "1.3M", gdp: "$~3B", gdp_pc: "$~2,300",
+      orgs: ["ASEAN"],
+      description: "EE.UU. apoyó su independencia de Indonesia (2002). Estado joven. Petróleo y gas en el Mar de Timor.",
+      allies: ["Australia","Portugal"],
+      keywords: ["independencia","petróleo"]
+    },
+    "Bangladesh": {
+      name_es: "Bangladés", flag: "bd", capital: "Daca",
+      continent: "asia", region: "Asia del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "172M", gdp: "$460B", gdp_pc: "$2,688",
+      orgs: [],
+      description: "Potencia textil global. Cooperación humanitaria. Crisis de refugiados rohingya. Crecimiento económico sostenido.",
+      allies: ["India"],
+      keywords: ["textiles","rohingya","crecimiento"]
+    },
+    "Sri Lanka": {
+      name_es: "Sri Lanka", flag: "lk", capital: "Colombo",
+      continent: "asia", region: "Asia del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "22M", gdp: "$~85B", gdp_pc: "$~3,900",
+      orgs: [],
+      description: "Ubicación estratégica en el Océano Índico. Crisis económica (2022). Trampa de deuda china (puerto de Hambantota). Competencia entre India/EE.UU. y China.",
+      allies: ["India"],
+      keywords: ["Océano Índico","deuda china","crisis"]
+    },
+    "Nepal": {
+      name_es: "Nepal", flag: "np", capital: "Katmandú",
+      continent: "asia", region: "Asia del Sur",
+      relation: "partner", relation_es: "Socio",
+      population: "30M", gdp: "$~42B", gdp_pc: "$~1,400",
+      orgs: [],
+      description: "Entre India y China. Recibe asistencia de EE.UU. Competencia de influencia entre India y China.",
+      allies: ["India"],
+      keywords: ["India-China","asistencia"]
+    },
+    "Bhutan": {
+      name_es: "Bután", flag: "bt", capital: "Thimbu",
+      continent: "asia", region: "Asia del Sur",
+      relation: "neutral", relation_es: "Neutral",
+      population: "780K", gdp: "$~2.8B", gdp_pc: "$~3,600",
+      orgs: [],
+      description: "Monarquía pequeña entre India y China. Disputas fronterizas con China. India es su principal aliado y socio.",
+      allies: ["India"],
+      keywords: ["monarquía","India","China frontera"]
+    },
+    "Madagascar": {
+      name_es: "Madagascar", flag: "mg", capital: "Antananarivo",
+      continent: "africa", region: "África Oriental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "30M", gdp: "$~16B", gdp_pc: "$~530",
+      orgs: [],
+      description: "Isla nación con biodiversidad única. Rica en minerales (níquel, cobalto, tierras raras). Posición en el Océano Índico.",
+      allies: ["France"],
+      keywords: ["biodiversidad","minerales","Índico"]
+    },
+    "Falkland Is.": {
+      name_es: "Islas Malvinas", flag: "fk", capital: "Stanley",
+      continent: "south-america", region: "Atlántico Sur",
+      relation: "partner", relation_es: "Territorio británico",
+      population: "3.5K", gdp: "$~280M", gdp_pc: "$~80,000",
+      orgs: [],
+      description: "Territorio británico de ultramar. Guerra de las Malvinas (1982) entre Reino Unido y Argentina. EE.UU. apoyó a Reino Unido. Base militar británica.",
+      allies: ["United Kingdom"],
+      keywords: ["Malvinas","Argentina","Reino Unido"]
+    },
+    "W. Sahara": {
+      name_es: "Sahara Occidental", flag: "eh", capital: "El Aaiún",
+      continent: "africa", region: "Norte de África",
+      relation: "neutral", relation_es: "Territorio disputado",
+      population: "600K", gdp: "—", gdp_pc: "—",
+      orgs: [],
+      description: "Territorio disputado entre Marruecos y el Frente Polisario. EE.UU. reconoció la soberanía marroquí en 2020 como parte de los Acuerdos de Abraham.",
+      allies: [],
+      keywords: ["disputado","Marruecos","Polisario"]
+    },
+    "N. Cyprus": {
+      name_es: "Chipre del Norte", flag: "cy", capital: "Nicosia Norte",
+      continent: "middle-east", region: "Mediterráneo",
+      relation: "neutral", relation_es: "No reconocido",
+      population: "330K", gdp: "—", gdp_pc: "—",
+      orgs: [],
+      description: "Reconocido solo por Turquía. Ocupación turca desde 1974. Parte del conflicto chipriota.",
+      allies: ["Turkey"],
+      keywords: ["Turquía","no reconocido","ocupación"]
+    },
+    "Cyprus": {
+      name_es: "Chipre", flag: "cy", capital: "Nicosia",
+      continent: "middle-east", region: "Mediterráneo",
+      relation: "partner", relation_es: "Socio",
+      population: "1.3M", gdp: "$32B", gdp_pc: "$24,600",
+      orgs: ["UE"],
+      description: "Miembro de la UE. Isla dividida. Bases británicas soberanas. Descubrimientos de gas natural en aguas circundantes.",
+      allies: ["Greece","Israel","United Kingdom"],
+      keywords: ["dividida","UE","gas","bases británicas"]
+    },
+    "Somaliland": {
+      name_es: "Somalilandia", flag: "so", capital: "Hargeisa",
+      continent: "africa", region: "Cuerno de África",
+      relation: "neutral", relation_es: "No reconocido",
+      population: "5.7M", gdp: "—", gdp_pc: "—",
+      orgs: [],
+      description: "Estado autoproclamado, no reconocido internacionalmente. Más estable que Somalia. Puerto de Berbera con presencia de EAU.",
+      allies: [],
+      keywords: ["no reconocido","Berbera","estabilidad"]
+    },
+    "Central African Rep.": {
+      name_es: "Rep. Centroafricana", flag: "cf", capital: "Bangui",
+      continent: "africa", region: "África Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "5.5M", gdp: "$~2.6B", gdp_pc: "$~470",
+      orgs: [],
+      description: "Presencia de grupo Wagner/Africa Corps (Rusia). Conflicto armado crónico. Minerales (diamantes, uranio, oro).",
+      allies: ["Russia"],
+      keywords: ["Wagner","conflicto","minerales"]
+    },
+    "Congo": {
+      name_es: "Rep. del Congo", flag: "cg", capital: "Brazzaville",
+      continent: "africa", region: "África Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "6M", gdp: "$~13B", gdp_pc: "$~2,200",
+      orgs: [],
+      description: "Productor de petróleo. No confundir con la RDC. Capital frente a Kinshasa.",
+      allies: [],
+      keywords: ["petróleo","Brazzaville"]
+    },
+    "Gabon": {
+      name_es: "Gabón", flag: "ga", capital: "Libreville",
+      continent: "africa", region: "África Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "2.4M", gdp: "$~20B", gdp_pc: "$~8,300",
+      orgs: ["OPEP"],
+      description: "Rico en petróleo y madera. Golpe militar en 2023. Fue base de influencia francesa en África.",
+      allies: ["France"],
+      keywords: ["petróleo","golpe","Francia"]
+    },
+    "Cameroon": {
+      name_es: "Camerún", flag: "cm", capital: "Yaundé",
+      continent: "africa", region: "África Central",
+      relation: "partner", relation_es: "Socio",
+      population: "28M", gdp: "$~45B", gdp_pc: "$~1,600",
+      orgs: [],
+      description: "Cooperación antiterrorista (Boko Haram). Conflicto anglófono interno. Posición en el Golfo de Guinea.",
+      allies: ["France"],
+      keywords: ["Boko Haram","anglófono","Golfo de Guinea"]
+    },
+    "Eq. Guinea": {
+      name_es: "Guinea Ecuatorial", flag: "gq", capital: "Malabo",
+      continent: "africa", region: "África Central",
+      relation: "neutral", relation_es: "Neutral",
+      population: "1.7M", gdp: "$~12B", gdp_pc: "$~7,000",
+      orgs: ["OPEP"],
+      description: "Rico en petróleo. Régimen autoritario más longevo de África. Único país hispanohablante de África subsahariana.",
+      allies: [],
+      keywords: ["petróleo","autoritarismo","hispanohablante"]
+    },
+    "Ghana": {
+      name_es: "Ghana", flag: "gh", capital: "Accra",
+      continent: "africa", region: "África Occidental",
+      relation: "partner", relation_es: "Socio",
+      population: "33M", gdp: "$~76B", gdp_pc: "$~2,300",
+      orgs: [],
+      description: "Democracia estable en África Occidental. Cooperación de seguridad con EE.UU. Productor de oro y cacao.",
+      allies: ["United States of America","United Kingdom"],
+      keywords: ["democracia","oro","cacao"]
+    },
+    "Côte d'Ivoire": {
+      name_es: "Costa de Marfil", flag: "ci", capital: "Yamusukro",
+      continent: "africa", region: "África Occidental",
+      relation: "partner", relation_es: "Socio",
+      population: "28M", gdp: "$~78B", gdp_pc: "$~2,800",
+      orgs: [],
+      description: "Mayor productor de cacao del mundo. Crecimiento económico robusto. Base militar francesa (reducida).",
+      allies: ["France"],
+      keywords: ["cacao","crecimiento","Francia"]
+    },
+    "Senegal": {
+      name_es: "Senegal", flag: "sn", capital: "Dakar",
+      continent: "africa", region: "África Occidental",
+      relation: "partner", relation_es: "Socio",
+      population: "18M", gdp: "$~29B", gdp_pc: "$~1,600",
+      orgs: [],
+      description: "Democracia notable en África Occidental. Base militar francesa (retirada en 2024). Descubrimientos de gas y petróleo.",
+      allies: ["France"],
+      keywords: ["democracia","gas","Francia retirada"]
+    },
+    "Mali": {
+      name_es: "Mali", flag: "ml", capital: "Bamako",
+      continent: "africa", region: "África Occidental",
+      relation: "adversary", relation_es: "Adversario (junta)",
+      population: "22M", gdp: "$~19B", gdp_pc: "$~880",
+      orgs: [],
+      description: "Junta militar. Expulsó a fuerzas francesas y de la ONU. Presencia de Wagner/Africa Corps (Rusia). Inestabilidad y terrorismo jihadista.",
+      allies: ["Russia"],
+      keywords: ["junta","Wagner","terrorismo","Francia expulsión"]
+    },
+    "Burkina Faso": {
+      name_es: "Burkina Faso", flag: "bf", capital: "Uagadugú",
+      continent: "africa", region: "África Occidental",
+      relation: "adversary", relation_es: "Adversario (junta)",
+      population: "22M", gdp: "$~19B", gdp_pc: "$~860",
+      orgs: [],
+      description: "Junta militar. Expulsó a fuerzas francesas. Presencia rusa (Wagner). Cooperación con Mali y Níger (Alianza de Estados del Sahel).",
+      allies: ["Russia","Mali"],
+      keywords: ["junta","Wagner","Sahel"]
+    },
+    "Niger": {
+      name_es: "Níger", flag: "ne", capital: "Niamey",
+      continent: "africa", region: "África Occidental",
+      relation: "adversary", relation_es: "Adversario (junta)",
+      population: "26M", gdp: "$~17B", gdp_pc: "$~650",
+      orgs: [],
+      description: "Golpe militar (2023). EE.UU. retiró fuerzas de la base aérea 201. Uranio importante para Francia. Presencia rusa creciente.",
+      allies: ["Russia","Mali","Burkina Faso"],
+      keywords: ["golpe","base 201","uranio","Rusia"]
+    },
+    "Chad": {
+      name_es: "Chad", flag: "td", capital: "Yamena",
+      continent: "africa", region: "África Central",
+      relation: "partner", relation_es: "Socio",
+      population: "18M", gdp: "$~12B", gdp_pc: "$~680",
+      orgs: [],
+      description: "Cooperación antiterrorista (Boko Haram, JNIM). Base francesa reducida. Aliado de EE.UU. en la lucha contra el terrorismo en el Sahel.",
+      allies: ["France","United States of America"],
+      keywords: ["antiterrorismo","Sahel","Francia"]
+    },
+    "Mauritania": {
+      name_es: "Mauritania", flag: "mr", capital: "Nuakchot",
+      continent: "africa", region: "África Occidental",
+      relation: "partner", relation_es: "Socio",
+      population: "4.6M", gdp: "$~10B", gdp_pc: "$~2,200",
+      orgs: [],
+      description: "Cooperación antiterrorista. Frontera del Sahel. Descubrimientos de gas (campo Tortue/Ahmeyim con Senegal).",
+      allies: [],
+      keywords: ["antiterrorismo","gas","Sahel"]
+    },
+    "Guinea": {
+      name_es: "Guinea", flag: "gn", capital: "Conakri",
+      continent: "africa", region: "África Occidental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "14M", gdp: "$~21B", gdp_pc: "$~1,500",
+      orgs: [],
+      description: "Junta militar desde 2021. Enorme reserva de bauxita (aluminio). Creciente influencia china y rusa.",
+      allies: [],
+      keywords: ["junta","bauxita","minerales"]
+    },
+    "Sierra Leone": {
+      name_es: "Sierra Leona", flag: "sl", capital: "Freetown",
+      continent: "africa", region: "África Occidental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "8.6M", gdp: "$~4.3B", gdp_pc: "$~500",
+      orgs: [],
+      description: "Posguerra civil. Diamantes. Reconstrucción con asistencia internacional.",
+      allies: ["United Kingdom"],
+      keywords: ["diamantes","posguerra"]
+    },
+    "Liberia": {
+      name_es: "Liberia", flag: "lr", capital: "Monrovia",
+      continent: "africa", region: "África Occidental",
+      relation: "partner", relation_es: "Socio (histórico)",
+      population: "5.3M", gdp: "$~4B", gdp_pc: "$~750",
+      orgs: [],
+      description: "Fundada por exesclavos estadounidenses. Lazos históricos profundos con EE.UU. Posguerra civil.",
+      allies: ["United States of America"],
+      keywords: ["historia","fundación","posguerra"]
+    },
+    "Guinea-Bissau": {
+      name_es: "Guinea-Bisáu", flag: "gw", capital: "Bisáu",
+      continent: "africa", region: "África Occidental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "2.1M", gdp: "$~1.8B", gdp_pc: "$~850",
+      orgs: [],
+      description: "Narcotráfico. Inestabilidad política crónica. Uno de los países más pobres del mundo.",
+      allies: [],
+      keywords: ["narcotráfico","inestabilidad"]
+    },
+    "Gambia": {
+      name_es: "Gambia", flag: "gm", capital: "Banjul",
+      continent: "africa", region: "África Occidental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "2.7M", gdp: "$~2.2B", gdp_pc: "$~830",
+      orgs: [],
+      description: "Pequeño estado dentro de Senegal. Transición democrática post-Jammeh (2017).",
+      allies: ["Senegal"],
+      keywords: ["democracia","transición"]
+    },
+    "Togo": {
+      name_es: "Togo", flag: "tg", capital: "Lomé",
+      continent: "africa", region: "África Occidental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "8.8M", gdp: "$~8.5B", gdp_pc: "$~970",
+      orgs: [],
+      description: "Puerto de Lomé. Cooperación regional contra terrorismo.",
+      allies: [],
+      keywords: ["Lomé","cooperación"]
+    },
+    "Benin": {
+      name_es: "Benín", flag: "bj", capital: "Porto Novo",
+      continent: "africa", region: "África Occidental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "13M", gdp: "$~19B", gdp_pc: "$~1,460",
+      orgs: [],
+      description: "Cooperación antiterrorista. Frontera con Nigeria y Burkina Faso.",
+      allies: [],
+      keywords: ["antiterrorismo","frontera"]
+    },
+    "Zambia": {
+      name_es: "Zambia", flag: "zm", capital: "Lusaka",
+      continent: "africa", region: "África Austral",
+      relation: "partner", relation_es: "Socio",
+      population: "20M", gdp: "$~29B", gdp_pc: "$~1,440",
+      orgs: [],
+      description: "Rico en cobre. Trampa de deuda china. Reestructuración de deuda con apoyo occidental.",
+      allies: [],
+      keywords: ["cobre","deuda china","reestructuración"]
+    },
+    "Zimbabwe": {
+      name_es: "Zimbabue", flag: "zw", capital: "Harare",
+      continent: "africa", region: "África Austral",
+      relation: "adversary", relation_es: "Adversario (sanciones)",
+      population: "16M", gdp: "$~24B", gdp_pc: "$~1,530",
+      orgs: [],
+      description: "Sanciones de EE.UU. Gobierno de ZANU-PF. Minerales (platino, litio, diamantes). Hiperinflación histórica.",
+      allies: ["China","Russia"],
+      keywords: ["sanciones","ZANU-PF","minerales"]
+    },
+    "Mozambique": {
+      name_es: "Mozambique", flag: "mz", capital: "Maputo",
+      continent: "africa", region: "África Austral",
+      relation: "neutral", relation_es: "Neutral",
+      population: "33M", gdp: "$~19B", gdp_pc: "$~580",
+      orgs: [],
+      description: "Insurgencia islamista en Cabo Delgado. Grandes reservas de gas natural. Cooperación antiterrorista.",
+      allies: [],
+      keywords: ["insurgencia","gas","Cabo Delgado"]
+    },
+    "Botswana": {
+      name_es: "Botsuana", flag: "bw", capital: "Gaborone",
+      continent: "africa", region: "África Austral",
+      relation: "partner", relation_es: "Socio",
+      population: "2.6M", gdp: "$~20B", gdp_pc: "$~7,700",
+      orgs: [],
+      description: "Democracia estable. Mayor productor de diamantes de África (en gemas). Cooperación militar con EE.UU.",
+      allies: ["United States of America"],
+      keywords: ["democracia","diamantes","estabilidad"]
+    },
+    "Namibia": {
+      name_es: "Namibia", flag: "na", capital: "Windhoek",
+      continent: "africa", region: "África Austral",
+      relation: "neutral", relation_es: "Neutral",
+      population: "2.6M", gdp: "$~13B", gdp_pc: "$~5,000",
+      orgs: [],
+      description: "Uranio. Potencial de hidrógeno verde. Democracia estable.",
+      allies: ["South Africa"],
+      keywords: ["uranio","hidrógeno verde"]
+    },
+    "Angola": {
+      name_es: "Angola", flag: "ao", capital: "Luanda",
+      continent: "africa", region: "África Central",
+      relation: "partner", relation_es: "Socio",
+      population: "35M", gdp: "$~75B", gdp_pc: "$~2,100",
+      orgs: ["OPEP"],
+      description: "Productor de petróleo. Corredor de Lobito (proyecto de infraestructura apoyado por EE.UU./G7). Relaciones mejoradas con EE.UU.",
+      allies: [],
+      keywords: ["petróleo","Lobito","infraestructura"]
+    },
+    "Rwanda": {
+      name_es: "Ruanda", flag: "rw", capital: "Kigali",
+      continent: "africa", region: "África Oriental",
+      relation: "partner", relation_es: "Socio (complejo)",
+      population: "14M", gdp: "$~13B", gdp_pc: "$~930",
+      orgs: [],
+      description: "Desarrollo económico rápido. Controversia por apoyo a grupos armados en RDC. Centro tecnológico emergente en África.",
+      allies: [],
+      keywords: ["desarrollo","RDC","tecnología"]
+    },
+    "Uganda": {
+      name_es: "Uganda", flag: "ug", capital: "Kampala",
+      continent: "africa", region: "África Oriental",
+      relation: "partner", relation_es: "Socio (complejo)",
+      population: "47M", gdp: "$~50B", gdp_pc: "$~1,070",
+      orgs: ["BRICS (socio)"],
+      description: "Cooperación antiterrorista (Al-Shabaab en Somalia). Tensiones por ley anti-LGBTQ. Descubrimientos petroleros.",
+      allies: [],
+      keywords: ["antiterrorismo","LGBTQ","petróleo"]
+    },
+    "Malawi": {
+      name_es: "Malaui", flag: "mw", capital: "Lilongüe",
+      continent: "africa", region: "África Austral",
+      relation: "neutral", relation_es: "Neutral",
+      population: "20M", gdp: "$~14B", gdp_pc: "$~640",
+      orgs: [],
+      description: "Uno de los países más pobres del mundo. Asistencia de desarrollo de EE.UU.",
+      allies: [],
+      keywords: ["pobreza","asistencia"]
+    },
+    "eSwatini": {
+      name_es: "Esuatini", flag: "sz", capital: "Mbabane",
+      continent: "africa", region: "África Austral",
+      relation: "partner", relation_es: "Socio",
+      population: "1.2M", gdp: "$~4.9B", gdp_pc: "$~4,100",
+      orgs: [],
+      description: "Última monarquía absoluta de África. AGOA (acceso preferencial al mercado de EE.UU.). Reconoce a Taiwán.",
+      allies: ["Taiwan","South Africa"],
+      keywords: ["monarquía","AGOA","Taiwán"]
+    },
+    "Lesotho": {
+      name_es: "Lesoto", flag: "ls", capital: "Maseru",
+      continent: "africa", region: "África Austral",
+      relation: "neutral", relation_es: "Neutral",
+      population: "2.3M", gdp: "$~2.5B", gdp_pc: "$~1,100",
+      orgs: [],
+      description: "Enclave dentro de Sudáfrica. Diamantes y agua.",
+      allies: ["South Africa"],
+      keywords: ["enclave","diamantes"]
+    },
+    "Burundi": {
+      name_es: "Burundi", flag: "bi", capital: "Gitega",
+      continent: "africa", region: "África Oriental",
+      relation: "neutral", relation_es: "Neutral",
+      population: "13M", gdp: "$~3.6B", gdp_pc: "$~280",
+      orgs: [],
+      description: "Uno de los países más pobres del mundo. Sanciones previas de EE.UU. (parcialmente levantadas).",
+      allies: [],
+      keywords: ["pobreza","sanciones previas"]
+    },
+    "Trinidad and Tobago": {
+      name_es: "Trinidad y Tobago", flag: "tt", capital: "Puerto España",
+      continent: "south-america", region: "Caribe",
+      relation: "partner", relation_es: "Socio",
+      population: "1.5M", gdp: "$~27B", gdp_pc: "$~18,000",
+      orgs: [],
+      description: "Productor de gas natural y petróleo en el Caribe. Relación comercial con EE.UU.",
+      allies: [],
+      keywords: ["gas","petróleo","Caribe"]
+    },
+    "Jamaica": {
+      name_es: "Jamaica", flag: "jm", capital: "Kingston",
+      continent: "north-america", region: "Caribe",
+      relation: "partner", relation_es: "Socio",
+      population: "2.8M", gdp: "$~18B", gdp_pc: "$~6,400",
+      orgs: [],
+      description: "Socio comercial en el Caribe. Gran diáspora en EE.UU. Cooperación en seguridad.",
+      allies: ["United States of America","United Kingdom"],
+      keywords: ["Caribe","diáspora"]
+    },
+    "Haiti": {
+      name_es: "Haití", flag: "ht", capital: "Puerto Príncipe",
+      continent: "north-america", region: "Caribe",
+      relation: "neutral", relation_es: "Neutral (crisis)",
+      population: "11.7M", gdp: "$~20B", gdp_pc: "$~1,700",
+      orgs: [],
+      description: "Crisis humanitaria y de seguridad. Bandas armadas. Misión internacional apoyada por EE.UU. País más pobre del hemisferio occidental.",
+      allies: [],
+      keywords: ["crisis","bandas","humanitaria"]
+    },
+    "Puerto Rico": {
+      name_es: "Puerto Rico", flag: "pr", capital: "San Juan",
+      continent: "north-america", region: "Caribe",
+      relation: "self", relation_es: "Territorio de EE.UU.",
+      population: "3.2M", gdp: "$~113B", gdp_pc: "$~35,600",
+      orgs: [],
+      description: "Territorio no incorporado de EE.UU. Estado libre asociado. Debate sobre estadidad.",
+      allies: [],
+      keywords: ["territorio","estadidad","EE.UU."]
+    },
+    "Bahamas": {
+      name_es: "Bahamas", flag: "bs", capital: "Nasáu",
+      continent: "north-america", region: "Caribe",
+      relation: "partner", relation_es: "Socio",
+      population: "410K", gdp: "$~13B", gdp_pc: "$~32,000",
+      orgs: [],
+      description: "Cooperación antinarcóticos. Centro financiero offshore. Cercanía geográfica a EE.UU. (80 km de Florida).",
+      allies: ["United States of America","United Kingdom"],
+      keywords: ["finanzas offshore","antinarcóticos"]
+    },
+    "Belize": {
+      name_es: "Belice", flag: "bz", capital: "Belmopán",
+      continent: "north-america", region: "América Central",
+      relation: "partner", relation_es: "Socio",
+      population: "410K", gdp: "$~3B", gdp_pc: "$~7,300",
+      orgs: [],
+      description: "Único país anglófono de Centroamérica. Lazos con Commonwealth. Cooperación antinarcóticos.",
+      allies: ["United Kingdom","Guatemala"],
+      keywords: ["anglófono","Commonwealth"]
+    },
+    "Fr. S. Antarctic Lands": {
+      name_es: "Tierras Australes Francesas", flag: "fr", capital: "—",
+      continent: "oceania", region: "Subantártico",
+      relation: "neutral", relation_es: "Territorio francés",
+      population: "~150", gdp: "—", gdp_pc: "—",
+      orgs: [],
+      description: "Territorio francés de ultramar en el Océano Índico austral.",
+      allies: [],
+      keywords: ["Francia","subantártico"]
+    },
+    "New Caledonia": {
+      name_es: "Nueva Caledonia", flag: "nc", capital: "Numea",
+      continent: "oceania", region: "Oceanía",
+      relation: "neutral", relation_es: "Territorio francés",
+      population: "290K", gdp: "$~10B", gdp_pc: "$~34,400",
+      orgs: [],
+      description: "Territorio francés en el Pacífico. Mayor productor de níquel del mundo. Protestas independentistas. Posición estratégica en el Indo-Pacífico.",
+      allies: ["France"],
+      keywords: ["níquel","independencia","Indo-Pacífico"]
+    },
+    "Solomon Is.": {
+      name_es: "Islas Salomón", flag: "sb", capital: "Honiara",
+      continent: "oceania", region: "Oceanía",
+      relation: "neutral", relation_es: "Neutral (pro-China)",
+      population: "720K", gdp: "$~1.8B", gdp_pc: "$~2,500",
+      orgs: [],
+      description: "Cambió reconocimiento de Taiwán a China (2019). Acuerdo de seguridad con China. Competencia por influencia en el Pacífico.",
+      allies: ["China"],
+      keywords: ["China","Taiwán cambio","Pacífico"]
+    },
+    "Vanuatu": {
+      name_es: "Vanuatu", flag: "🇻🇺", capital: "Port Vila",
+      continent: "oceania", region: "Oceanía",
+      relation: "neutral", relation_es: "Neutral",
+      population: "320K", gdp: "$~1B", gdp_pc: "$~3,100",
+      orgs: [],
+      description: "Pacífico Sur. Competencia entre EE.UU./Australia y China por influencia.",
+      allies: [],
+      keywords: ["Pacífico","competencia"]
+    },
+    "Antarctica": {
+      name_es: "Antártida", flag: "🏳️", capital: "—",
+      continent: "oceania", region: "Antártida",
+      relation: "neutral", relation_es: "Tratado Antártico",
+      population: "~4,000 (estacional)", gdp: "—", gdp_pc: "—",
+      orgs: [],
+      description: "Gobernada por el Tratado Antártico (1959). Desmilitarizada. Solo investigación científica. EE.UU. opera la Estación McMurdo y la del Polo Sur.",
+      allies: [],
+      keywords: ["tratado","científico","McMurdo"]
+    }
+  },
+
+  // Organizations
+  organizations: {
+    "OTAN": {
+      name: "Organización del Tratado del Atlántico Norte",
+      members: 32,
+      color: "#1e40af",
+      description: "Alianza militar defensiva liderada por EE.UU. Artículo 5: ataque a uno es ataque a todos."
+    },
+    "BRICS": {
+      name: "Brasil, Rusia, India, China, Sudáfrica + nuevos",
+      members: 11,
+      color: "#7c2d12",
+      description: "Bloque de economías emergentes. Ampliado en 2024 con Egipto, Etiopía, Irán, Arabia Saudita, EAU e Indonesia."
+    },
+    "QUAD": {
+      name: "Diálogo de Seguridad Cuadrilateral",
+      members: 4,
+      color: "#0e7490",
+      description: "EE.UU., Japón, India, Australia. Cooperación en el Indo-Pacífico."
+    },
+    "AUKUS": {
+      name: "Australia, United Kingdom, United States",
+      members: 3,
+      color: "#4338ca",
+      description: "Pacto de seguridad para el Indo-Pacífico. Incluye submarinos nucleares para Australia."
+    },
+    "Five Eyes": {
+      name: "Alianza de Inteligencia",
+      members: 5,
+      color: "#7c3aed",
+      description: "EE.UU., UK, Canadá, Australia, NZ. Mayor alianza de inteligencia del mundo."
+    }
+  },
+
+  // Strategic locations
+  strategicLocations: [
+    { name: "Canal de Panamá", coords: [-79.5, 9.0], description: "6% del comercio marítimo mundial", type: "canal" },
+    { name: "Estrecho de Malaca", coords: [101.5, 2.5], description: "25% del comercio marítimo mundial", type: "strait" },
+    { name: "Estrecho de Ormuz", coords: [56.5, 26.5], description: "21% del petróleo mundial", type: "strait" },
+    { name: "Bab el-Mandeb", coords: [43.3, 12.5], description: "Acceso al Mar Rojo", type: "strait" },
+    { name: "Canal de Suez", coords: [32.3, 30.5], description: "12% del comercio marítimo", type: "canal" },
+    { name: "Estrecho del Bósforo", coords: [29.0, 41.1], description: "Acceso al Mar Negro", type: "strait" }
+  ],
+
+  // Continent zoom configurations
+  continentViews: {
+    "world": { center: [0, 15], scale: 1 },
+    "north-america": { center: [-100, 40], scale: 2.5 },
+    "south-america": { center: [-60, -20], scale: 2.5 },
+    "europe": { center: [15, 50], scale: 4 },
+    "africa": { center: [20, 0], scale: 2.5 },
+    "asia": { center: [90, 30], scale: 2.5 },
+    "oceania": { center: [140, -25], scale: 3.5 },
+    "middle-east": { center: [45, 28], scale: 4.5 }
+  }
+};
+
+let currentSearchHighlight = null;
+
+// Helper to convert ISO code to emoji
+function getFlagEmoji(countryCode) {
+  if (!countryCode || countryCode.length !== 2) return countryCode;
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints);
+}
+
+// ----------------------------------------------------
+// UI Logic
+// ----------------------------------------------------
+
+// NATO country list for category filtering
+const NATO_NAMES = [
+  "Albania","Belgium","Bulgaria","Canada","Croatia","Czechia","Denmark","Estonia","Finland","France",
+  "Germany","Greece","Hungary","Iceland","Italy","Latvia","Lithuania","Luxembourg","Montenegro",
+  "Macedonia","Netherlands","Norway","Poland","Portugal","Romania","Slovakia","Slovenia","Spain",
+  "Sweden","Turkey","United Kingdom","United States of America"
+];
+
+const BRICS_NAMES = [
+  "Brazil","Russia","India","China","South Africa","Egypt","Ethiopia","Iran","Saudi Arabia",
+  "United Arab Emirates","Indonesia"
+];
+
+const CONFLICT_NAMES = [
+  "Ukraine","Syria","Yemen","Sudan","S. Sudan","Myanmar","Somalia","Palestine","Afghanistan",
+  "Libya","Mali","Burkina Faso","Niger","Dem. Rep. Congo","Iraq"
+];
+
+// ============================================================
+// APPLICATION ENGINE
+// ============================================================
+let svg, g, projection, path, zoom, tooltip, width, height;
+let selectedCountry = null;
+let compareCountry = null;
+let activeCategory = 'all';
+let countryPaths = {};
+let worldData = null;
+
+function initApp() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+
+  // Create projection
+  projection = d3.geoNaturalEarth1()
+    .scale(width / 5.5)
+    .translate([width / 2, height / 2 + 20]);
+
+  path = d3.geoPath().projection(projection);
+
+  // Create SVG
+  svg = d3.select('#map-container')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+  // Create zoom behavior
+  zoom = d3.zoom()
+    .scaleExtent([0.8, 20])
+    .on('zoom', (event) => {
+      g.attr('transform', event.transform);
+    });
+
+  svg.call(zoom);
+
+  g = svg.append('g').attr('id', 'map-group');
+
+  // Add ocean background
+  g.append('rect')
+    .attr('class', 'ocean')
+    .attr('x', -5000)
+    .attr('y', -5000)
+    .attr('width', 15000)
+    .attr('height', 15000)
+    .attr('fill', 'var(--ocean-color)');
+
+  // Add graticule
+  const graticule = d3.geoGraticule();
+  g.append('path')
+    .datum(graticule())
+    .attr('class', 'graticule')
+    .attr('d', path);
+
+  // Load map data
+  loadMapData();
+
+  // Setup interactions
+  setupSearch();
+  setupCategories();
+  setupContinentNav();
+
+  // Tooltip
+  tooltip = document.getElementById('tooltip');
+
+  // Handle resize
+  window.addEventListener('resize', handleResize);
+}
+
+function loadMapData() {
+  // Use inline TopoJSON data (works with file:// protocol)
+  try {
+    const data = WORLD_TOPO_DATA;
+    worldData = data;
+    renderCountries(data);
+    renderStrategicLocations();
+
+    // Hide loading
+    setTimeout(() => {
+      document.getElementById('loading').classList.add('fade-out');
+      setTimeout(() => {
+        document.getElementById('loading').style.display = 'none';
+      }, 600);
+    }, 500);
+  } catch(err) {
+    console.error('Error loading map data:', err);
+    document.querySelector('.loader-text').textContent = 'Error cargando datos del mapa';
+  }
+}
+
+function renderCountries(data) {
+  const countries = topojson.feature(data, data.objects.countries);
+
+  g.selectAll('.country-path')
+    .data(countries.features)
+    .enter()
+    .append('path')
+    .attr('class', d => {
+      const name = d.properties.name;
+      const info = GEO_DB.countries[name];
+      let classes = 'country-path';
+      if (name === 'United States of America') classes += ' usa';
+      if (info) {
+        switch(info.relation) {
+          case 'ally': classes += ' cat-ally'; break;
+          case 'partner': classes += ' cat-partner'; break;
+          case 'competitor': classes += ' cat-competitor'; break;
+          case 'adversary': classes += ' cat-adversary'; break;
+        }
+      }
+      return classes;
+    })
+    .attr('d', path)
+    .attr('data-name', d => d.properties.name)
+    .on('mouseover', handleMouseOver)
+    .on('mousemove', handleMouseMove)
+    .on('mouseout', handleMouseOut)
+    .on('click', handleClick);
+
+  // Store references
+  g.selectAll('.country-path').each(function(d) {
+    countryPaths[d.properties.name] = this;
+  });
+
+  // Add country borders
+  g.append('path')
+    .datum(topojson.mesh(data, data.objects.countries, (a, b) => a !== b))
+    .attr('fill', 'none')
+    .attr('stroke', 'rgba(148,163,184,0.4)')
+    .attr('stroke-width', 0.8)
+    .attr('d', path);
+}
+
+function renderStrategicLocations() {
+  const locations = g.append('g').attr('class', 'strategic-locations');
+
+  GEO_DB.strategicLocations.forEach(loc => {
+    const [x, y] = projection(loc.coords);
+    if (x && y) {
+      const group = locations.append('g')
+        .attr('transform', `translate(${x},${y})`)
+        .style('cursor', 'pointer')
+        .on('mouseover', function(event) {
+          showTooltipAt(event.clientX, event.clientY, {
+            name: loc.name,
+            flag: loc.type === 'canal' ? '🚢' : '⚓',
+            relation_es: loc.description
+          });
+        })
+        .on('mouseout', hideTooltip);
+
+      // Pulsing circle
+      group.append('circle')
+        .attr('r', 4)
+        .attr('fill', 'var(--accent-violet)')
+        .attr('opacity', 0.8);
+
+      group.append('circle')
+        .attr('r', 4)
+        .attr('fill', 'none')
+        .attr('stroke', 'var(--accent-violet)')
+        .attr('stroke-width', 1)
+        .attr('opacity', 0.5)
+        .append('animate')
+        .attr('attributeName', 'r')
+        .attr('from', '4')
+        .attr('to', '12')
+        .attr('dur', '2s')
+        .attr('repeatCount', 'indefinite');
+
+      group.append('circle')
+        .attr('r', 4)
+        .attr('fill', 'none')
+        .attr('stroke', 'var(--accent-violet)')
+        .attr('stroke-width', 1)
+        .attr('opacity', 0)
+        .append('animate')
+        .attr('attributeName', 'opacity')
+        .attr('from', '0.6')
+        .attr('to', '0')
+        .attr('dur', '2s')
+        .attr('repeatCount', 'indefinite');
+    }
+  });
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+
+function handleMouseOver(event, d) {
+  const name = d.properties.name;
+  const info = GEO_DB.countries[name];
+
+  d3.select(this).raise();
+
+  if (info) {
+    showTooltipAt(event.clientX, event.clientY, {
+      name: info.name_es,
+      flag: info.flag,
+      relation_es: info.relation_es
+    });
+  } else {
+    showTooltipAt(event.clientX, event.clientY, {
+      name: name,
+      flag: '🏳️',
+      relation_es: 'Sin datos'
+    });
+  }
+}
+
+function handleMouseMove(event) {
+  positionTooltip(event.clientX, event.clientY);
+}
+
+function handleMouseOut() {
+  hideTooltip();
+}
+
+function handleClick(event, d) {
+  const name = d.properties.name;
+  const info = GEO_DB.countries[name];
+
+  // Deselect previous
+  g.selectAll('.country-path.selected').classed('selected', false);
+
+  // Select new
+  d3.select(this).classed('selected', true);
+  selectedCountry = name;
+
+  // Show info panel
+  if (info) {
+    showInfoPanel(name, info);
+    showConnections(name, info);
+  }
+}
+
+function showTooltipAt(x, y, data) {
+  const tt = document.getElementById('tooltip');
+  const ttFlag = tt.querySelector('.tt-flag');
+  ttFlag.textContent = getFlagEmoji(data.flag);
+  ttFlag.className = 'tt-flag';
+  tt.querySelector('.tt-name').textContent = data.name;
+
+  const relEl = tt.querySelector('.tt-relation');
+  
+  if (activeCategory === 'potencias' && data.potencia_regional) {
+    relEl.textContent = data.potencia_regional.reason;
+    relEl.style.background = 'rgba(147, 51, 234, 0.1)';
+    relEl.style.color = '#c084fc';
+    relEl.style.whiteSpace = 'normal';
+    relEl.style.maxWidth = '250px';
+    relEl.style.lineHeight = '1.4';
+    relEl.style.textAlign = 'left';
+  } else {
+    relEl.textContent = data.relation_es;
+    relEl.style.background = getRelationColor(data.relation_es, 0.2);
+    relEl.style.color = getRelationColor(data.relation_es, 1);
+    relEl.style.whiteSpace = 'nowrap';
+    relEl.style.maxWidth = 'none';
+    relEl.style.textAlign = 'center';
+  }
+
+  tt.classList.add('visible');
+  positionTooltip(x, y);
+}
+
+function positionTooltip(x, y) {
+  const tt = document.getElementById('tooltip');
+  const pad = 15;
+  let left = x + pad;
+  let top = y + pad;
+
+  if (left + 280 > window.innerWidth) left = x - 280 - pad;
+  if (top + 100 > window.innerHeight) top = y - 100 - pad;
+
+  tt.style.left = left + 'px';
+  tt.style.top = top + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').classList.remove('visible');
+}
+
+function getRelationColor(relation_es, alpha) {
+  if (!relation_es) return `rgba(100,116,139,${alpha})`;
+  const r = relation_es.toLowerCase();
+  if (r.includes('aliado') || r.includes('ally')) return `rgba(34,197,94,${alpha})`;
+  if (r.includes('socio') || r.includes('partner')) return `rgba(6,182,212,${alpha})`;
+  if (r.includes('competidor') || r.includes('competitor')) return `rgba(245,158,11,${al  if (activeCategory === 'potencias' && info.potencia_regional) {
+    badge.textContent = `Potencia regional — ${info.potencia_regional.region_poder || region}`;
+    badge.style.background = 'rgba(147, 51, 234, 0.1)';
+    badge.style.color = '#c084fc';
+    badge.style.border = '1px solid rgba(147, 51, 234, 0.3)';
+    
+    let html = `
+      <div class="panel-section animate-in">
+        <div class="panel-section-title" style="text-transform: uppercase;">Tipo de poder</div>
+        <div class="panel-section-content" style="font-weight:600; color:var(--text-primary);">${info.potencia_regional.tipo_poder}</div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform: uppercase;">¿Por qué es una potencia regional?</div>
+        <div class="panel-section-content">${info.potencia_regional.long_reason}</div>
+      </div>
+      
+      <div class="panel-section animate-in" style="animation-delay:0.1s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Ámbito de influencia</div>
+        <div class="panel-section-content">${info.potencia_regional.influence}</div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.15s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Principales fortalezas</div>
+        <div class="panel-section-content">${info.potencia_regional.strengths}</div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.2s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Importancia estratégica</div>
+        <div class="panel-section-content">${info.potencia_regional.strategic}</div>
+      </div>
+    `;const badge = document.getElementById('panel-relation');
+  
+  if (activeCategory === 'potencias' && info.potencia_regional) {
+    badge.textContent = Potencia regional â€” ;
+    badge.style.background = 'rgba(147, 51, 234, 0.1)';
+    badge.style.color = '#c084fc';
+    badge.style.border = '1px solid rgba(147, 51, 234, 0.3)';
+    
+    let html = 
+      <div class="panel-section animate-in">
+        <div class="panel-section-title" style="text-transform: uppercase;">Tipo de poder</div>
+        <div class="panel-section-content" style="font-weight:600; color:var(--text-primary);"></div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Â¿Por quÃ© es una potencia regional?</div>
+        <div class="panel-section-content"></div>
+      </div>
+      
+      <div class="panel-section animate-in" style="animation-delay:0.1s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Ãmbito de influencia</div>
+        <div class="panel-section-content"></div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.15s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Principales fortalezas</div>
+        <div class="panel-section-content"></div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.2s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Importancia estratÃ©gica</div>
+        <div class="panel-section-content"></div>
+      </div>
+    ;
+    
+    document.getElementById('panel-body').innerHTML = html;
+    
+    panel.classList.add('open');
+    if (window.innerWidth <= 768) {
+      document.getElementById('overlay').classList.add('active');
+    }
+    return;
+  }
+
+  badge.textContent = relation_es;
+  badge.style.background = getRelationColor(relation_es, 0.15);
+  badge.style.color = getRelationColor(relation_es, 1);
+  badge.style.border = `1px solid ${getRelationColor(relation_es, 0.3)}`;
+
+  let html = '';
+
+  if (info.summary) {
+    html += `<div class="panel-section animate-in"><div class="panel-section-title">📋 Resumen Geopolítico</div>
+             <div class="panel-section-content" style="font-weight:600;">${info.summary}</div></div>`;
+  } else if (info.description) {
+    html += `<div class="panel-section animate-in"><div class="panel-section-title">📋 Análisis Geopolítico</div>
+             <div class="panel-section-content">${info.description}</div></div>`;
+  }
+
+  // New Schema Stats
+  if (info.econ_importance) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.05s"><div class="panel-section-title">📊 Datos Clave</div>
+      <div class="panel-stat-row"><span class="panel-stat-label">Población</span><span class="panel-stat-value">${info.identity.pop}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">PIB</span><span class="panel-stat-value">${info.econ_importance.gdp}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">PIB per cápita</span><span class="panel-stat-value">${info.econ_importance.gdp_pc}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">Crecimiento</span><span class="panel-stat-value">${info.econ_importance.growth}</span></div>
+    </div>`;
+  } else if (info.population) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.05s"><div class="panel-section-title">📊 Datos Clave</div>
+      <div class="panel-stat-row"><span class="panel-stat-label">Población</span><span class="panel-stat-value">${info.population}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">PIB</span><span class="panel-stat-value">${info.gdp}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">PIB per cápita</span><span class="panel-stat-value">${info.gdp_pc}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">Continente</span><span class="panel-stat-value">${info.region}</span></div>
+    </div>`;
+  }
+
+  // USA Relation Detailed
+  if (info.usa_relation && info.usa_relation.explanation) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.08s">
+      <div class="panel-section-title">🇺🇸 Relación con EE.UU.</div>
+      <div class="panel-section-content">${info.usa_relation.explanation}</div>
+    </div>`;
+  }
+  // China Relation Detailed
+  if (info.china_relation && info.china_relation.explanation) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.1s">
+      <div class="panel-section-title">🇨🇳 Relación con China</div>
+      <div class="panel-section-content">${info.china_relation.explanation}</div>
+    </div>`;
+  }
+  // Russia Relation Detailed
+  if (info.russia_relation && info.russia_relation.explanation) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.1s">
+      <div class="panel-section-title">🇷🇺 Relación con Rusia</div>
+      <div class="panel-section-content">${info.russia_relation.explanation}</div>
+    </div>`;
+  }
+
+  const orgs = info.orgs || info.orgs_simple || [];
+  if (orgs.length > 0) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.1s">
+      <div class="panel-section-title">🏛️ Organizaciones</div>
+      <div class="panel-tags">${orgs.map(o => `<span class="panel-tag">${o}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  // Detailed Allies (New schema is array of objects, legacy is array of strings)
+  if (info.allies && info.allies.length > 0) {
+    const allyFlags = info.allies.map(a => {
+      const allyName = typeof a === 'string' ? a : a.country;
+      const ai = GEO_DB.countries[allyName];
+      if (!ai) return '';
+      const aName = ai.identity ? ai.identity.name_es : ai.name_es;
+      const aFlag = ai.identity ? ai.identity.flag : ai.flag;
+      const tooltip = typeof a === 'object' ? ` title="${a.type}: ${a.importance}"` : '';
+      return `<span class="panel-tag" style="cursor:pointer; display: flex; align-items: center; gap: 4px;" onclick="selectCountryByName('${allyName}')"${tooltip}>
+        <span>${getFlagEmoji(aFlag)}</span> ${aName}
+      </span>`;
+    }).join('');
+    html += `<div class="panel-section animate-in" style="animation-delay:0.15s">
+      <div class="panel-section-title">🤝 Aliados Principales</div>
+      <div class="panel-tags">${allyFlags}</div>
+    </div>`;
+  }
+
+  // Rivals
+  if (info.rivals && info.rivals.length > 0) {
+    const rivalFlags = info.rivals.map(r => {
+      const rivalName = r.country;
+      const ri = GEO_DB.countries[rivalName];
+      if (!ri) return '';
+      const rName = ri.identity ? ri.identity.name_es : ri.name_es;
+      const rFlag = ri.identity ? ri.identity.flag : ri.flag;
+      return `<span class="panel-tag" style="cursor:pointer; display: flex; align-items: center; gap: 4px; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.1);" onclick="selectCountryByName('${rivalName}')" title="${r.reason}">
+        <span>${getFlagEmoji(rFlag)}</span> ${rName}
+      </span>`;
+    }).join('');
+    html += `<div class="panel-section animate-in" style="animation-delay:0.16s">
+      <div class="panel-section-title">⚔️ Rivales Principales</div>
+      <div class="panel-tags">${rivalFlags}</div>
+    </div>`;
+  }
+
+  // Conflicts
+  if (info.conflicts && info.conflicts.length > 0) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title">💥 Conflictos</div>
+      ${info.conflicts.map(c => `
+        <div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
+          <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${c.name} (${c.since})</div>
+          <div style="font-size:11px; color:var(--text-secondary);">${c.current}</div>
+        </div>
+      `).join('')}
+    </div>`;
+  }
+
+  // Geo & Econ Importance
+  if (info.geo_importance) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.18s">
+      <div class="panel-section-title">🎯 Importancia Geopolítica</div>
+      <div class="panel-section-content">${info.geo_importance}</div>
+    </div>`;
+  }
+  if (info.technology || info.minerals || info.energy) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.19s">
+      <div class="panel-section-title">⚡ Recursos y Tecnología</div>
+      <div class="panel-section-content" style="font-size:12px; opacity:0.9;">
+        ${info.technology ? `<b>Tecnología:</b> ${info.technology}<br><br>` : ''}
+        ${info.energy ? `<b>Energía:</b> ${info.energy}<br><br>` : ''}
+        ${info.minerals ? `<b>Minerales Críticos:</b> ${info.minerals}` : ''}
+      </div>
+    </div>`;
+  }
+
+  // Keywords (legacy)
+  if (info.keywords && info.keywords.length > 0) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
+      <div class="panel-section-title">🏷️ Palabras Clave</div>
+      <div class="panel-tags">${info.keywords.map(k => `<span class="panel-tag" style="opacity:0.7">#${k}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  // Compare button
+  html += `<button class="compare-btn animate-in" style="animation-delay:0.25s" onclick="startCompare('${name}')">⚖️ Comparar con otro país</button>`;
+
+  document.getElementById('panel-body').innerHTML = html;
+  
+  // Notice we use "active" for the panel instead of "open" based on previous logic? Wait, the previous code had panel.classList.add('open') at 3225
+  panel.classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('info-panel').classList.remove('open');
+  g.selectAll('.country-path.selected').classed('selected', false);
+  removeConnections();
+  selectedCountry = null;
+}
+
+function selectCountryByName(name) {
+  const el = countryPaths[name];
+  if (el) {
+    const d = d3.select(el).datum();
+    handleClick.call(el, { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 }, d);
+
+    // Zoom to country
+    const bounds = path.bounds(d);
+    const dx = bounds[1][0] - bounds[0][0];
+    const dy = bounds[1][1] - bounds[0][1];
+    const x = (bounds[0][0] + bounds[1][0]) / 2;
+    const y = (bounds[0][1] + bounds[1][1]) / 2;
+    const scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height)));
+    const translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+    svg.transition()
+      .duration(750)
+      .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
+  }
+}
+
+// ============================================================
+// CONNECTIONS
+// ============================================================
+
+function showConnections(name, info) {
+  removeConnections();
+
+  if (!info.allies || info.allies.length === 0) return;
+
+  const connGroup = g.append('g').attr('class', 'connections-layer');
+
+  const sourceEl = countryPaths[name];
+  if (!sourceEl) return;
+  const sourceBounds = path.bounds(d3.select(sourceEl).datum());
+  const sx = (sourceBounds[0][0] + sourceBounds[1][0]) / 2;
+  const sy = (sourceBounds[0][1] + sourceBounds[1][1]) / 2;
+
+  info.allies.forEach(ally => {
+    const allyName = typeof ally === 'string' ? ally : ally.country;
+    const allyEl = countryPaths[allyName];
+    if (!allyEl) return;
+    const allyBounds = path.bounds(d3.select(allyEl).datum());
+    const tx = (allyBounds[0][0] + allyBounds[1][0]) / 2;
+    const ty = (allyBounds[0][1] + allyBounds[1][1]) / 2;
+
+    const allyInfo = GEO_DB.countries[allyName];
+    const color = allyInfo ? getRelationColorHex(allyInfo.relation_es || allyInfo.relation) : '#64748b';
+
+    // Curved line
+    const midX = (sx + tx) / 2;
+    const midY = (sy + ty) / 2 - Math.abs(tx - sx) * 0.15;
+
+    connGroup.append('path')
+      .attr('class', 'connection-line')
+      .attr('d', `M${sx},${sy} Q${midX},${midY} ${tx},${ty}`)
+      .attr('stroke', color)
+      .attr('opacity', 0)
+      .transition()
+      .duration(500)
+      .attr('opacity', 0.5);
+  });
+}
+
+function removeConnections() {
+  g.selectAll('.connections-layer').remove();
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+
+function setupSearch() {
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+
+  input.addEventListener('input', () => {
+    const query = input.value.toLowerCase().trim();
+    if (query.length < 2) {
+      results.classList.remove('active');
+      return;
+    }
+
+    const matches = Object.entries(GEO_DB.countries).filter(([name, info]) => {
+      return info.name_es.toLowerCase().includes(query) ||
+             name.toLowerCase().includes(query) ||
+             (info.keywords && info.keywords.some(k => k.toLowerCase().includes(query))) ||
+             (info.capital && info.capital.toLowerCase().includes(query));
+    }).slice(0, 10);
+
+    if (matches.length === 0) {
+      results.classList.remove('active');
+      return;
+    }
+
+    results.innerHTML = '';
+    matches.forEach(([name, info]) => {
+      const div = document.createElement('div');
+      div.className = 'search-result-item';
+      div.setAttribute('data-name', name);
+      div.innerHTML = `
+        <span class="flag">${getFlagEmoji(info.flag)}</span>
+        <span class="name">${info.name_es}</span>
+        <span class="relation-tag" style="background:${getRelationColor(info.relation_es, 0.15)};color:${getRelationColor(info.relation_es, 1)}">${info.relation_es}</span>
+      `;
+      results.appendChild(div);
+    });
+
+    results.classList.add('active');
+
+    // Click handlers
+    results.querySelectorAll('.search-result-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const n = item.dataset.name;
+        selectCountryByName(n);
+        input.value = '';
+        results.classList.remove('active');
+      });
+    });
+  });
+
+  // Close on click outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#search-container')) {
+      results.classList.remove('active');
+    }
+  });
+
+  // Close on Escape
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      results.classList.remove('active');
+      input.blur();
+    }
+  });
+}
+
+// ============================================================
+// CATEGORY FILTERS
+// ============================================================
+
+function setupCategories() {
+  document.querySelectorAll('.cat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeCategory = pill.dataset.cat;
+      applyCategory(activeCategory);
+    });
+  });
+}
+
+function applyCategory(cat) {
+  g.selectAll('.country-path').each(function(d) {
+    const name = d.properties.name;
+    const info = GEO_DB.countries[name];
+    const el = d3.select(this);
+
+    // Remove legacy classes and clear inline styles
+    el.classed('cat-ally', false).classed('cat-partner', false)
+      .classed('cat-competitor', false).classed('cat-adversary', false)
+      .classed('cat-nato', false).classed('cat-brics', false)
+      .classed('cat-conflict', false).classed('cat-strategic', false);
+    
+    el.style('fill', null).style('opacity', null);
+
+    if (cat === 'all') {
+      if (name === 'United States of America') el.classed('usa', true);
+      else if (info) {
+        const rel = info.relation_es || (info.usa_relation ? info.usa_relation.level : 'neutral');
+        el.style('fill', getRelationColorHex(info.relation || 'neutral'));
+      }
+      el.style('opacity', 1);
+    } 
+    else if (cat === 'potencias') {
+      if (info && info.potencia_regional) {
+        if (info.potencia_regional.tipo_poder.toLowerCase().includes('global')) {
+          el.style('fill', '#4f46e5').style('opacity', 1);
+        } else {
+          el.style('fill', '#9333ea').style('opacity', 1);
+        }
+      }
+      else el.style('opacity', 0.2);
+    }
+    else if (cat === 'aliados') {
+      if (info && info.allies && info.allies.length > 0) el.style('fill', '#16a34a').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+    else if (cat === 'rivales') {
+      if (info && info.rivals && info.rivals.length > 0) el.style('fill', '#dc2626').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+    else if (cat === 'conflictos') {
+      if (info && info.conflicts && info.conflicts.length > 0) el.style('fill', '#be123c').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+    else if (cat === 'organizaciones') {
+      const orgs = info ? (info.orgs || info.orgs_simple || []) : [];
+      if (orgs.includes('OTAN')) el.style('fill', '#2563eb').style('opacity', 1);
+      else if (orgs.includes('OCS')) el.style('fill', '#dc2626').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+    else if (cat === 'bloques') {
+      if (info && (info.brics?.is_member || (info.orgs_simple && info.orgs_simple.includes('BRICS')))) el.style('fill', '#ea580c').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+    else if (cat === 'zonas') {
+      // General zones based on relation
+      if (info && info.relation === 'ally') el.style('fill', 'rgba(37,99,235,0.6)').style('opacity', 1);
+      else if (info && info.relation === 'adversary') el.style('fill', 'rgba(220,38,38,0.6)').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+    else if (cat === 'territorios') {
+      if (info && info.strategic_territories) el.style('fill', '#0891b2').style('opacity', 1);
+      else el.style('opacity', 0.15);
+    }
+  });
+
+  // Update legend
+  updateLegend(cat);
+}
+
+function updateLegend(cat) {
+  const legend = document.getElementById('map-legend');
+  let html = '';
+
+  switch(cat) {
+    case 'all':
+      html = `
+        <div class="legend-title">Relaciones Globales</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>EE.UU.</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Aliados</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>Socios Estratégicos</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Competidores</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>Adversarios</div>
+      `;
+      break;
+    case 'potencias':
+      html = 
+        <div class="legend-title">Potencias regionales</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#4f46e5"></div>Potencia global con predominio regional</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#9333ea"></div>Potencia regional principal</div>
+      ;
+      break;
+    case 'organizaciones':
+      html = `
+        <div class="legend-title">Organizaciones</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>OTAN</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>OCS</div>
+      `;
+      break;
+    case 'bloques':
+      html = `
+        <div class="legend-title">Bloques Económicos</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ea580c"></div>BRICS</div>
+      `;
+      break;
+    case 'conflictos':
+      html = `
+        <div class="legend-title">Conflictos</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#be123c"></div>Zona de Conflicto Activo</div>
+      `;
+      break;
+    case 'aliados':
+      html = `<div class="legend-title">Red de Alianzas</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Aliado Mayor</div>`;
+      break;
+    case 'rivales':
+      html = `<div class="legend-title">Rivales Sistémicos</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Rival / Adversario</div>`;
+      break;
+    case 'zonas':
+      html = `<div class="legend-title">Zonas de Influencia</div>`;
+      break;
+    case 'territorios':
+      html = `<div class="legend-title">Territorios Estratégicos</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Punto de Control</div>`;
+      break;
+  }
+
+  legend.innerHTML = html;
+}
+
+// ============================================================
+// CONTINENT NAVIGATION
+// ============================================================
+
+function setupContinentNav() {
+  document.querySelectorAll('.cont-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cont-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      zoomToContinent(btn.dataset.continent);
+    });
+  });
+}
+
+function zoomToContinent(continent) {
+  const view = GEO_DB.continentViews[continent];
+  if (!view) return;
+
+  const [cx, cy] = projection(view.center);
+  const scale = view.scale;
+
+  svg.transition()
+    .duration(1000)
+    .ease(d3.easeCubicInOut)
+    .call(zoom.transform,
+      d3.zoomIdentity
+        .translate(width / 2, height / 2)
+        .scale(scale)
+        .translate(-cx, -cy)
+    );
+}
+
+// ============================================================
+// COMPARATOR
+// ============================================================
+
+let compareMode = false;
+let compareA = null;
+let compareB = null;
+
+function startCompare(countryName) {
+  compareA = countryName;
+  compareMode = true;
+  closePanel();
+
+  // Show instruction toast
+  showToast('Haz clic en otro país para comparar');
+
+  // Override click handler
+  g.selectAll('.country-path').on('click.compare', function(event, d) {
+    const name = d.properties.name;
+    if (name === compareA) return;
+
+    compareB = name;
+    compareMode = false;
+
+    // Restore normal click
+    g.selectAll('.country-path').on('click.compare', null);
+
+    showComparator(compareA, compareB);
+  });
+}
+
+function showComparator(nameA, nameB) {
+  const infoA = GEO_DB.countries[nameA];
+  const infoB = GEO_DB.countries[nameB];
+
+  if (!infoA || !infoB) return;
+
+  const body = document.getElementById('comparator-body');
+  body.innerHTML = `
+    <div class="comparator-col">
+      <div class="comp-header-content">
+        <div class="comp-flag">${getFlagEmoji(infoA.flag)}</div>
+        <div class="comp-name">${infoA.name_es}</div>
+        <div class="comp-relation" style="background:${getRelationColor(infoA.relation_es, 0.15)};color:${getRelationColor(infoA.relation_es, 1)}">${infoA.relation_es}</div>
+      </div>
+      <div class="comp-stat"><span class="comp-stat-label">Capital</span><span class="comp-stat-value">${infoA.capital}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">Población</span><span class="comp-stat-value">${infoA.population}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">PIB</span><span class="comp-stat-value">${infoA.gdp}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">PIB per cápita</span><span class="comp-stat-value">${infoA.gdp_pc}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">Región</span><span class="comp-stat-value">${infoA.region}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">Organizaciones</span><span class="comp-stat-value">${infoA.orgs.length > 0 ? infoA.orgs.join(', ') : '—'}</span></div>
+    </div>
+    <div class="comparator-col">
+      <div class="comp-header-content">
+        <div class="comp-flag">${getFlagEmoji(infoB.flag)}</div>
+        <div class="comp-name">${infoB.name_es}</div>
+        <div class="comp-relation" style="background:${getRelationColor(infoB.relation_es, 0.15)};color:${getRelationColor(infoB.relation_es, 1)}">${infoB.relation_es}</div>
+      </div>
+      <div class="comp-stat"><span class="comp-stat-label">Capital</span><span class="comp-stat-value">${infoB.capital}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">Población</span><span class="comp-stat-value">${infoB.population}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">PIB</span><span class="comp-stat-value">${infoB.gdp}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">PIB per cápita</span><span class="comp-stat-value">${infoB.gdp_pc}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">Región</span><span class="comp-stat-value">${infoB.region}</span></div>
+      <div class="comp-stat"><span class="comp-stat-label">Organizaciones</span><span class="comp-stat-value">${infoB.orgs.length > 0 ? infoB.orgs.join(', ') : '—'}</span></div>
+    </div>
+  `;
+
+  document.getElementById('comparator').classList.add('open');
+  document.getElementById('overlay').classList.add('active');
+}
+
+function closeComparator() {
+  document.getElementById('comparator').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+  compareMode = false;
+}
+
+// ============================================================
+// TOAST NOTIFICATION
+// ============================================================
+
+function showToast(message) {
+  let toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(59,130,246,0.95);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 2000;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      backdrop-filter: blur(12px);
+    `;
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+  });
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 3000);
+}
+
+// ============================================================
+// LENS EFFECT
+// ============================================================
+
+// Lens effect removed
+
+// ============================================================
+// CONTROLS
+// ============================================================
+
+function zoomIn() {
+  svg.transition().duration(300).call(zoom.scaleBy, 1.5);
+}
+
+function zoomOut() {
+  svg.transition().duration(300).call(zoom.scaleBy, 0.67);
+}
+
+function resetView() {
+  svg.transition()
+    .duration(750)
+    .ease(d3.easeCubicInOut)
+    .call(zoom.transform, d3.zoomIdentity);
+
+  document.querySelectorAll('.cont-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.cont-btn[data-continent="world"]').classList.add('active');
+
+  // Reset category
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('.cat-pill[data-cat="all"]').classList.add('active');
+  applyCategory('all');
+
+  closePanel();
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen().catch(() => {});
+  }
+}
+
+function handleResize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+
+  projection
+    .scale(width / 5.5)
+    .translate([width / 2, height / 2 + 20]);
+
+  svg.attr('width', width).attr('height', height);
+
+  g.selectAll('.country-path').attr('d', path);
+  g.selectAll('.graticule').attr('d', path);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', initApp);
+</script>
+</body>
+</html>
