@@ -1,0 +1,154 @@
+{
+  "United States of America": {
+    "tipo_poder": "Potencia global con predominio regional en América y liderazgo estratégico en el sistema internacional.",
+    "region_poder": "América del Norte, América Latina y el Caribe; influencia de alcance mundial.",
+    "long_reason": "Clasificada como superpotencia (Asia Power Index 2025). Es una potencia global con capacidades económicas, militares, tecnológicas, diplomáticas y financieras inigualables. En el hemisferio occidental mantiene una posición estratégica privilegiada.",
+    "influence": "América del Norte, Caribe, América Latina y, a escala mundial, Europa, Indo-Pacífico y Medio Oriente.",
+    "strengths": "economía, dólar y sistema financiero, tecnología, fuerzas armadas, inteligencia, alianzas y capacidad diplomática.",
+    "strategic": "Su posición geográfica, capacidad militar y extensa red de alianzas le permiten proyectar poder en múltiples regiones simultáneamente."
+  },
+  "China": {
+    "tipo_poder": "Potencia global con predominio regional en Asia Oriental e Indo-Pacífico.",
+    "region_poder": "Asia Oriental, Mar de China Meridional, Taiwán e Indo-Pacífico.",
+    "long_reason": "Clasificada como superpotencia (Asia Power Index 2025). Combina una enorme capacidad económica e industrial con creciente poder tecnológico y militar. <br><small><i>La investigación describe a China como superpotencia con capacidad para modificar el equilibrio estratégico del Indo-Pacífico. (<a href=\"https://power.lowyinstitute.org/countries/china/\" target=\"_blank\" style=\"color:var(--accent-blue)\">Lowy Institute</a>)</i></small>",
+    "influence": "Asia Oriental, Sudeste Asiático, Asia Central y extensas redes comerciales internacionales.",
+    "strengths": "manufactura, comercio, tecnología, infraestructura, finanzas, población, poder naval y cadenas de suministro.",
+    "strategic": "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
+  },
+  "Russia": {
+    "tipo_poder": "Potencia global con predominio regional en Eurasia y potencia media en Asia.",
+    "region_poder": "Europa Oriental, Cáucaso, Asia Central y Ártico.",
+    "long_reason": "Clasificada como potencia media en Asia (Asia Power Index 2025), mantiene el estatus de potencia global por su arsenal nuclear y capacidad de disuasión. Posee territorio enorme y recursos energéticos que le permiten ejercer influencia sustancial.",
+    "influence": "Europa Oriental, Cáucaso, Asia Central, Ártico y espacios estratégicos de Medio Oriente.",
+    "strengths": "arsenal nuclear, fuerzas armadas, energía, territorio, recursos naturales, industria militar y disuasión estratégica.",
+    "strategic": "Control de espacios euroasiáticos, rutas energéticas, acceso al Ártico y posición de puente intercontinental."
+  },
+  "India": {
+    "tipo_poder": "Potencia mayor y potencia regional principal del sur de Asia.",
+    "region_poder": "Asia del Sur e Indo-Pacífico.",
+    "long_reason": "Clasificada como potencia mayor (Asia Power Index 2025). India combina una enorme población, veloz crecimiento económico, formidables capacidades militares y una posición estratégica insustituible en el océano Índico.",
+    "influence": "Asia del Sur, océano Índico e Indo-Pacífico.",
+    "strengths": "población, economía, tecnología, industria, fuerzas armadas, espacio y creciente peso diplomático.",
+    "strategic": "Actor fundamental y contrapeso indispensable en el equilibrio de poder del Indo-Pacífico."
+  },
+  "Japan": {
+    "tipo_poder": "Potencia media (Asia Power Index) y potencia económica-tecnológica del Indo-Pacífico.",
+    "region_poder": "Asia Oriental e Indo-Pacífico.",
+    "long_reason": "Clasificada como potencia media (Asia Power Index 2025). Posee una de las economías más avanzadas, tecnología de altísimo nivel, enorme influencia financiera y una alianza estratégica decisiva con EE. UU.",
+    "influence": "Japón, Pacífico occidental y Asia Oriental.",
+    "strengths": "tecnología, industria, economía, innovación, diplomacia, resiliencia y fuertes capacidades de defensa.",
+    "strategic": "Su geografía archipelágica en el Pacífico occidental contiene rutas marítimas vitales y actúa como barrera estratégica primaria."
+  },
+  "Brazil": {
+    "tipo_poder": "Potencia regional principal de América del Sur.",
+    "region_poder": "América del Sur y Atlántico Sur.",
+    "long_reason": "Es el Estado con mayor extensión territorial, población y peso económico de Sudamérica, sosteniendo una activa diplomacia multilateral e influencia regional consolidada.",
+    "influence": "América del Sur, Atlántico Sur y foros multilaterales.",
+    "strengths": "territorio, población, enorme sector agropecuario, recursos hídricos, energía, biodiversidad y diplomacia.",
+    "strategic": "Controla gran parte de la Amazonía, proyecta influencia naval en el Atlántico Sur y lidera la dinámica integradora sudamericana."
+  },
+  "Mexico": {
+    "tipo_poder": "Potencia regional principal de América del Norte y Mesoamérica.",
+    "region_poder": "América del Norte, Centroamérica y espacio mesoamericano.",
+    "long_reason": "Su integración económica con EE. UU., su población y su robusta industria manufacturera orientada a la exportación le confieren una ineludible influencia regional estructural.",
+    "influence": "América del Norte, Mesoamérica y América Latina.",
+    "strengths": "manufactura, libre comercio, demografía, remesas, proximidad geográfica y estrechos vínculos con Estados Unidos.",
+    "strategic": "Su frontera norte gestiona flujos migratorios y comerciales vitales, actuando como bisagra entre las Américas."
+  },
+  "Germany": {
+    "tipo_poder": "Potencia regional principal de Europa y motor económico continental.",
+    "region_poder": "Europa Central y Unión Europea.",
+    "long_reason": "Es la principal economía europea, ostentando un peso industrial, comercial, tecnológico y político inigualable dentro de las instituciones de la Unión Europea.",
+    "influence": "Europa continental y Unión Europea.",
+    "strengths": "poderosa base industrial, exportaciones tecnológicas, solidez financiera, diplomacia y liderazgo institucional europeo.",
+    "strategic": "Su orientación política y fortaleza económica determinan en gran medida la autonomía estratégica y viabilidad del proyecto europeo."
+  },
+  "France": {
+    "tipo_poder": "Potencia regional principal europea con alcance y disuasión estratégica a escala mundial.",
+    "region_poder": "Europa, Mediterráneo, África y territorios de ultramar.",
+    "long_reason": "Único país de la UE con arsenal nuclear y asiento permanente en el Consejo de Seguridad de la ONU. Combina fuerza militar, diplomacia y presencia marítima extensa.",
+    "influence": "Europa, Mediterráneo, África, Indo-Pacífico (vía ultramar) y organizaciones internacionales.",
+    "strengths": "disuasión nuclear, industria de defensa independiente, diplomacia activa, cultura y vastísima zona económica exclusiva marítima.",
+    "strategic": "Su doctrina de autonomía estratégica y su presencia territorial en múltiples océanos le permiten sostener una política exterior excepcionalmente independiente."
+  },
+  "United Kingdom": {
+    "tipo_poder": "Potencia regional principal europea con alcance geoestratégico mundial.",
+    "region_poder": "Europa y Atlántico Norte, con asociaciones en el Indo-Pacífico.",
+    "long_reason": "Posee fuerzas armadas de primera línea, armas nucleares, servicios financieros globales, inteligencia sofisticada y lazos estrechos y estructurales con Estados Unidos.",
+    "influence": "Europa, Atlántico Norte, Commonwealth e Indo-Pacífico.",
+    "strengths": "defensa de alta tecnología, inteligencia (Five Eyes), centro financiero global, influencia cultural y asiento en el CSNU.",
+    "strategic": "Socio pilar de la OTAN, garante de la seguridad marítima europea y actor emergente en la seguridad del Indo-Pacífico (AUKUS)."
+  },
+  "Turkey": {
+    "tipo_poder": "Potencia regional principal euroasiática y bisagra geopolítica.",
+    "region_poder": "Anatolia, Mediterráneo Oriental, Mar Negro, Cáucaso y Medio Oriente.",
+    "long_reason": "Su soberanía sobre los estrechos del Bósforo y Dardanelos, sumada a su proactiva diplomacia militar y poderosa industria de drones, consolidan su influencia en múltiples frentes.",
+    "influence": "Turquía, Mar Negro, Cáucaso, Balcanes, Norte de África, Mediterráneo Oriental y Medio Oriente.",
+    "strengths": "gran ejército (OTAN), próspera industria de defensa, inmejorable ubicación geográfica y pragmatismo diplomático.",
+    "strategic": "Controla el paso marítimo entre el Mar Negro y el Mediterráneo, operando como mediador indispensable y potencia equilibradora regional."
+  },
+  "Iran": {
+    "tipo_poder": "Potencia regional principal asimétrica de Medio Oriente.",
+    "region_poder": "Golfo Pérsico, Medio Oriente y Asia Occidental.",
+    "long_reason": "A pesar de las sanciones internacionales, proyecta enorme influencia mediante el apoyo a redes de actores no estatales (Eje de la Resistencia) y robustos programas de misiles y tecnología militar.",
+    "influence": "Golfo Pérsico, Irak, Siria, Líbano, Yemen y Asia Occidental.",
+    "strengths": "abundancia energética, inexpugnable topografía, doctrina de guerra asimétrica, redes milicianas aliadas y extensa producción de misiles/drones.",
+    "strategic": "Capacidad de disrupción en el Estrecho de Ormuz (ruta petrolera crítica) y consolidación del arco de influencia chiita hasta el Mediterráneo."
+  },
+  "Saudi Arabia": {
+    "tipo_poder": "Potencia regional principal del Golfo y líder del mundo sunita.",
+    "region_poder": "Península Arábiga, Golfo Pérsico y mundo árabe.",
+    "long_reason": "Combina su liderazgo estructural en los mercados mundiales de energía con masivas reservas financieras y la custodia de los sitios más sagrados del islam.",
+    "influence": "Península Arábiga, mercados de energía globales, mundo árabe e islámico.",
+    "strengths": "reservas y producción petrolera (OPEP), fondos soberanos de riqueza masivos, liderazgo religioso y cuantiosas compras militares.",
+    "strategic": "Estabilizador principal del mercado energético mundial y actor ineludible en cualquier reconfiguración de seguridad del Medio Oriente."
+  },
+  "Israel": {
+    "tipo_poder": "Potencia regional principal de Medio Oriente y potencia tecnológica-militar.",
+    "region_poder": "Levante y Mediterráneo Oriental.",
+    "long_reason": "Pese a su reducida extensión y población, sus innovaciones tecnológicas, su superioridad militar cualitativa en la región y su alianza estratégica con EE. UU. le otorgan una ventaja estratégica categórica.",
+    "influence": "Levante, Mediterráneo Oriental y dinámica de seguridad de Medio Oriente.",
+    "strengths": "superioridad tecnológica y cibernética, sofisticada inteligencia (Mossad), doctrina militar disuasoria y dinámico sector de innovación.",
+    "strategic": "Su capacidad para alterar el balance de poder regional a través de ataques preventivos y tecnología avanzada moldea de forma absoluta el contexto de seguridad del Levante."
+  },
+  "Egypt": {
+    "tipo_poder": "Potencia regional principal del Norte de África y polo de estabilidad árabe.",
+    "region_poder": "Norte de África, Mediterráneo Oriental y Mar Rojo.",
+    "long_reason": "El Estado más poblado del mundo árabe ejerce soberanía territorial sobre el Canal de Suez y mantiene las fuerzas armadas más grandes y mejor equipadas del continente africano.",
+    "influence": "Norte de África, Mediterráneo Oriental, Mar Rojo, Cuerno de África y Liga Árabe.",
+    "strengths": "excepcional ubicación geográfica, crecimiento demográfico, fuerzas armadas y capacidad de arbitraje político en el mundo árabe.",
+    "strategic": "El Canal de Suez es el cordón umbilical del comercio entre Europa y Asia, haciendo de Egipto el guardián de una de las arterias económicas vitales del planeta."
+  },
+  "Indonesia": {
+    "tipo_poder": "Potencia media (Asia Power Index) y potencia regional principal del Sudeste Asiático.",
+    "region_poder": "Sudeste Asiático e Indo-Pacífico.",
+    "long_reason": "Clasificada como potencia media (Asia Power Index 2025). Es la mayor economía de la ASEAN, el país de mayoría musulmana más poblado del mundo y controla cuellos de botella marítimos existenciales para el comercio mundial. <br><small><i>(<a href=\"https://power.lowyinstitute.org/countries/indonesia/\" target=\"_blank\" style=\"color:var(--accent-blue)\">Lowy Institute</a>)</i></small>",
+    "influence": "ASEAN, Sudeste Asiático, rutas marítimas críticas e Indo-Pacífico.",
+    "strengths": "vasta demografía, dinamismo económico, enormes recursos naturales, diplomacia no alineada y soberanía sobre estrechos marítimos vitales.",
+    "strategic": "Controla los estrechos de Malaca, Sunda y Lombok, puntos de estrangulamiento indispensables para el comercio interoceánico y el despliegue naval."
+  },
+  "Australia": {
+    "tipo_poder": "Potencia media (Asia Power Index) y ancla geoestratégica de Oceanía.",
+    "region_poder": "Australia, Pacífico Sur, Sudeste Asiático e Índico.",
+    "long_reason": "Clasificada como potencia media (Asia Power Index 2025). Integra a la perfección vastos recursos continentales con instituciones avanzadas, ejerciendo influencia fundamental a través de alianzas de defensa de alta confiabilidad y desarrollo diplomático. <br><small><i>(<a href=\"https://power.lowyinstitute.org/countries/australia/\" target=\"_blank\" style=\"color:var(--accent-blue)\">Lowy Institute</a>)</i></small>",
+    "influence": "Pacífico Sur (área de influencia primaria), Sudeste Asiático, Indo-Pacífico y océano Índico oriental.",
+    "strengths": "robusta alianza de defensa (AUKUS, ANZUS), formidable capacidad de inteligencia (Five Eyes), economía rica en recursos críticos e instituciones sólidas.",
+    "strategic": "Sirve como bastión logístico y socio principal de las democracias occidentales para mantener un Indo-Pacífico libre, disuadiendo el expansionismo en el Pacífico Sur."
+  },
+  "South Africa": {
+    "tipo_poder": "Potencia regional principal del África austral con proyección institucional continental.",
+    "region_poder": "África austral y continente africano.",
+    "long_reason": "La nación más industrializada de África actúa como portavoz del continente en foros internacionales y lidera las misiones de mantenimiento de paz e iniciativas diplomáticas africanas.",
+    "influence": "Comunidad de Desarrollo de África Austral (SADC), Unión Africana y bloque BRICS.",
+    "strengths": "sofisticado sector financiero e industrial, inmensas reservas minerales, red de infraestructuras avanzadas y consolidado prestigio diplomático multilateral.",
+    "strategic": "Su posición en el Cabo de Buena Esperanza ofrece la única alternativa marítima viable frente a interrupciones en el Canal de Suez, asegurando el flujo logístico mundial."
+  },
+  "Nigeria": {
+    "tipo_poder": "Potencia regional principal de África Occidental y gigante demográfico.",
+    "region_poder": "África Occidental y Golfo de Guinea.",
+    "long_reason": "La economía más grande y el país más poblado de África ejerce un liderazgo estructural en la subregión a través de la CEDEAO y proyecciones de seguridad conjuntas.",
+    "influence": "África Occidental, bloque de la CEDEAO, Golfo de Guinea y foros panafricanos.",
+    "strengths": "proyección demográfica imparable, vastas exportaciones de hidrocarburos, emergente sector tecnológico e industrias culturales de alcance global.",
+    "strategic": "Garante indispensable de la estabilidad política en África Occidental y principal fuerza estabilizadora frente al extremismo y piratería en el Golfo de Guinea."
+  }
+}
