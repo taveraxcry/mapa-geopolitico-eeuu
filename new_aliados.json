@@ -1,0 +1,32 @@
+{
+  "United States of America": {
+    "tipo_alianza": "Arquitectura de seguridad hemisférica y global (Eje)",
+    "nivel": "N/A",
+    "description": "Centro de gravedad del sistema interamericano de seguridad y defensa, lidera una red global de alianzas formales (OTAN, acuerdos bilaterales) y asociaciones estratégicas.",
+    "mecanismos": ["OEA", "TIAR", "OTAN", "Comandos Combatientes Unificados"]
+  },
+  "Colombia": {
+    "tipo_alianza": "Aliado estratégico y socio de seguridad hemisférica",
+    "nivel": "Major Non-NATO Ally (MNNA) / Socio Global OTAN",
+    "description": "El principal socio estratégico de EE. UU. en Sudamérica. Designado Major Non-NATO Ally en 2022 y primer socio global de la OTAN en América Latina.",
+    "mecanismos": ["OEA", "TIAR", "Acuerdos Bilaterales de Defensa", "OTAN (Socio Global)", "Plan Colombia / Paz Colombia"]
+  },
+  "Argentina": {
+    "tipo_alianza": "Socio regional y cooperación en defensa",
+    "nivel": "Major Non-NATO Ally (MNNA)",
+    "description": "Designado Major Non-NATO Ally en 1998, mantiene vínculos históricos con la arquitectura de seguridad interamericana y participación en ejercicios conjuntos.",
+    "mecanismos": ["OEA", "TIAR"]
+  },
+  "Brazil": {
+    "tipo_alianza": "Socio regional mayor",
+    "nivel": "Major Non-NATO Ally (MNNA)",
+    "description": "Designado Major Non-NATO Ally en 2019, la relación es pragmática y prioriza la independencia estratégica, pero coopera profundamente en seguridad marítima y defensa.",
+    "mecanismos": ["OEA", "TIAR", "Junta Interamericana de Defensa"]
+  },
+  "Mexico": {
+    "tipo_alianza": "Socio de seguridad fronteriza y hemisférica",
+    "nivel": "Cooperación Bilateral Estratégica",
+    "description": "Aunque se retiró del TIAR en 2002 por su doctrina de no intervención, mantiene una estrecha cooperación con EE. UU. en seguridad fronteriza, antinarcóticos e inteligencia.",
+    "mecanismos": ["OEA", "Entendimiento Bicentenario"]
+  }
+}

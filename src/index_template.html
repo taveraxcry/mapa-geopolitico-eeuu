@@ -267,15 +267,15 @@ body {
 
 .country-path {
   fill: var(--land-default);
-  stroke: rgba(148,163,184,0.4);
-  stroke-width: 0.8px;
+  stroke: rgba(10, 14, 26, 0.8); /* Dark background color gap */
+  stroke-width: 1px;
   cursor: pointer;
   transition: fill 0.2s ease, stroke-width 0.2s ease;
 }
 
 .country-path:hover {
   fill: var(--land-hover);
-  stroke: rgba(148,163,184,0.8);
+  stroke: rgba(255, 255, 255, 0.7);
   stroke-width: 1.5px;
 }
 
@@ -3023,6 +3023,8 @@ function initApp() {
     .scaleExtent([0.8, 20])
     .on('zoom', (event) => {
       g.attr('transform', event.transform);
+      g.selectAll('.mesh-borders').attr('stroke-width', 1 / event.transform.k);
+      g.selectAll('.country-path').attr('stroke-width', 1 / event.transform.k);
     });
 
   svg.call(zoom);
@@ -3119,9 +3121,9 @@ function renderCountries(data) {
   g.append('path')
     .datum(topojson.mesh(data, data.objects.countries, (a, b) => a !== b))
     .attr('fill', 'none')
-    .attr('stroke', 'rgba(148,163,184,0.4)')
-    .attr('stroke-width', 0.8)
-    .attr('d', path);
+    .attr('stroke', 'rgba(148, 163, 184, 0.25)')
+    .attr('stroke-width', 0.6).style('pointer-events', 'none')
+    .attr('d', path).attr('class', 'mesh-borders');
 }
 
 function renderStrategicLocations() {
