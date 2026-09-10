@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -2992,14 +2992,169 @@ const GEO_DB = {
     }
   },
 
-  // Strategic locations
+  // Strategic locations - Full geopolitical data (Updated: 9 Sep 2026)
   strategicLocations: [
-    { name: "Canal de Panamá", coords: [-79.5, 9.0], description: "6% del comercio marítimo mundial", type: "canal" },
-    { name: "Estrecho de Malaca", coords: [101.5, 2.5], description: "25% del comercio marítimo mundial", type: "strait" },
-    { name: "Estrecho de Ormuz", coords: [56.5, 26.5], description: "21% del petróleo mundial", type: "strait" },
-    { name: "Bab el-Mandeb", coords: [43.3, 12.5], description: "Acceso al Mar Rojo", type: "strait" },
-    { name: "Canal de Suez", coords: [32.3, 30.5], description: "12% del comercio marítimo", type: "canal" },
-    { name: "Estrecho del Bósforo", coords: [29.0, 41.1], description: "Acceso al Mar Negro", type: "strait" }
+    {
+      name: "Estrecho de Ormuz",
+      name_short: "Ormuz",
+      coords: [56.5, 26.5],
+      icon: "🛢️",
+      type: "strait",
+      risk: "CRÍTICO",
+      risk_color: "#dc2626",
+      what: "Estrecho entre Irán, Omán y EAU. Mide ~56 km en su punto más estrecho. Única salida marítima del Golfo Pérsico.",
+      strategic: "El chokepoint energético más crítico del mundo. El 20-21% del petróleo mundial (aprox. 17 millones de barriles/día) y el 20% del GNL global transitan por aquí.",
+      countries: ["Irán", "Omán", "Emiratos Árabes Unidos", "Arabia Saudita", "Kuwait", "Iraq", "Qatar"],
+      commercial: "~35% del petróleo comercializado por vía marítima. Interrupción elevaría el precio del crudo a niveles históricos.",
+      energy: "Paso obligado para exportaciones de Arabia Saudita, EAU, Iraq, Kuwait, Qatar e Irán. Sin alternativa viable equivalente.",
+      military: "EE. UU. mantiene la 5ª Flota en Bahréin. Irán posee la doctrina de 'guerra asimétrica' para intentar cerrarlo.",
+      situation_current: "⚠️ ZONA DE CONFLICTO ACTIVO: Doble bloqueo en curso desde julio 2026. EE.UU. mantiene bloqueo naval contra puertos iraníes (desde 14 Jul 2026). Irán ataca buques asociados a EE.UU./Israel. Solo 6 buques/día vs. ~85 en condiciones normales. Brent superó los 100 USD/barril.",
+      verified_facts: [
+        "14 Jul 2026: EE. UU. declaró bloqueo naval contra puertos iraníes.",
+        "Sep 9-10 2026: Irán atacó más de una docena de buques, incluyendo petroleros y barcos estadounidenses.",
+        "Irán declaró 'zona prohibida' que incluye partes del Golfo de Omán y Mar Arábigo.",
+        "Tráfico caído a ~7% del volumen normal (6 buques/día vs. ~85).",
+        "Brent crude por encima de 100 USD/barril.",
+        "La OMI calificó la crisis de 'sin precedentes'."
+      ],
+      interpretation: "El Estrecho no está completamente bloqueado, pero está efectivamente militarizado y el tráfico comercial ha colapsado. EE.UU. mantiene corredor de seguridad para aliados, pero el riesgo de escalada total es máximo.",
+      risk_scenarios: "Escalada total paralizaría el 20% del suministro energético mundial. El crudo alcanzaría máximos históricos (>$150/barril). Recesión global inmediata.",
+      updated: "9 Sep 2026",
+      sources: "Al Jazeera, Straits.live, OMI, CBS News, alarabiya.net"
+    },
+    {
+      name: "Bab el-Mandeb",
+      name_short: "Bab el-Mandeb",
+      coords: [43.3, 12.5],
+      icon: "⚠️",
+      type: "strait",
+      risk: "ALTO",
+      risk_color: "#ea580c",
+      what: "Estrecho entre Yemen (Asia) y Yibuti/Eritrea (África). Conecta el Mar Rojo con el Golfo de Adén. ~29 km en su punto más estrecho.",
+      strategic: "Puerta de entrada al Canal de Suez desde el sur. El ~10% del comercio marítimo mundial depende de este corredor.",
+      countries: ["Yemen", "Yibuti", "Eritrea", "Arabia Saudita", "Somalia"],
+      commercial: "Paso de entre 17.000 y 21.000 buques al año en condiciones normales. La interrupción fuerza el desvío por el Cabo de Buena Esperanza (+10-14 días de navegación).",
+      energy: "Paso de crudo saudí hacia Europa y Asia via Suez. Exportaciones de GNL del Golfo hacia Occidente.",
+      military: "Camp Lemonnier (EE.UU.) en Yibuti. Bases militares de Francia, China, Japón e Italia en la zona.",
+      situation_current: "⚠️ ALTA TENSIÓN: Los Houthis declararon bloqueo naval contra puertos saudíes (jul 2026). Combates intensos en Taiz y Hudaydah (sep 2026). Ataques con misiles y drones Houthi sobre Arabia Saudita (Abha, Jazán). Empresas navieras desviando hacia el Cabo.",
+      verified_facts: [
+        "Jul 2026: Houthis declararon bloqueo naval contra puertos de Arabia Saudita.",
+        "Sep 2026: Combates en Hudaydah y Taiz con centenares de bajas.",
+        "Ataques de misiles y drones sobre infraestructura energética saudí (Jazán, Najrán).",
+        "Arabia Saudita desvió exportaciones hacia Yanbu y Canal de Suez.",
+        "UE condenó la escalada Houthi como 'peligrosa'."
+      ],
+      interpretation: "El tráfico comercial ha disminuido pero no se ha detenido. El peligro real es la acumulación de riesgos junto a la crisis de Ormuz: si los dos corredores del Mar Rojo y el Golfo se cierran simultáneamente, el sistema logístico global entra en crisis severa.",
+      risk_scenarios: "Bloqueo efectivo del corredor Suez-Mar Rojo combinado con la crisis de Ormuz generaría una crisis logística y energética sin precedentes desde la guerra del Yom Kippur.",
+      updated: "9 Sep 2026",
+      sources: "Reuters, Al Jazeera, EU External Action Service, Saudi Aramco advisories"
+    },
+    {
+      name: "Canal de Suez",
+      name_short: "Suez",
+      coords: [32.3, 30.5],
+      icon: "🚢",
+      type: "canal",
+      risk: "MEDIO-ALTO",
+      risk_color: "#d97706",
+      what: "Canal artificial de 193 km que conecta el Mar Mediterráneo con el Mar Rojo a través de Egipto. Inaugurado en 1869.",
+      strategic: "Atajo de ~7.000 km respecto al Cabo de Buena Esperanza. El ~12% del comercio marítimo mundial, 30% del tráfico de contenedores y 10% del petróleo global.",
+      countries: ["Egipto", "UE", "China", "Arabia Saudita"],
+      commercial: "~19.000 buques al año en condiciones normales. Julio 2026: 1.340 buques (+27% interanual) por redirección desde Ormuz.",
+      energy: "Paso clave del crudo del Golfo hacia Europa. En jul 2026 procesó aumento por redirección saudí.",
+      military: "Egipto controla soberanamente el canal. EE.UU. tiene acuerdos de acceso prioritario. Vulnerable a sabotaje.",
+      situation_current: "✅ OPERATIVO con recuperación: El canal opera con normalidad aunque a volúmenes aún por debajo de 2023. Beneficiado por la crisis de Ormuz que redirige tráfico. Ingresos jul 2026: $505M, máximo desde dic 2023. Persiste cautela por inseguridad en el Mar Rojo.",
+      verified_facts: [
+        "Jul 2026: 1.340 buques transitaron (+27% interanual), ingresos $505M.",
+        "Ingresos anuales 2026 proyectados: $5.8-6B (SCA).",
+        "Operadores mantienen recargos de seguridad para rutas al Mediterráneo oriental.",
+        "Muchas navieras mantienen desvíos por el Cabo por razones de seguro."
+      ],
+      interpretation: "El Suez se beneficia paradójicamente de la crisis de Ormuz. Sin embargo, su recuperación es frágil: depende del control del Bab el-Mandeb. Si los Houthis efectivamente cierran el Mar Rojo, el Suez pierde su valor como alternativa.",
+      risk_scenarios: "El escenario de riesgo sistémico requiere que ambas crisis (Ormuz + Bab el-Mandeb) se consoliden simultáneamente. En ese caso, el Suez quedaría inaccesible y el Cabo sería la única ruta.",
+      updated: "9 Sep 2026",
+      sources: "Suez Canal Authority, Clarksons Research, Reuters"
+    },
+    {
+      name: "Canal de Panamá",
+      name_short: "Panamá",
+      coords: [-79.5, 9.0],
+      icon: "🚧",
+      type: "canal",
+      risk: "MEDIO",
+      risk_color: "#ca8a04",
+      what: "Canal de 82 km que conecta el Atlántico (Caribe) con el Pacífico a través de Panamá. Inaugurado en 1914. Ampliado en 2016.",
+      strategic: "Conecta las costas este y oeste de América. El ~6% del comercio marítimo mundial y ~40% del comercio entre Asia y la costa este de EE.UU.",
+      countries: ["Panamá", "EE. UU.", "China", "Colombia"],
+      commercial: "~14.000 buques al año. Restricciones actuales: 34 tránsitos/día (reducción desde 36). Esclusas Neopanamax: 9 tránsitos/día.",
+      energy: "Paso clave de GNL de EE.UU. hacia Asia. Petróleo y derivados en ambas direcciones.",
+      military: "EE. UU. opera múltiples bases en la zona. Panamá es neutral. Debate geopolítico sobre influencia china en la administración portuaria.",
+      situation_current: "⚡ RESTRICCIONES ACTIVAS: Reducción de tránsitos diarios a 34 (baja a 32 el 15 Sep 2026) por sequía severa vinculada a El Niño. Nivel del lago Gatún en mínimos críticos. Calado Neopanamax: 14,63 m (postergada reducción prevista para oct 2026).",
+      verified_facts: [
+        "Sep 2026: 34 tránsitos diarios (reducción desde normalidad de ~36-38).",
+        "15 Sep 2026: programada nueva reducción a 32 tránsitos.",
+        "Esclusas Neopanamax limitadas a 9 tránsitos/día.",
+        "Calado máximo actual: 14,63 m. Reducción a 14,48 m postergada indefinidamente.",
+        "Proyecto Río Indio en estudio como solución estructural de largo plazo."
+      ],
+      interpretation: "El Canal de Panamá opera bajo restricciones pero no está bloqueado. El problema es estructural (dependencia hídrica en un contexto de cambio climático) y estratégico (posible influencia china en operadores portuarios como Hutchison Ports).",
+      risk_scenarios: "Sequía más severa en oct-nov 2026 podría forzar nuevas reducciones. Cierre parcial generaría escasez en la cadena de suministro Asia-Costa Este de EE.UU.",
+      updated: "9 Sep 2026",
+      sources: "Autoridad del Canal de Panamá (ACP), Clarksons, Reuters"
+    },
+    {
+      name: "Estrecho de Malaca",
+      name_short: "Malaca",
+      coords: [101.5, 2.5],
+      icon: "⚓",
+      type: "strait",
+      risk: "MEDIO-ALTO",
+      risk_color: "#d97706",
+      what: "Estrecho de 890 km entre la península malaya y Sumatra (Indonesia). Con solo 2,7 km en su punto más estrecho (Phillip Channel). El más transitado del mundo.",
+      strategic: "El 25% del comercio marítimo mundial. Paso obligado del petróleo del Golfo hacia China, Japón y Corea del Sur. El 'talón de Aquiles' estratégico de China.",
+      countries: ["Malasia", "Singapur", "Indonesia", "Tailandia", "China", "India", "Japón"],
+      commercial: "~90.000 buques al año. Hub logístico global con Singapur como nodo central (2° puerto del mundo).",
+      energy: "~15 millones de barriles/día de petróleo en tránsito hacia economías de Asia Oriental.",
+      military: "Patrullas conjuntas Malaysia-Singapur-Indonesia. EE.UU. mantiene acceso desde Singapur. China busca alternativas (canal Kra, oleoductos).",
+      situation_current: "⚡ TENSIÓN CRECIENTE: Debate en septiembre 2026 sobre posibles peajes al tránsito. Indonesia y Malasia implementando marco integrado de seguridad. China acelera su 'dilema de Malaca': proyecto del canal Kra (Tailandia) y oleoductos terrestres.",
+      verified_facts: [
+        "1-3 Sep 2026: 11ª Conferencia Internacional sobre los Estrechos de Malaca, debate sobre peajes.",
+        "Indonesia y Malasia avanzan en marco de seguridad integrado con intercambio de inteligencia en tiempo real.",
+        "1 Oct 2026: entra en vigor nueva Ley de Movilización Nacional de Defensa de China (relevante para activos civiles).",
+        "Analistas advierten sobre riesgo de 'precedente Ormuz' normalizando interferencias en otros estrechos."
+      ],
+      interpretation: "Malaca opera con normalidad pero bajo presión sistémica. La crisis de Ormuz está generando un efecto normalización que podría derivar en actos de interferencia o imposición de peajes en Malaca. China enfrenta su mayor vulnerabilidad estratégica: el 80% de su petróleo importado pasa por aquí.",
+      risk_scenarios: "Un cierre hipotético de Malaca paralizaría las economías de China, Japón y Corea del Sur. Es el único chokepoint cuya interrupción generaría una crisis económica global comparable a Ormuz.",
+      updated: "9 Sep 2026",
+      sources: "Conferencia Internacional sobre Estrechos de Malaca, IISS, Windward Maritime"
+    },
+    {
+      name: "Estrecho del Bósforo",
+      name_short: "Bósforo",
+      coords: [29.0, 41.1],
+      icon: "⚓",
+      type: "strait",
+      risk: "MEDIO",
+      risk_color: "#ca8a04",
+      what: "Estrecho turco de 31 km que conecta el Mar Negro con el Mar de Mármara (y luego el Mediterráneo via Dardanelos). Atraviesa Estambul.",
+      strategic: "Única salida marítima del Mar Negro. Control de Turquía bajo la Convención de Montreux (1936). Exportaciones de grano ucraniano y petróleo ruso.",
+      countries: ["Turquía", "Rusia", "Ucrania", "Bulgaria", "Rumania", "Georgia"],
+      commercial: "~40.000 buques al año en condiciones normales. Cargas principales: cereales, petróleo ruso, productos turcos.",
+      energy: "Oleoductos submarinos y tránsito de petróleo ruso (con restricciones por sanciones). Gas y petróleo del Caspio.",
+      military: "Convención de Montreux: Turquía puede cerrar el estrecho en tiempo de guerra. Ha restringido paso de buques de guerra desde feb 2022.",
+      situation_current: "⚠️ INCIDENTES ACTIVOS: 2 Sep 2026: colisión entre dos buques turcos cerca de Estambul, un barco hundido, búsqueda de tripulantes. Mar Negro sigue siendo zona de alta peligrosidad por guerra Rusia-Ucrania. Ataques a infraestructura portuaria escalan.",
+      verified_facts: [
+        "2 Sep 2026: Colisión de dos buques turcos en el Bósforo, uno hundido.",
+        "Mar Negro: escalada de ataques a puertos e infraestructura (Rusia-Ucrania).",
+        "Turquía mantiene cierre del estrecho a buques de guerra desde feb 2022.",
+        "Aseguradoras aplican primas de guerra para rutas al Mar Negro.",
+        "Reducción de exportaciones de grano ucraniano vía mar por inseguridad."
+      ],
+      interpretation: "El Bósforo es operativo pero vulnerable a incidentes y a la decisión política de Turquía. Erdoğan usa el control del estrecho como palanca diplomática entre la OTAN y Rusia.",
+      risk_scenarios: "Una escalada mayor en el Mar Negro o una decisión de Turquía de cerrar el estrecho geopolíticamente aislaría a Rusia y Ucrania del Mediterráneo, con impacto severo en exportaciones de grano y energía.",
+      updated: "9 Sep 2026",
+      sources: "Autoridades marítimas turcas, Reuters, BIMCO, Agencia Francesa de Prensa"
+    }
   ],
 
   // Continent zoom configurations
@@ -3207,57 +3362,190 @@ function renderCountries(data) {
 }
 
 function renderStrategicLocations() {
+  // Remove any existing strategic locations layer
+  g.selectAll('.strategic-locations').remove();
   const locations = g.append('g').attr('class', 'strategic-locations');
 
   GEO_DB.strategicLocations.forEach(loc => {
-    const [x, y] = projection(loc.coords);
-    if (x && y) {
-      const group = locations.append('g')
-        .attr('transform', `translate(${x},${y})`)
-        .style('cursor', 'pointer')
-        .on('mouseover', function(event) {
-          showTooltipAt(event.clientX, event.clientY, {
-            name: loc.name,
-            flag: loc.type === 'canal' ? '🚢' : '⚓',
-            relation_es: loc.description
-          });
-        })
-        .on('mouseout', hideTooltip);
+    const projected = projection(loc.coords);
+    if (!projected) return;
+    const [x, y] = projected;
 
-      // Pulsing circle
-      group.append('circle')
-        .attr('r', 4)
-        .attr('fill', 'var(--accent-violet)')
-        .attr('opacity', 0.8);
+    const group = locations.append('g')
+      .attr('class', 'strategic-point')
+      .attr('transform', `translate(${x},${y})`)
+      .style('cursor', 'pointer')
+      .style('pointer-events', 'all');
 
-      group.append('circle')
-        .attr('r', 4)
-        .attr('fill', 'none')
-        .attr('stroke', 'var(--accent-violet)')
-        .attr('stroke-width', 1)
-        .attr('opacity', 0.5)
-        .append('animate')
-        .attr('attributeName', 'r')
-        .attr('from', '4')
-        .attr('to', '12')
-        .attr('dur', '2s')
-        .attr('repeatCount', 'indefinite');
+    // Invisible hit area (large for mobile/touch)
+    group.append('circle')
+      .attr('r', 18)
+      .attr('fill', 'transparent')
+      .attr('stroke', 'none');
 
-      group.append('circle')
-        .attr('r', 4)
-        .attr('fill', 'none')
-        .attr('stroke', 'var(--accent-violet)')
-        .attr('stroke-width', 1)
-        .attr('opacity', 0)
-        .append('animate')
-        .attr('attributeName', 'opacity')
-        .attr('from', '0.6')
-        .attr('to', '0')
-        .attr('dur', '2s')
-        .attr('repeatCount', 'indefinite');
-    }
+    // Risk ring (colored border)
+    group.append('circle')
+      .attr('r', 13)
+      .attr('fill', 'rgba(15,23,42,0.85)')
+      .attr('stroke', loc.risk_color || '#7c3aed')
+      .attr('stroke-width', 2);
+
+    // Emoji icon as foreignObject for better rendering
+    group.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('font-size', '12px')
+      .attr('y', 0.5)
+      .style('pointer-events', 'none')
+      .style('user-select', 'none')
+      .text(loc.icon || '⚓');
+
+    // Short label below icon
+    group.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('y', 22)
+      .attr('font-size', '8px')
+      .attr('fill', loc.risk_color || '#a78bfa')
+      .attr('font-weight', '700')
+      .attr('font-family', 'Inter, sans-serif')
+      .style('pointer-events', 'none')
+      .style('text-shadow', '0 1px 3px rgba(0,0,0,0.9)')
+      .text(loc.name_short || loc.name);
+
+    // Mouse events (desktop tooltip)
+    group
+      .on('mouseover', function(event) {
+        showTooltipAt(event.clientX, event.clientY, {
+          name: loc.name,
+          flag: loc.icon,
+          relation_es: `🚨 Riesgo: ${loc.risk} · ${loc.situation_current ? loc.situation_current.substring(0, 80) + '...' : loc.commercial}`
+        });
+      })
+      .on('mouseout', hideTooltip)
+      .on('click', function(event) {
+        event.stopPropagation();
+        hideTooltip();
+        showStrategicPanel(loc);
+      })
+      .on('touchstart', function(event) {
+        event.stopPropagation();
+        hideTooltip();
+        showStrategicPanel(loc);
+      }, { passive: true });
   });
+
+  // Ensure strategic points render ABOVE country layers
+  locations.raise();
 }
+
+function showStrategicPanel(loc) {
+  const panel = document.getElementById('info-panel');
+  if (!panel) return;
+
+  const badge = document.getElementById('panel-relation');
+  if (badge) {
+    badge.textContent = `🚨 RIESGO: ${loc.risk}`;
+    badge.style.background = (loc.risk_color || '#7c3aed') + '33';
+    badge.style.color = loc.risk_color || '#a78bfa';
+    badge.style.border = `1px solid ${(loc.risk_color || '#7c3aed')}66`;
+  }
+
+  const flagEl = document.getElementById('panel-flag');
+  if (flagEl) flagEl.textContent = loc.icon || '⚓';
+  const nameEl = document.getElementById('panel-name');
+  if (nameEl) nameEl.textContent = loc.name;
+  const regionEl = document.getElementById('panel-region');
+  if (regionEl) regionEl.textContent = (loc.countries || []).join(', ');
+
+  let html = '';
+
+  // ¿Qué es?
+  html += `<div class="panel-section animate-in">
+    <div class="panel-section-title">📍 ¿Qué es?</div>
+    <div class="panel-section-content">${loc.what}</div>
+  </div>`;
+
+  // Situación actual
+  html += `<div class="panel-section animate-in" style="animation-delay:0.03s; border-left: 3px solid ${loc.risk_color || '#7c3aed'}; padding-left: 10px;">
+    <div class="panel-section-title" style="color: ${loc.risk_color || '#a78bfa'};">⚡ Situación Actual — 9 Sep 2026</div>
+    <div class="panel-section-content" style="font-weight: 600;">${loc.situation_current}</div>
+  </div>`;
+
+  // Hechos verificados
+  if (loc.verified_facts && loc.verified_facts.length > 0) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.05s;">
+      <div class="panel-section-title" style="color: var(--accent-cyan);">✅ Hechos Verificados</div>
+      <div class="panel-section-content">
+        <ul style="margin: 4px 0 0 14px; padding: 0; line-height: 1.7;">
+          ${loc.verified_facts.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+      </div>
+    </div>`;
+  }
+
+  // Importancia estratégica
+  html += `<div class="panel-section animate-in" style="animation-delay:0.06s;">
+    <div class="panel-section-title">🌐 Importancia Estratégica</div>
+    <div class="panel-section-content">${loc.strategic}</div>
+  </div>`;
+
+  // Datos clave (comercial, energético, militar)
+  html += `<div class="panel-section animate-in" style="animation-delay:0.07s;">
+    <div class="panel-section-title">📊 Datos Clave</div>
+    <div class="panel-section-content">
+      <div style="margin-bottom:6px;"><span style="color:var(--accent-cyan);font-weight:700;">Comercial: </span>${loc.commercial}</div>
+      <div style="margin-bottom:6px;"><span style="color:#fbbf24;font-weight:700;">Energético: </span>${loc.energy}</div>
+      <div><span style="color:#f87171;font-weight:700;">Militar: </span>${loc.military}</div>
+    </div>
+  </div>`;
+
+  // Interpretación
+  if (loc.interpretation) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.08s;">
+      <div class="panel-section-title">🔍 Interpretación Geopolítica</div>
+      <div class="panel-section-content" style="font-style: italic; color: #cbd5e1;">${loc.interpretation}</div>
+    </div>`;
+  }
+
+  // Escenarios de riesgo
+  if (loc.risk_scenarios) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.09s; border-left: 3px solid #dc2626; padding-left: 10px;">
+      <div class="panel-section-title" style="color: #fca5a5;">⚠️ Escenarios de Riesgo</div>
+      <div class="panel-section-content">${loc.risk_scenarios}</div>
+    </div>`;
+  }
+
+  // Países involucrados
+  if (loc.countries && loc.countries.length) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.10s;">
+      <div class="panel-section-title">🏳️ Países Involucrados</div>
+      <div class="panel-section-content">${loc.countries.join(' · ')}</div>
+    </div>`;
+  }
+
+  // Fuentes y actualización
+  html += `<div class="panel-section animate-in" style="animation-delay:0.11s;">
+    <div class="panel-section-content" style="font-size:0.78rem; color:#64748b; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+      🗓️ <strong>Actualizado:</strong> ${loc.updated || '9 Sep 2026'} &nbsp;|&nbsp; 
+      📰 <strong>Fuentes:</strong> ${loc.sources || 'Fuentes oficiales y académicas'}
+    </div>
+  </div>`;
+
+  document.getElementById('panel-body').innerHTML = html;
+  panel.classList.add('open');
+
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
+
 
 // ============================================================
 // INTERACTIONS
