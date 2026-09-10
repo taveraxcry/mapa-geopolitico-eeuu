@@ -3260,6 +3260,17 @@ function initApp() {
       g.attr('transform', event.transform);
       g.selectAll('.mesh-borders').attr('stroke-width', 1 / event.transform.k);
       g.selectAll('.country-path').attr('stroke-width', 1 / event.transform.k);
+      // Counter-scale strategic points to maintain their visual size
+      g.selectAll('.strategic-point').attr('transform', function() {
+        const cx = d3.select(this).attr('data-x');
+        const cy = d3.select(this).attr('data-y');
+        if (cx && cy) {
+          return `translate(${cx},${cy}) scale(${1 / event.transform.k})`;
+        }
+        return '';
+      });
+      // Always keep strategic points on top
+      g.selectAll('.strategic-locations').raise();
     });
 
   svg.call(zoom);
@@ -3303,7 +3314,8 @@ function loadMapData() {
     const data = WORLD_TOPO_DATA;
     worldData = data;
     renderCountries(data);
-    renderStrategicLocations();
+    // Strategic locations MUST render AFTER countries to stay on top in SVG z-order
+    setTimeout(() => { renderStrategicLocations(); }, 50);
 
     // Hide loading
     setTimeout(() => {
@@ -3373,6 +3385,9 @@ function renderStrategicLocations() {
 
     const group = locations.append('g')
       .attr('class', 'strategic-point')
+      .attr('data-x', x)
+      .attr('data-y', y)
+      // Apply initial scale based on current zoom if possible, or just default to 1 (it will be updated on next zoom/pan)
       .attr('transform', `translate(${x},${y})`)
       .style('cursor', 'pointer')
       .style('pointer-events', 'all');
