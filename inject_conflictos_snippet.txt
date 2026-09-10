@@ -1,0 +1,34 @@
+  if (activeCategory === 'conflictos' && info.conflicts && info.conflicts.length > 0) {
+    badge.textContent = "Zona de Conflicto Activo";
+    badge.style.background = 'rgba(190, 18, 60, 0.15)';
+    badge.style.color = '#fda4af';
+    badge.style.border = '1px solid rgba(190, 18, 60, 0.3)';
+    
+    let html = '';
+    info.conflicts.forEach((conflictId, index) => {
+      const conflictData = CONFLICT_DB[conflictId];
+      if (conflictData) {
+        html += `<div class="panel-section animate-in" style="animation-delay:${index * 0.05}s; margin-bottom: 15px; border-left: 3px solid #be123c; padding-left: 10px;">
+            <div class="panel-section-title" style="color: #fda4af; font-size: 1.1em;">⚠️ ${conflictData.name}</div>
+            <div style="font-size: 0.85em; color: #94a3b8; margin-bottom: 8px;">
+              <span style="display:inline-block; margin-right: 10px;"><strong>Estado:</strong> ${conflictData.status}</span><br/>
+              <span style="display:inline-block; margin-right: 10px;"><strong>Tipo:</strong> ${conflictData.type}</span><br/>
+              <span><strong>Inicio:</strong> ${conflictData.date_started}</span>
+            </div>
+            <div class="panel-section-content" style="margin-bottom: 8px;">${conflictData.description}</div>
+            <div class="panel-section-content" style="font-style: italic; color: #cbd5e1;"><strong>Impacto Estratégico:</strong> ${conflictData.impact}</div>
+          </div>`;
+      }
+    });
+    
+    document.getElementById('panel-body').innerHTML = html;
+    
+    panel.classList.add('open');
+    if (window.innerWidth <= 768) { 
+      hideTooltip(); 
+      document.getElementById('map-legend').style.display = 'none'; 
+      document.getElementById('controls').style.display = 'none'; 
+      document.getElementById('overlay').classList.add('active');
+    }
+    return;
+  }

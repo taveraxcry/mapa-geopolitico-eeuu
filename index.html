@@ -267,15 +267,15 @@ body {
 
 .country-path {
   fill: var(--land-default);
-  stroke: rgba(148,163,184,0.4);
-  stroke-width: 0.8px;
+  stroke: rgba(10, 14, 26, 0.8); /* Dark background color gap */
+  stroke-width: 1px;
   cursor: pointer;
   transition: fill 0.2s ease, stroke-width 0.2s ease;
 }
 
 .country-path:hover {
   fill: var(--land-hover);
-  stroke: rgba(148,163,184,0.8);
+  stroke: rgba(255, 255, 255, 0.7);
   stroke-width: 1.5px;
 }
 
@@ -765,6 +765,102 @@ body {
 
 /* Lens CSS removed */
 
+
+/* ===== MOBILE RESPONSIVE OVERRIDES ===== */
+@media (max-width: 768px) {
+  body, html { overflow-x: hidden; width: 100%; position: relative; overscroll-behavior-y: none; }
+  
+  /* Compact multi-row header */
+  #header {
+    height: auto;
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px;
+    padding: 8px 10px;
+    background: rgba(10, 14, 26, 0.95);
+  }
+  #header .logo { grid-column: 1; grid-row: 1; margin: 0; }
+  #header .logo-text { display: none; }
+  #search-container { grid-column: 2; grid-row: 1; margin: 0; flex: 1; min-width: 0; }
+  
+  /* Horizontal Categories */
+  #categories {
+    display: flex !important;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    width: 100%;
+  }
+  #categories::-webkit-scrollbar { display: none; }
+  .cat-pill { white-space: nowrap; flex-shrink: 0; font-size: 11px; padding: 6px 12px; }
+
+  /* Horizontal Continents */
+  #continent-nav {
+    top: 92px !important; /* Below the header */
+    width: 100%;
+    border-radius: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 6px 10px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: rgba(15, 23, 42, 0.85);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  #continent-nav::-webkit-scrollbar { display: none; }
+  .cont-btn { white-space: nowrap; flex-shrink: 0; padding: 6px 12px !important; font-size: 11px !important; }
+
+  /* Bottom Sheet Info Panel */
+  #info-panel {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 75dvh !important;
+    border-left: none !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.3, 1, 0.3, 1);
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+  }
+  #info-panel.open {
+    transform: translateY(0);
+  }
+  
+  .panel-header {
+    flex-shrink: 0;
+    padding-top: 16px;
+  }
+  
+  .panel-body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain; /* Prevents background map scroll */
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  #map-legend { bottom: 10px !important; left: 10px !important; font-size: 11px !important; padding: 10px !important; z-index: 900; }
+  
+  #controls {
+    top: auto !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    flex-direction: column;
+  }
+}
 </style>
 </head>
 <body>
@@ -899,6 +995,14 @@ const GEO_DB = {
       orgs: ["OTAN","QUAD","AUKUS","Five Eyes","USMCA","IPEF","APEP","P5 (CS-ONU)","G7","G20"],
       description: "Superpotencia hegemónica del sistema internacional. Mayor economía y poder militar del mundo. El dólar USD representa el 57.13% de las reservas oficiales de divisas asignadas globalmente (Q1 2026, FMI COFER). Líder de la alianza occidental y arquitecto del orden liberal internacional de posguerra.",
       allies: ["United Kingdom","Canada","Australia","Japan","South Korea","Germany","France","Italy"],
+      potencia_regional: {
+        tipo_poder: "Potencia global con predominio regional en América y liderazgo estratégico en el sistema internacional.",
+        region_poder: "América del Norte, América Latina y el Caribe; influencia de alcance mundial.",
+        long_reason: "Clasificada como superpotencia (Asia Power Index 2025). Es una potencia global con capacidades económicas, militares, tecnológicas, diplomáticas y financieras inigualables. En el hemisferio occidental mantiene una posición estratégica privilegiada.",
+        influence: "América del Norte, Caribe, América Latina y, a escala mundial, Europa, Indo-Pacífico y Medio Oriente.",
+        strengths: "economía, dólar y sistema financiero, tecnología, fuerzas armadas, inteligencia, alianzas y capacidad diplomática.",
+        strategic: "Su posición geográfica, capacidad militar y extensa red de alianzas le permiten proyectar poder en múltiples regiones simultáneamente."
+      },
       keywords: ["superpotencia","hegemonía","dólar","OTAN","nuclear"]
     },
     "Canada": {
@@ -919,12 +1023,13 @@ const GEO_DB = {
       orgs: ["USMCA","APEP","G20","OEA"],
       description: "Socio comercial clave bajo el USMCA. Relación compleja que abarca comercio, migración y seguridad. Segundo mayor socio comercial de EE.UU. Cooperación en lucha contra el narcotráfico y gestión migratoria.",
       allies: ["United States of America","Canada"],
-            potencia_regional: {
-        reason: "México es una potencia regional por su gran peso demográfico y económico, su amplia base manufacturera y su posición estratégica entre América del Norte, América Latina y el Pacífico. Es una de las quince mayores economías del mundo y la segunda de América Latina, con una economía manufacturera profundamente integrada en las cadenas globales de valor. Su cercanía e integración comercial con Estados Unidos aumentan su capacidad para influir en los asuntos económicos y políticos del hemisferio.",
-        long_reason: "México es una potencia regional por su gran peso demográfico y económico, su amplia base manufacturera y su posición estratégica entre América del Norte, América Latina y el Pacífico. Es una de las quince mayores economías del mundo y la segunda de América Latina, con una economía manufacturera profundamente integrada en las cadenas globales de valor. Su cercanía e integración comercial con Estados Unidos aumentan su capacidad para influir en los asuntos económicos y políticos del hemisferio.",
-        influence: "América del Norte, América Central y espacios latinoamericanos.",
-        strengths: "Exportaciones manufactureras, bonos demográficos, industria automotriz, cultura, peso diplomático",
-        strategic: "Industria, comercio, frontera con Estados Unidos, cadenas de suministro y conexión entre Norteamérica y América Latina."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de América del Norte y Mesoamérica.",
+        region_poder: "América del Norte, Centroamérica y espacio mesoamericano.",
+        long_reason: "Su integración económica con EE. UU., su población y su robusta industria manufacturera orientada a la exportación le confieren una ineludible influencia regional estructural.",
+        influence: "América del Norte, Mesoamérica y América Latina.",
+        strengths: "manufactura, libre comercio, demografía, remesas, proximidad geográfica y estrechos vínculos con Estados Unidos.",
+        strategic: "Su frontera norte gestiona flujos migratorios y comerciales vitales, actuando como bisagra entre las Américas."
       },
       keywords: ["USMCA","frontera","comercio","migración"]
     },
@@ -936,6 +1041,14 @@ const GEO_DB = {
       orgs: ["OTAN","AUKUS","Five Eyes","P5 (CS-ONU)","G7","G20"],
       description: "\"Relación especial\" con EE.UU. Aliado más cercano en Europa. Potencia nuclear y miembro permanente del Consejo de Seguridad de la ONU. Pilar del AUKUS para el Indo-Pacífico y de Five Eyes para inteligencia.",
       allies: ["United States of America","France","Canada","Australia","Japan"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal europea con alcance geoestratégico mundial.",
+        region_poder: "Europa y Atlántico Norte, con asociaciones en el Indo-Pacífico.",
+        long_reason: "Posee fuerzas armadas de primera línea, armas nucleares, servicios financieros globales, inteligencia sofisticada y lazos estrechos y estructurales con Estados Unidos.",
+        influence: "Europa, Atlántico Norte, Commonwealth e Indo-Pacífico.",
+        strengths: "defensa de alta tecnología, inteligencia (Five Eyes), centro financiero global, influencia cultural y asiento en el CSNU.",
+        strategic: "Socio pilar de la OTAN, garante de la seguridad marítima europea y actor emergente en la seguridad del Indo-Pacífico (AUKUS)."
+      },
       keywords: ["OTAN","AUKUS","Five Eyes","nuclear","P5"]
     },
     "France": {
@@ -946,6 +1059,14 @@ const GEO_DB = {
       orgs: ["OTAN","P5 (CS-ONU)","UE","G7","G20"],
       description: "Aliado de la OTAN con política exterior independiente. Potencia nuclear y miembro del P5. Presencia militar global significativa, especialmente en África. Motor político de la Unión Europea junto con Alemania.",
       allies: ["United States of America","Germany","United Kingdom","Italy","Spain"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal europea con alcance y disuasión estratégica a escala mundial.",
+        region_poder: "Europa, Mediterráneo, África y territorios de ultramar.",
+        long_reason: "Único país de la UE con arsenal nuclear y asiento permanente en el Consejo de Seguridad de la ONU. Combina fuerza militar, diplomacia y presencia marítima extensa.",
+        influence: "Europa, Mediterráneo, África, Indo-Pacífico (vía ultramar) y organizaciones internacionales.",
+        strengths: "disuasión nuclear, industria de defensa independiente, diplomacia activa, cultura y vastísima zona económica exclusiva marítima.",
+        strategic: "Su doctrina de autonomía estratégica y su presencia territorial en múltiples océanos le permiten sostener una política exterior excepcionalmente independiente."
+      },
       keywords: ["OTAN","nuclear","P5","UE"]
     },
     "Germany": {
@@ -956,6 +1077,14 @@ const GEO_DB = {
       orgs: ["OTAN","UE","G7","G20"],
       description: "Mayor economía de Europa y pilar de la OTAN. Aliado clave de EE.UU. en Europa. Ha incrementado significativamente su gasto en defensa tras la invasión rusa de Ucrania (2022). Motor económico de la Unión Europea.",
       allies: ["United States of America","France","United Kingdom","Poland","Italy"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de Europa y motor económico continental.",
+        region_poder: "Europa Central y Unión Europea.",
+        long_reason: "Es la principal economía europea, ostentando un peso industrial, comercial, tecnológico y político inigualable dentro de las instituciones de la Unión Europea.",
+        influence: "Europa continental y Unión Europea.",
+        strengths: "poderosa base industrial, exportaciones tecnológicas, solidez financiera, diplomacia y liderazgo institucional europeo.",
+        strategic: "Su orientación política y fortaleza económica determinan en gran medida la autonomía estratégica y viabilidad del proyecto europeo."
+      },
       keywords: ["OTAN","UE","economía","defensa"]
     },
     "Japan": {
@@ -966,12 +1095,13 @@ const GEO_DB = {
       orgs: ["QUAD","IPEF","G7","G20"],
       description: "Aliado clave en el Indo-Pacífico con tratado de defensa bilateral desde 1951. Miembro del QUAD. Alberga la mayor presencia militar de EE.UU. en Asia (~54,000 tropas). Potencia tecnológica crucial en semiconductores.",
       allies: ["United States of America","Australia","India","South Korea"],
-            potencia_regional: {
-        reason: "Japón mantiene una posición central en Asia por el tamaño y sofisticación de su economía, su capacidad industrial y tecnológica y su importante capacidad diplomática y de seguridad. Su influencia se extiende por el Indo-Pacífico mediante cooperación económica, tecnológica y de seguridad. En 2026 Japón está impulsando una estrategia de Indo-Pacífico que prioriza cadenas de suministro, energía, materiales críticos, tecnologías avanzadas y estabilidad regional. También participa activamente en el QUAD junto con Estados Unidos, India y Australia.",
-        long_reason: "Japón mantiene una posición central en Asia por el tamaño y sofisticación de su economía, su capacidad industrial y tecnológica y su importante capacidad diplomática y de seguridad. Su influencia se extiende por el Indo-Pacífico mediante cooperación económica, tecnológica y de seguridad. En 2026 Japón está impulsando una estrategia de Indo-Pacífico que prioriza cadenas de suministro, energía, materiales críticos, tecnologías avanzadas y estabilidad regional. También participa activamente en el QUAD junto con Estados Unidos, India y Australia.",
-        influence: "Asia Oriental e Indo-Pacífico.",
-        strengths: "Innovación tecnológica avanzada, fuerte sector financiero e industrial, armada moderna, diplomacia del capital",
-        strategic: "Tecnología, industria, comercio, cadenas de suministro y seguridad marítima."
+      potencia_regional: {
+        tipo_poder: "Potencia media (Asia Power Index) y potencia económica-tecnológica del Indo-Pacífico.",
+        region_poder: "Asia Oriental e Indo-Pacífico.",
+        long_reason: "Clasificada como potencia media (Asia Power Index 2025). Posee una de las economías más avanzadas, tecnología de altísimo nivel, enorme influencia financiera y una alianza estratégica decisiva con EE. UU.",
+        influence: "Japón, Pacífico occidental y Asia Oriental.",
+        strengths: "tecnología, industria, economía, innovación, diplomacia, resiliencia y fuertes capacidades de defensa.",
+        strategic: "Su geografía archipelágica en el Pacífico occidental contiene rutas marítimas vitales y actúa como barrera estratégica primaria."
       },
       keywords: ["QUAD","Indo-Pacífico","semiconductores","bases militares"]
     },
@@ -993,6 +1123,14 @@ const GEO_DB = {
       orgs: ["AUKUS","QUAD","Five Eyes","IPEF","G20"],
       description: "Aliado crucial en el Indo-Pacífico. Miembro de AUKUS (submarinos nucleares), QUAD y Five Eyes. Socio de defensa e inteligencia de primer nivel. Ubicación geoestratégica clave frente a la expansión china en el Pacífico.",
       allies: ["United States of America","Japan","United Kingdom","New Zealand","India"],
+      potencia_regional: {
+        tipo_poder: "Potencia media (Asia Power Index) y ancla geoestratégica de Oceanía.",
+        region_poder: "Australia, Pacífico Sur, Sudeste Asiático e Índico.",
+        long_reason: "Clasificada como potencia media (Asia Power Index 2025). Integra a la perfección vastos recursos continentales con instituciones avanzadas, ejerciendo influencia fundamental a través de alianzas de defensa de alta confiabilidad y desarrollo diplomático. \u003cbr\u003e\u003csmall\u003e\u003ci\u003e(\u003ca href=\"https://power.lowyinstitute.org/countries/australia/\" target=\"_blank\" style=\"color:var(--accent-blue)\"\u003eLowy Institute\u003c/a\u003e)\u003c/i\u003e\u003c/small\u003e",
+        influence: "Pacífico Sur (área de influencia primaria), Sudeste Asiático, Indo-Pacífico y océano Índico oriental.",
+        strengths: "robusta alianza de defensa (AUKUS, ANZUS), formidable capacidad de inteligencia (Five Eyes), economía rica en recursos críticos e instituciones sólidas.",
+        strategic: "Sirve como bastión logístico y socio principal de las democracias occidentales para mantener un Indo-Pacífico libre, disuadiendo el expansionismo en el Pacífico Sur."
+      },
       keywords: ["AUKUS","QUAD","Five Eyes","Indo-Pacífico"]
     },
     "New Zealand": {
@@ -1013,12 +1151,13 @@ const GEO_DB = {
       orgs: ["QUAD","IPEF","BRICS","G20"],
       description: "Socio estratégico en ascenso. Miembro del QUAD pero también de BRICS. Practíca \"multi-alineamiento\" — relaciones con EE.UU. y Rusia simultáneamente. País más poblado del mundo. Potencia tecnológica emergente y contrapeso a China en Asia.",
       allies: ["United States of America","Japan","France","Australia"],
-            potencia_regional: {
-        reason: "India es la principal potencia del sur de Asia por su enorme población, rápido crecimiento económico, capacidad militar y tecnológica y creciente peso diplomático. Su posición en el océano Índico le proporciona una importancia estratégica excepcional y su participación simultánea en agrupaciones como el QUAD y BRICS refleja una política de autonomía estratégica. En el ejercicio fiscal 2025/26 su economía creció 7,6 %, manteniéndose como la principal gran economía de más rápido crecimiento según el Banco Mundial.",
-        long_reason: "India es la principal potencia del sur de Asia por su enorme población, rápido crecimiento económico, capacidad militar y tecnológica y creciente peso diplomático. Su posición en el océano Índico le proporciona una importancia estratégica excepcional y su participación simultánea en agrupaciones como el QUAD y BRICS refleja una política de autonomía estratégica. En el ejercicio fiscal 2025/26 su economía creció 7,6 %, manteniéndose como la principal gran economía de más rápido crecimiento según el Banco Mundial.",
+      potencia_regional: {
+        tipo_poder: "Potencia mayor y potencia regional principal del sur de Asia.",
+        region_poder: "Asia del Sur e Indo-Pacífico.",
+        long_reason: "Clasificada como potencia mayor (Asia Power Index 2025). India combina una enorme población, veloz crecimiento económico, formidables capacidades militares y una posición estratégica insustituible en el océano Índico.",
         influence: "Asia del Sur, océano Índico e Indo-Pacífico.",
-        strengths: "Demografía colosal, sector tecnológico, capacidad nuclear y militar, crecimiento económico, mercado interno",
-        strategic: "Población, economía, tecnología, defensa, océano Índico y autonomía estratégica."
+        strengths: "población, economía, tecnología, industria, fuerzas armadas, espacio y creciente peso diplomático.",
+        strategic: "Actor fundamental y contrapeso indispensable en el equilibrio de poder del Indo-Pacífico."
       },
       keywords: ["QUAD","BRICS","multi-alineamiento","democracia","nuclear"]
     },
@@ -1030,6 +1169,14 @@ const GEO_DB = {
       orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
       description: "Principal competidor estratégico de EE.UU. Segunda economía mundial. Competencia en tecnología (IA, semiconductores, 5G), militar (mayor armada del mundo) y geopolítica (Mar de China Meridional, Taiwán, Iniciativa de la Franja y la Ruta). Miembro del P5.",
       allies: ["Russia"],
+      potencia_regional: {
+        tipo_poder: "Potencia global con predominio regional en Asia Oriental e Indo-Pacífico.",
+        region_poder: "Asia Oriental, Mar de China Meridional, Taiwán e Indo-Pacífico.",
+        long_reason: "Clasificada como superpotencia (Asia Power Index 2025). Combina una enorme capacidad económica e industrial con creciente poder tecnológico y militar. \u003cbr\u003e\u003csmall\u003e\u003ci\u003eLa investigación describe a China como superpotencia con capacidad para modificar el equilibrio estratégico del Indo-Pacífico. (\u003ca href=\"https://power.lowyinstitute.org/countries/china/\" target=\"_blank\" style=\"color:var(--accent-blue)\"\u003eLowy Institute\u003c/a\u003e)\u003c/i\u003e\u003c/small\u003e",
+        influence: "Asia Oriental, Sudeste Asiático, Asia Central y extensas redes comerciales internacionales.",
+        strengths: "manufactura, comercio, tecnología, infraestructura, finanzas, población, poder naval y cadenas de suministro.",
+        strategic: "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
+      },
       keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"]
     },
     "Russia": {
@@ -1040,6 +1187,14 @@ const GEO_DB = {
       orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
       description: "Adversario principal tras la invasión de Ucrania (2022). Mayor arsenal nuclear del mundo. Miembro del P5. Sanciones occidentales masivas. Alianza estratégica creciente con China. Proveedor de energía (gas, petróleo) y desestabilizador en Europa.",
       allies: ["China","North Korea","Iran"],
+      potencia_regional: {
+        tipo_poder: "Potencia global con predominio regional en Eurasia y potencia media en Asia.",
+        region_poder: "Europa Oriental, Cáucaso, Asia Central y Ártico.",
+        long_reason: "Clasificada como potencia media en Asia (Asia Power Index 2025), mantiene el estatus de potencia global por su arsenal nuclear y capacidad de disuasión. Posee territorio enorme y recursos energéticos que le permiten ejercer influencia sustancial.",
+        influence: "Europa Oriental, Cáucaso, Asia Central, Ártico y espacios estratégicos de Medio Oriente.",
+        strengths: "arsenal nuclear, fuerzas armadas, energía, territorio, recursos naturales, industria militar y disuasión estratégica.",
+        strategic: "Control de espacios euroasiáticos, rutas energéticas, acceso al Ártico y posición de puente intercontinental."
+      },
       keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"]
     },
     "Iran": {
@@ -1050,6 +1205,14 @@ const GEO_DB = {
       orgs: ["BRICS","OPEP"],
       description: "Adversario desde la Revolución Islámica de 1979. Programa nuclear controvertido. Apoya milicias proxy (Hezbollah, Houthis, milicias en Irak). Tensiones por el Estrecho de Ormuz (21% del petróleo mundial transita allí). Miembro de BRICS desde 2024.",
       allies: ["Russia","China","Syria"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal asimétrica de Medio Oriente.",
+        region_poder: "Golfo Pérsico, Medio Oriente y Asia Occidental.",
+        long_reason: "A pesar de las sanciones internacionales, proyecta enorme influencia mediante el apoyo a redes de actores no estatales (Eje de la Resistencia) y robustos programas de misiles y tecnología militar.",
+        influence: "Golfo Pérsico, Irak, Siria, Líbano, Yemen y Asia Occidental.",
+        strengths: "abundancia energética, inexpugnable topografía, doctrina de guerra asimétrica, redes milicianas aliadas y extensa producción de misiles/drones.",
+        strategic: "Capacidad de disrupción en el Estrecho de Ormuz (ruta petrolera crítica) y consolidación del arco de influencia chiita hasta el Mediterráneo."
+      },
       keywords: ["adversario","nuclear","proxy","Ormuz","sanciones"]
     },
     "North Korea": {
@@ -1090,12 +1253,13 @@ const GEO_DB = {
       orgs: ["BRICS","G20","MERCOSUR"],
       description: "Mayor economía de América Latina y potencia regional. Miembro fundador de BRICS. Practíca política exterior independiente. Relación pragmática con EE.UU. Aspirante a un asiento permanente en el Consejo de Seguridad de la ONU.",
       allies: ["Argentina"],
-            potencia_regional: {
-        reason: "Brasil es la principal potencia regional de América del Sur por la combinación de su enorme territorio, población, economía, recursos naturales y capacidad diplomática. Es el país más grande de América Latina y posee una economía diversificada en la que destacan los servicios, la agricultura y la industria. Su participación en mecanismos como MERCOSUR, BRICS y G20 amplía su capacidad de actuación internacional, mientras que su territorio, recursos naturales y posición en el Atlántico Sur le otorgan un peso estratégico singular en Sudamérica.",
-        long_reason: "Brasil es la principal potencia regional de América del Sur por la combinación de su enorme territorio, población, economía, recursos naturales y capacidad diplomática. Es el país más grande de América Latina y posee una economía diversificada en la que destacan los servicios, la agricultura y la industria. Su participación en mecanismos como MERCOSUR, BRICS y G20 amplía su capacidad de actuación internacional, mientras que su territorio, recursos naturales y posición en el Atlántico Sur le otorgan un peso estratégico singular en Sudamérica.",
-        influence: "América del Sur y cooperación latinoamericana.",
-        strengths: "Economía, territorio, recursos naturales, energía, población, comercio, diplomacia",
-        strategic: "Economía, territorio, recursos naturales, agricultura, energía, diplomacia y Atlántico Sur."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de América del Sur.",
+        region_poder: "América del Sur y Atlántico Sur.",
+        long_reason: "Es el Estado con mayor extensión territorial, población y peso económico de Sudamérica, sosteniendo una activa diplomacia multilateral e influencia regional consolidada.",
+        influence: "América del Sur, Atlántico Sur y foros multilaterales.",
+        strengths: "territorio, población, enorme sector agropecuario, recursos hídricos, energía, biodiversidad y diplomacia.",
+        strategic: "Controla gran parte de la Amazonía, proyecta influencia naval en el Atlántico Sur y lidera la dinámica integradora sudamericana."
       },
       keywords: ["BRICS","potencia regional","Amazon","MERCOSUR"]
     },
@@ -1187,12 +1351,13 @@ const GEO_DB = {
       orgs: ["OTAN","G20"],
       description: "Aliado OTAN pero con relación cada vez más compleja. Compra de sistemas S-400 a Rusia generó fricciones. Control del Estrecho del Bósforo. Posición geoestratégica única entre Europa, Asia y Medio Oriente.",
       allies: ["Azerbaijan"],
-            potencia_regional: {
-        reason: "Turquía ejerce una influencia regional importante gracias a su posición entre Europa, Asia y Medio Oriente, su capacidad militar, su economía y su actividad diplomática. Los estrechos turcos constituyen la única vía marítima que conecta el mar Negro con el Mediterráneo y los mares abiertos, lo que les proporciona una importancia económica y militar excepcional. Esta posición permite a Turquía desempeñar un papel relevante en el mar Negro, el Mediterráneo oriental, el Cáucaso y Medio Oriente.",
-        long_reason: "Turquía ejerce una influencia regional importante gracias a su posición entre Europa, Asia y Medio Oriente, su capacidad militar, su economía y su actividad diplomática. Los estrechos turcos constituyen la única vía marítima que conecta el mar Negro con el Mediterráneo y los mares abiertos, lo que les proporciona una importancia económica y militar excepcional. Esta posición permite a Turquía desempeñar un papel relevante en el mar Negro, el Mediterráneo oriental, el Cáucaso y Medio Oriente.",
-        influence: "Mar Negro, Mediterráneo oriental, Cáucaso, Balcanes y Medio Oriente.",
-        strengths: "Posición geográfica inigualable, gran industria de defensa (drones), ejército OTAN, control de tránsito marítimo",
-        strategic: "Estrechos turcos, posición geográfica, defensa, comercio y energía."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal euroasiática y bisagra geopolítica.",
+        region_poder: "Anatolia, Mediterráneo Oriental, Mar Negro, Cáucaso y Medio Oriente.",
+        long_reason: "Su soberanía sobre los estrechos del Bósforo y Dardanelos, sumada a su proactiva diplomacia militar y poderosa industria de drones, consolidan su influencia en múltiples frentes.",
+        influence: "Turquía, Mar Negro, Cáucaso, Balcanes, Norte de África, Mediterráneo Oriental y Medio Oriente.",
+        strengths: "gran ejército (OTAN), próspera industria de defensa, inmejorable ubicación geográfica y pragmatismo diplomático.",
+        strategic: "Controla el paso marítimo entre el Mar Negro y el Mediterráneo, operando como mediador indispensable y potencia equilibradora regional."
       },
       keywords: ["OTAN","Bósforo","S-400","Erdogan","geoestratégica"]
     },
@@ -1204,6 +1369,14 @@ const GEO_DB = {
       orgs: [],
       description: "Aliado principal en Medio Oriente. Recibe la mayor asistencia militar de EE.UU. (~$3.8B/año). Potencia tecnológica y de defensa. Conflicto con Palestina define la dinámica regional. Capacidad nuclear no declarada.",
       allies: ["United States of America"],
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de Medio Oriente y potencia tecnológica-militar.",
+        region_poder: "Levante y Mediterráneo Oriental.",
+        long_reason: "Pese a su reducida extensión y población, sus innovaciones tecnológicas, su superioridad militar cualitativa en la región y su alianza estratégica con EE. UU. le otorgan una ventaja estratégica categórica.",
+        influence: "Levante, Mediterráneo Oriental y dinámica de seguridad de Medio Oriente.",
+        strengths: "superioridad tecnológica y cibernética, sofisticada inteligencia (Mossad), doctrina militar disuasoria y dinámico sector de innovación.",
+        strategic: "Su capacidad para alterar el balance de poder regional a través de ataques preventivos y tecnología avanzada moldea de forma absoluta el contexto de seguridad del Levante."
+      },
       keywords: ["aliado","defensa","tecnología","Palestina","nuclear"]
     },
     "Saudi Arabia": {
@@ -1214,12 +1387,13 @@ const GEO_DB = {
       orgs: ["BRICS","OPEP","G20"],
       description: "Socio estratégico basado en petróleo y seguridad. Pacto del petrodólar. Mayor comprador de armas de EE.UU. Ingresó a BRICS en 2024. Diversificación económica con Visión 2030. Rivalidad con Irán define la geopolítica regional.",
       allies: ["United States of America","United Arab Emirates"],
-            potencia_regional: {
-        reason: "Arabia Saudita es una potencia regional por su enorme peso energético, económico, financiero y diplomático en Medio Oriente. Su posición dentro del mercado petrolero mundial le proporciona una capacidad de influencia que trasciende la península arábiga. Al mismo tiempo, el país está transformando su economía mediante Vision 2030, con inversiones en infraestructura, servicios, logística y nuevas actividades productivas. Su posición en el Golfo y su importancia para los mercados energéticos hacen que cualquier alteración regional tenga repercusiones internacionales.",
-        long_reason: "Arabia Saudita es una potencia regional por su enorme peso energético, económico, financiero y diplomático en Medio Oriente. Su posición dentro del mercado petrolero mundial le proporciona una capacidad de influencia que trasciende la península arábiga. Al mismo tiempo, el país está transformando su economía mediante Vision 2030, con inversiones en infraestructura, servicios, logística y nuevas actividades productivas. Su posición en el Golfo y su importancia para los mercados energéticos hacen que cualquier alteración regional tenga repercusiones internacionales.",
-        influence: "Península Arábiga, Golfo y mundo árabe.",
-        strengths: "Reservas energéticas masivas, fondo soberano trillonario, peso religioso, modernización acelerada",
-        strategic: "Energía, inversión, logística, posición geográfica y diplomacia regional."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del Golfo y líder del mundo sunita.",
+        region_poder: "Península Arábiga, Golfo Pérsico y mundo árabe.",
+        long_reason: "Combina su liderazgo estructural en los mercados mundiales de energía con masivas reservas financieras y la custodia de los sitios más sagrados del islam.",
+        influence: "Península Arábiga, mercados de energía globales, mundo árabe e islámico.",
+        strengths: "reservas y producción petrolera (OPEP), fondos soberanos de riqueza masivos, liderazgo religioso y cuantiosas compras militares.",
+        strategic: "Estabilizador principal del mercado energético mundial y actor ineludible en cualquier reconfiguración de seguridad del Medio Oriente."
       },
       keywords: ["petróleo","petrodólar","OPEP","BRICS","armas"]
     },
@@ -1241,12 +1415,13 @@ const GEO_DB = {
       orgs: ["BRICS"],
       description: "Major Non-NATO Ally. Control del Canal de Suez (12% del comercio marítimo mundial). Recibe ~$1.3B/año en asistencia militar de EE.UU. Miembro de BRICS desde 2024.",
       allies: ["United States of America","Saudi Arabia"],
-            potencia_regional: {
-        reason: "Egipto mantiene un peso regional excepcional por su población, sus capacidades militares, su posición geográfica y el papel estratégico del Canal de Suez. Su territorio conecta África, Asia y Europa y su economía combina agricultura, industria y servicios. El Canal de Suez convierte al país en un nodo fundamental de las rutas marítimas internacionales. Además, Egipto desempeña un papel diplomático relevante en el Norte de África, el mundo árabe y el Mediterráneo oriental.",
-        long_reason: "Egipto mantiene un peso regional excepcional por su población, sus capacidades militares, su posición geográfica y el papel estratégico del Canal de Suez. Su territorio conecta África, Asia y Europa y su economía combina agricultura, industria y servicios. El Canal de Suez convierte al país en un nodo fundamental de las rutas marítimas internacionales. Además, Egipto desempeña un papel diplomático relevante en el Norte de África, el mundo árabe y el Mediterráneo oriental.",
-        influence: "Norte de África, mundo árabe y Mediterráneo oriental.",
-        strengths: "Control del Canal de Suez, gran poder militar regional, influencia cultural histórica, peso demográfico",
-        strategic: "Canal de Suez, posición geográfica, población, fuerzas armadas y diplomacia regional."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del Norte de África y polo de estabilidad árabe.",
+        region_poder: "Norte de África, Mediterráneo Oriental y Mar Rojo.",
+        long_reason: "El Estado más poblado del mundo árabe ejerce soberanía territorial sobre el Canal de Suez y mantiene las fuerzas armadas más grandes y mejor equipadas del continente africano.",
+        influence: "Norte de África, Mediterráneo Oriental, Mar Rojo, Cuerno de África y Liga Árabe.",
+        strengths: "excepcional ubicación geográfica, crecimiento demográfico, fuerzas armadas y capacidad de arbitraje político en el mundo árabe.",
+        strategic: "El Canal de Suez es el cordón umbilical del comercio entre Europa y Asia, haciendo de Egipto el guardián de una de las arterias económicas vitales del planeta."
       },
       keywords: ["MNNA","Suez","asistencia militar","BRICS"]
     },
@@ -1258,12 +1433,13 @@ const GEO_DB = {
       orgs: ["BRICS","IPEF","G20","ASEAN"],
       description: "Mayor país musulmán del mundo por población. Ubicación estratégica en el Estrecho de Malaca. Miembro de BRICS e IPEF simultáneamente. Economía emergente del G20.",
       allies: ["Australia","Japan"],
-            potencia_regional: {
-        reason: "Indonesia es la principal potencia económica y demográfica del Sudeste Asiático. Es la mayor economía de la región y el cuarto país más poblado del mundo, además de estar formado por más de 17.000 islas. Su ubicación entre los océanos Índico y Pacífico le proporciona una enorme importancia para el comercio marítimo y la seguridad regional. También posee un papel creciente en las cadenas de suministro de minerales críticos, especialmente el níquel, fundamental para industrias como el acero y las baterías.",
-        long_reason: "Indonesia es la principal potencia económica y demográfica del Sudeste Asiático. Es la mayor economía de la región y el cuarto país más poblado del mundo, además de estar formado por más de 17.000 islas. Su ubicación entre los océanos Índico y Pacífico le proporciona una enorme importancia para el comercio marítimo y la seguridad regional. También posee un papel creciente en las cadenas de suministro de minerales críticos, especialmente el níquel, fundamental para industrias como el acero y las baterías.",
-        influence: "Sudeste Asiático, ASEAN e Indo-Pacífico.",
-        strengths: "Población masiva, reservas de minerales críticos (níquel), economía emergente acelerada, geografía archipelágica",
-        strategic: "Población, economía, rutas marítimas, minerales críticos y posición entre dos océanos."
+      potencia_regional: {
+        tipo_poder: "Potencia media (Asia Power Index) y potencia regional principal del Sudeste Asiático.",
+        region_poder: "Sudeste Asiático e Indo-Pacífico.",
+        long_reason: "Clasificada como potencia media (Asia Power Index 2025). Es la mayor economía de la ASEAN, el país de mayoría musulmana más poblado del mundo y controla cuellos de botella marítimos existenciales para el comercio mundial. \u003cbr\u003e\u003csmall\u003e\u003ci\u003e(\u003ca href=\"https://power.lowyinstitute.org/countries/indonesia/\" target=\"_blank\" style=\"color:var(--accent-blue)\"\u003eLowy Institute\u003c/a\u003e)\u003c/i\u003e\u003c/small\u003e",
+        influence: "ASEAN, Sudeste Asiático, rutas marítimas críticas e Indo-Pacífico.",
+        strengths: "vasta demografía, dinamismo económico, enormes recursos naturales, diplomacia no alineada y soberanía sobre estrechos marítimos vitales.",
+        strategic: "Controla los estrechos de Malaca, Sunda y Lombok, puntos de estrangulamiento indispensables para el comercio interoceánico y el despliegue naval."
       },
       keywords: ["Malaca","ASEAN","BRICS","IPEF","musulmán"]
     },
@@ -1695,12 +1871,13 @@ const GEO_DB = {
       orgs: ["BRICS","G20"],
       description: "Mayor economía de África subsahariana. Miembro fundador de BRICS. Relación pragmática con EE.UU. Críticas a la política exterior de EE.UU. Minerales críticos (platino, manganeso, cromo).",
       allies: ["Brazil","India","China"],
-            potencia_regional: {
-        reason: "Sudáfrica es una de las principales potencias de África por el tamaño y diversificación de su economía, su infraestructura, su sistema financiero, sus recursos minerales y su capacidad diplomática. El Banco Mundial la identifica como la segunda economía de África y como uno de los principales centros de transporte y logística del continente. Su posición en el extremo sur de África también la conecta con importantes rutas marítimas internacionales. Su participación en instituciones multilaterales amplía su capacidad de representación y negociación regional.",
-        long_reason: "Sudáfrica es una de las principales potencias de África por el tamaño y diversificación de su economía, su infraestructura, su sistema financiero, sus recursos minerales y su capacidad diplomática. El Banco Mundial la identifica como la segunda economía de África y como uno de los principales centros de transporte y logística del continente. Su posición en el extremo sur de África también la conecta con importantes rutas marítimas internacionales. Su participación en instituciones multilaterales amplía su capacidad de representación y negociación regional.",
-        influence: "África Austral y espacios de cooperación continental.",
-        strengths: "Sector financiero robusto, infraestructura avanzada, riqueza mineral estratégica, peso diplomático multilateral",
-        strategic: "Minería, finanzas, logística, industria, comercio y diplomacia."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal del África austral con proyección institucional continental.",
+        region_poder: "África austral y continente africano.",
+        long_reason: "La nación más industrializada de África actúa como portavoz del continente en foros internacionales y lidera las misiones de mantenimiento de paz e iniciativas diplomáticas africanas.",
+        influence: "Comunidad de Desarrollo de África Austral (SADC), Unión Africana y bloque BRICS.",
+        strengths: "sofisticado sector financiero e industrial, inmensas reservas minerales, red de infraestructuras avanzadas y consolidado prestigio diplomático multilateral.",
+        strategic: "Su posición en el Cabo de Buena Esperanza ofrece la única alternativa marítima viable frente a interrupciones en el Canal de Suez, asegurando el flujo logístico mundial."
       },
       keywords: ["BRICS","minerales","ANC","pragmático"]
     },
@@ -1712,12 +1889,13 @@ const GEO_DB = {
       orgs: ["BRICS (socio)","OPEP"],
       description: "País más poblado de África. Mayor productor de petróleo de África. Cooperación antiterrorista (Boko Haram). Potencia regional en África Occidental.",
       allies: [],
-            potencia_regional: {
-        reason: "Nigeria es una potencia regional por su enorme población, su peso económico, sus recursos energéticos y su influencia política y cultural en África Occidental. Con unos 237,5 millones de habitantes en 2025, es el país más poblado de África. Su economía alcanzó unos US$290.8 mil millones de PIB en 2025 y el crecimiento se mantuvo sólido, impulsado especialmente por los servicios. Nigeria también ocupa un lugar central en la cooperación política, económica y de seguridad de África Occidental a través de la CEDEAO.",
-        long_reason: "Nigeria es una potencia regional por su enorme población, su peso económico, sus recursos energéticos y su influencia política y cultural en África Occidental. Con unos 237,5 millones de habitantes en 2025, es el país más poblado de África. Su economía alcanzó unos US$290.8 mil millones de PIB en 2025 y el crecimiento se mantuvo sólido, impulsado especialmente por los servicios. Nigeria también ocupa un lugar central en la cooperación política, económica y de seguridad de África Occidental a través de la CEDEAO.",
-        influence: "África Occidental y Golfo de Guinea.",
-        strengths: "Demografía desmesurada, inmensas reservas de hidrocarburos, industria cultural, mercado joven en expansión",
-        strategic: "Población, energía, mercado interno, servicios, seguridad regional y peso diplomático."
+      potencia_regional: {
+        tipo_poder: "Potencia regional principal de África Occidental y gigante demográfico.",
+        region_poder: "África Occidental y Golfo de Guinea.",
+        long_reason: "La economía más grande y el país más poblado de África ejerce un liderazgo estructural en la subregión a través de la CEDEAO y proyecciones de seguridad conjuntas.",
+        influence: "África Occidental, bloque de la CEDEAO, Golfo de Guinea y foros panafricanos.",
+        strengths: "proyección demográfica imparable, vastas exportaciones de hidrocarburos, emergente sector tecnológico e industrias culturales de alcance global.",
+        strategic: "Garante indispensable de la estabilidad política en África Occidental y principal fuerza estabilizadora frente al extremismo y piratería en el Golfo de Guinea."
       },
       keywords: ["petróleo","Boko Haram","potencia regional"]
     },
@@ -2856,6 +3034,8 @@ function initApp() {
     .scaleExtent([0.8, 20])
     .on('zoom', (event) => {
       g.attr('transform', event.transform);
+      g.selectAll('.mesh-borders').attr('stroke-width', 1 / event.transform.k);
+      g.selectAll('.country-path').attr('stroke-width', 1 / event.transform.k);
     });
 
   svg.call(zoom);
@@ -2952,9 +3132,9 @@ function renderCountries(data) {
   g.append('path')
     .datum(topojson.mesh(data, data.objects.countries, (a, b) => a !== b))
     .attr('fill', 'none')
-    .attr('stroke', 'rgba(148,163,184,0.4)')
-    .attr('stroke-width', 0.8)
-    .attr('d', path);
+    .attr('stroke', 'rgba(148, 163, 184, 0.25)')
+    .attr('stroke-width', 0.6).style('pointer-events', 'none')
+    .attr('d', path).attr('class', 'mesh-borders');
 }
 
 function renderStrategicLocations() {
@@ -3053,6 +3233,7 @@ function handleClick(event, d) {
   // Select new
   d3.select(this).classed('selected', true);
   selectedCountry = name;
+  if (window.innerWidth <= 768) hideTooltip();
 
   // Show info panel
   if (info) {
@@ -3062,6 +3243,7 @@ function handleClick(event, d) {
 }
 
 function showTooltipAt(x, y, data) {
+  if (window.innerWidth <= 768 && document.getElementById('info-panel').classList.contains('open')) return;
   const tt = document.getElementById('tooltip');
   const ttFlag = tt.querySelector('.tt-flag');
   ttFlag.textContent = getFlagEmoji(data.flag);
@@ -3071,9 +3253,9 @@ function showTooltipAt(x, y, data) {
   const relEl = tt.querySelector('.tt-relation');
   
   if (activeCategory === 'potencias' && data.potencia_regional) {
-    relEl.textContent = data.potencia_regional.reason;
-    relEl.style.background = 'rgba(147, 51, 234, 0.1)';
-    relEl.style.color = '#c084fc';
+    relEl.innerHTML = data.potencia_regional.long_reason;
+    relEl.style.background = 'rgba(234, 179, 8, 0.15)';
+    relEl.style.color = '#fde047';
     relEl.style.whiteSpace = 'normal';
     relEl.style.maxWidth = '250px';
     relEl.style.lineHeight = '1.4';
@@ -3153,23 +3335,37 @@ function showInfoPanel(name, info) {
   const badge = document.getElementById('panel-relation');
   
   if (activeCategory === 'potencias' && info.potencia_regional) {
-    badge.textContent = `Potencia regional · ${region}`;
-    badge.style.background = 'rgba(147, 51, 234, 0.1)';
-    badge.style.color = '#c084fc';
-    badge.style.border = '1px solid rgba(147, 51, 234, 0.3)';
+    let panelTitle = "Potencia regional";
+    if (info.potencia_regional.tipo_poder.toLowerCase().includes('global')) {
+      panelTitle = "Potencia global con predominio regional";
+    }
+    badge.textContent = panelTitle;
+    badge.style.background = 'rgba(234, 179, 8, 0.15)';
+    badge.style.color = '#fde047';
+    badge.style.border = '1px solid rgba(234, 179, 8, 0.3)';
     
     let html = `
       <div class="panel-section animate-in">
+        <div class="panel-section-title" style="text-transform: uppercase;">Tipo de poder</div>
+        <div class="panel-section-content" style="font-weight:600; color:var(--text-primary);">${info.potencia_regional.tipo_poder}</div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
         <div class="panel-section-title" style="text-transform: uppercase;">¿Por qué es una potencia regional?</div>
         <div class="panel-section-content">${info.potencia_regional.long_reason}</div>
       </div>
       
-      <div class="panel-section animate-in" style="animation-delay:0.05s">
+      <div class="panel-section animate-in" style="animation-delay:0.1s">
         <div class="panel-section-title" style="text-transform: uppercase;">Ámbito de influencia</div>
         <div class="panel-section-content">${info.potencia_regional.influence}</div>
       </div>
 
-      <div class="panel-section animate-in" style="animation-delay:0.1s">
+      <div class="panel-section animate-in" style="animation-delay:0.15s">
+        <div class="panel-section-title" style="text-transform: uppercase;">Principales fortalezas</div>
+        <div class="panel-section-content">${info.potencia_regional.strengths}</div>
+      </div>
+
+      <div class="panel-section animate-in" style="animation-delay:0.2s">
         <div class="panel-section-title" style="text-transform: uppercase;">Importancia estratégica</div>
         <div class="panel-section-content">${info.potencia_regional.strategic}</div>
       </div>
@@ -3178,6 +3374,7 @@ function showInfoPanel(name, info) {
     document.getElementById('panel-body').innerHTML = html;
     
     panel.classList.add('open');
+  if (window.innerWidth <= 768) { hideTooltip(); document.getElementById('map-legend').style.display = 'none'; document.getElementById('controls').style.display = 'none'; }
     if (window.innerWidth <= 768) {
       document.getElementById('overlay').classList.add('active');
     }
@@ -3329,10 +3526,13 @@ function showInfoPanel(name, info) {
   
   // Notice we use "active" for the panel instead of "open" based on previous logic? Wait, the previous code had panel.classList.add('open') at 3225
   panel.classList.add('open');
+  if (window.innerWidth <= 768) { hideTooltip(); document.getElementById('map-legend').style.display = 'none'; document.getElementById('controls').style.display = 'none'; }
 }
+
 
 function closePanel() {
   document.getElementById('info-panel').classList.remove('open');
+  if (window.innerWidth <= 768) { document.getElementById('map-legend').style.display = ''; document.getElementById('controls').style.display = ''; }
   g.selectAll('.country-path.selected').classed('selected', false);
   removeConnections();
   selectedCountry = null;
@@ -3513,7 +3713,13 @@ function applyCategory(cat) {
       el.style('opacity', 1);
     } 
     else if (cat === 'potencias') {
-      if (info && info.potencia_regional) el.style('fill', '#9333ea').style('opacity', 1);
+      if (info && info.potencia_regional) {
+        if (info.potencia_regional.tipo_poder.toLowerCase().includes('global')) {
+          el.style('fill', '#d97706').style('opacity', 1);
+        } else {
+          el.style('fill', '#eab308').style('opacity', 1);
+        }
+      }
       else el.style('opacity', 0.2);
     }
     else if (cat === 'aliados') {
@@ -3571,9 +3777,12 @@ function updateLegend(cat) {
       break;
     case 'potencias':
       html = `
-        <div class="legend-title">Potencias</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#9333ea"></div>Potencia Global</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Potencia Regional</div>
+        <div class="legend-title">Potencias regionales</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Potencia global con predominio regional</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Potencia regional principal</div>
+        <div style="font-size:10px; color:var(--text-secondary); margin-top:8px; line-height:1.3; opacity:0.8;">
+          *Nota metodológica: Se identifica a una potencia regional por su capacidad sostenida de ejercer influencia sobre su entorno mediante una combinación de economía, defensa, diplomacia, geografía, tecnología y recursos estratégicos. No todos los Estados ostentan el mismo tipo de poder (diferenciando influencia regional y alcance global).
+        </div>
       `;
       break;
     case 'organizaciones':

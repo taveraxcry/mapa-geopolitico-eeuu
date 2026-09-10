@@ -1,0 +1,12 @@
+$htmlPath = "src\index_template.html"
+$html = Get-Content $htmlPath -Encoding UTF8 -Raw
+
+# 1. Update info-panel HTML to include actualidad block injection logic
+# In the generic branch (not potencias specific for now, or maybe potencias too)
+# Let's insert the actualidad rendering after description / summary but before stats.
+$actualidadRenderPattern = '(?s)(if \(info\.summary\) \{.*?\} else if \(info\.description\) \{.*?\})'
+$actualidadRenderReplace = "`$1`n`n  // Actualidad Geopolitica (Sept 2026)`n  if (info.actualidad) {`n    html += ``<div class=`"panel-section animate-in`" style=`"animation-delay:0.02s`">`n      <div class=`"panel-section-title`" style=`"color: var(--accent-orange); font-weight: bold;`">ACTUALIDAD GEOPOLÍTICA — 9 SEP 2026</div>`n      <div class=`"panel-section-content`">`n        <p style=`"margin-bottom:8px;`"><strong>Situación Actual:</strong> `$`{info.actualidad.current_situation}</p>`n        <div style=`"margin-bottom:8px; border-left: 2px solid var(--accent-cyan); padding-left: 8px; background: rgba(34,211,238,0.05);`">`n          <strong>Hechos Verificados:</strong>`n          <ul style=`"margin:4px 0 0 16px; padding:0;`">`n            `$`{info.actualidad.verified_facts.map(f => ``<li>`$`{f}</li>``).join('')}`n          </ul>`n        </div>`n        <p style=`"margin-bottom:8px;`"><strong>Interpretación:</strong> `$`{info.actualidad.interpretation}</p>`n``;`n    if (info.actualidad.timeline && info.actualidad.timeline.length > 0) {`n      html += ``<div style=`"margin-top:12px;`"><strong>Línea de Tiempo:</strong><br/>``;`n      info.actualidad.timeline.forEach(t => {`n        html += ``<div style=`"font-size:0.85rem; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);`"><span style=`"color:var(--accent-orange);font-weight:bold;margin-right:8px;`">`$`{t.date}</span> `$`{t.event}</div>``;`n      });`n      html += ``</div>``;`n    }`n    if (info.actualidad.sources && info.actualidad.sources.length > 0) {`n      html += ``<div style=`"margin-top:12px; font-size:0.8rem; color:#94a3b8;`"><strong>Fuentes:</strong> `$`{info.actualidad.sources.map(s => ``<a href=`"`$`{s.url}`" target=`"_blank`" style=`"color:var(--accent-cyan); text-decoration:none;`">`$`{s.name}</a>``).join(', ')}</div>``;`n    }`n    html += ``</div></div>``;`n  }"
+$html = [System.Text.RegularExpressions.Regex]::Replace($html, $actualidadRenderPattern, $actualidadRenderReplace, 1)
+
+[System.IO.File]::WriteAllText($htmlPath, $html, [System.Text.Encoding]::UTF8)
+Write-Output "Actualidad rendering logic injected."

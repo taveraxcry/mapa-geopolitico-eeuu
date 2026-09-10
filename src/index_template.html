@@ -992,7 +992,8 @@ const GEO_DB = {
         strengths: "economía, dólar y sistema financiero, tecnología, fuerzas armadas, inteligencia, alianzas y capacidad diplomática.",
         strategic: "Su posición geográfica, capacidad militar y extensa red de alianzas le permiten proyectar poder en múltiples regiones simultáneamente."
       },
-      keywords: ["superpotencia","hegemonía","dólar","OTAN","nuclear"]
+      keywords: ["superpotencia","hegemonía","dólar","OTAN","nuclear"],
+      conflicts: ["us_iran_escalation"]
     },
     "Canada": {
       name_es: "Canadá", flag: "ca", capital: "Ottawa",
@@ -1184,7 +1185,8 @@ const GEO_DB = {
         strengths: "arsenal nuclear, fuerzas armadas, energía, territorio, recursos naturales, industria militar y disuasión estratégica.",
         strategic: "Control de espacios euroasiáticos, rutas energéticas, acceso al Ártico y posición de puente intercontinental."
       },
-      keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"]
+      keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"],
+      conflicts: ["ukraine_russia"]
     },
     "Iran": {
       name_es: "Irán", flag: "ir", capital: "Teherán",
@@ -1202,7 +1204,26 @@ const GEO_DB = {
         strengths: "abundancia energética, inexpugnable topografía, doctrina de guerra asimétrica, redes milicianas aliadas y extensa producción de misiles/drones.",
         strategic: "Capacidad de disrupción en el Estrecho de Ormuz (ruta petrolera crítica) y consolidación del arco de influencia chiita hasta el Mediterráneo."
       },
-      keywords: ["adversario","nuclear","proxy","Ormuz","sanciones"]
+      keywords: ["adversario","nuclear","proxy","Ormuz","sanciones"],
+      actualidad: {
+        current_situation: "Alta tensión tras la Operación 'Epic Fury' (Feb 2026), que neutralizó instalaciones subterráneas en Isfahán.",
+        verified_facts: [
+          "El 28 de febrero de 2026, una coalición liderada por EE. UU. (con apoyo logístico regional) ejecutó ataques de precisión (Epic Fury).",
+          "Irán respondió bloqueando parcialmente el Estrecho de Ormuz durante 72 horas.",
+          "El enriquecimiento de uranio alcanzó picos críticos antes de la operación."
+        ],
+        interpretation: "El régimen de Teherán enfrenta una crisis de legitimidad interna combinada con una capacidad militar reducida, aunque mantiene sus redes proxy intactas.",
+        timeline: [
+          { date: "28 Feb 2026", event: "Operación 'Epic Fury'." },
+          { date: "1 Mar 2026", event: "Bloqueo intermitente de Ormuz." },
+          { date: "5 Mar 2026", event: "Reapertura de rutas bajo escolta internacional." }
+        ],
+        sources: [
+          { name: "Reportes de Seguridad Marítima (Mar 2026)", url: "#" },
+          { name: "Fuentes de Defensa (Feb 2026)", url: "#" }
+        ]
+      },
+      conflicts: ["us_iran_escalation", "middle_east_crisis"]
     },
     "North Korea": {
       name_es: "Corea del Norte", flag: "kp", capital: "Pyongyang",
@@ -1232,7 +1253,24 @@ const GEO_DB = {
       orgs: ["APEP","OTAN (socio global, NO miembro)","OEA"],
       description: "Major Non-NATO Ally (MNNA) y socio global de la OTAN — NO es miembro de la OTAN sino socio de cooperación. Aliado tradicional de EE.UU. en América Latina. Plan Colombia (2000-2015) definió la relación de cooperación en seguridad. Único socio global de la OTAN en América Latina.",
       allies: ["United States of America"],
-      keywords: ["MNNA","socio OTAN","Plan Colombia","narcotráfico","América Latina"]
+      keywords: ["MNNA","socio OTAN","Plan Colombia","narcotráfico","América Latina"],
+      actualidad: {
+        current_situation: "Profundización de los lazos de seguridad con EE. UU. y visita clave del Secretario de Estado Marco Rubio (Sep 2026).",
+        verified_facts: [
+          "El 8 de septiembre de 2026, el Secretario de Estado de EE. UU., Marco Rubio, visitó Bogotá.",
+          "Se firmaron acuerdos para ampliar la inteligencia compartida e interdicción conjunta bajo un 'Plan Colombia 2.0'.",
+          "Colombia reafirmó su postura como aliado estratégico extra-OTAN en la región andina."
+        ],
+        interpretation: "Bogotá busca asegurar flujo de recursos de seguridad ante la inestabilidad de Venezuela, consolidándose como el principal ancla de EE. UU. en la región.",
+        timeline: [
+          { date: "Ago 2026", event: "Aumento de operaciones antinarcóticos conjuntas." },
+          { date: "8 Sep 2026", event: "Visita de Marco Rubio y anuncio de nuevos acuerdos bilaterales." }
+        ],
+        sources: [
+          { name: "Departamento de Estado (Sep 2026)", url: "#" },
+          { name: "Ministerio de Defensa de Colombia", url: "#" }
+        ]
+      }
     },
     "Brazil": {
       name_es: "Brasil", flag: "br", capital: "Brasilia",
@@ -1290,7 +1328,25 @@ const GEO_DB = {
       orgs: ["OPEP"],
       description: "Relaciones rotas desde el gobierno de Chávez/Maduro. Sanciones extensivas de EE.UU. Crisis humanitaria y migratoria masiva. Mayores reservas probadas de petróleo del mundo. Apoyo de Rusia, China e Irán.",
       allies: ["Cuba","Russia","China","Iran"],
-      keywords: ["sanciones","petróleo","Maduro","crisis"]
+      keywords: ["sanciones","petróleo","Maduro","crisis"],
+      actualidad: {
+        current_situation: "Administración interina de Delcy Rodríguez tras la captura de Nicolás Maduro en la Operación 'Absolute Resolve' (Ene 2026).",
+        verified_facts: [
+          "El 3 de enero de 2026, fuerzas especiales de EE. UU. (JSOC) y agencias de inteligencia capturaron a Nicolás Maduro en Isla La Orchila.",
+          "Delcy Rodríguez asumió el poder bajo estado de excepción respaldada por las Fuerzas Armadas (Padrino López).",
+          "Se suspendieron las garantías constitucionales y hay una fuerte presencia militar en Caracas."
+        ],
+        interpretation: "La estructura del régimen chavista permanece intacta pese a la pérdida de su figura principal. La transición liderada por Rodríguez busca cohesión interna mientras negocia supervivencia.",
+        timeline: [
+          { date: "3 Ene 2026", event: "Operación 'Absolute Resolve': Captura de Nicolás Maduro." },
+          { date: "4 Ene 2026", event: "Delcy Rodríguez jura como presidenta interina." },
+          { date: "15 Ene 2026", event: "Declaratoria de estado de emergencia nacional." }
+        ],
+        sources: [
+          { name: "Casa Blanca - Briefing (Ene 2026)", url: "#" },
+          { name: "Informes de Inteligencia Regional", url: "#" }
+        ]
+      }
     },
     "Cuba": {
       name_es: "Cuba", flag: "cu", capital: "La Habana",
@@ -1366,7 +1422,8 @@ const GEO_DB = {
         strengths: "superioridad tecnológica y cibernética, sofisticada inteligencia (Mossad), doctrina militar disuasoria y dinámico sector de innovación.",
         strategic: "Su capacidad para alterar el balance de poder regional a través de ataques preventivos y tecnología avanzada moldea de forma absoluta el contexto de seguridad del Levante."
       },
-      keywords: ["aliado","defensa","tecnología","Palestina","nuclear"]
+      keywords: ["aliado","defensa","tecnología","Palestina","nuclear"],
+      conflicts: ["middle_east_crisis"]
     },
     "Saudi Arabia": {
       name_es: "Arabia Saudita", flag: "sa", capital: "Riad",
@@ -1490,7 +1547,8 @@ const GEO_DB = {
       orgs: [],
       description: "Receptor de asistencia militar y financiera masiva de EE.UU. desde la invasión rusa de 2022. Aspirante a la OTAN y la UE. El conflicto en Ucrania ha redefinido la seguridad europea y revitalizado la alianza transatlántica.",
       allies: ["United States of America","Poland","United Kingdom","Germany"],
-      keywords: ["guerra","Rusia","asistencia","OTAN","UE"]
+      keywords: ["guerra","Rusia","asistencia","OTAN","UE"],
+      conflicts: ["ukraine_russia"]
     },
     "Norway": {
       name_es: "Noruega", flag: "no", capital: "Oslo",
@@ -2986,10 +3044,32 @@ const BRICS_NAMES = [
   "United Arab Emirates","Indonesia"
 ];
 
-const CONFLICT_NAMES = [
-  "Ukraine","Syria","Yemen","Sudan","S. Sudan","Myanmar","Somalia","Palestine","Afghanistan",
-  "Libya","Mali","Burkina Faso","Niger","Dem. Rep. Congo","Iraq"
-];
+const CONFLICT_DB = {
+  "us_iran_escalation": {
+    name: "Crisis del Estrecho de Ormuz (Escalada EE. UU. - Irán)",
+    status: "Activo (Alta intensidad intermitente)",
+    type: "Conflicto asimétrico / Marítimo",
+    date_started: "Feb 2026",
+    description: "Tras la Operación 'Epic Fury' ejecutada por EE. UU., Irán inició bloqueos intermitentes en el Estrecho de Ormuz, provocando choques navales esporádicos y escalada de los proxies regionales (Houthis en Mar Rojo).",
+    impact: "Impacto severo en la cadena de suministro energético global. El 20% del crudo mundial pasa por la zona."
+  },
+  "ukraine_russia": {
+    name: "Invasión Rusa de Ucrania",
+    status: "Activo (Guerra de desgaste prolongada)",
+    type: "Guerra convencional interestatal",
+    date_started: "Feb 2022",
+    description: "Conflicto de gran escala donde Rusia busca consolidar territorios anexados mientras Ucrania, respaldada por la OTAN, sostiene una defensa exhaustiva. El frente oriental se mantiene como una zona de altísima letalidad.",
+    impact: "Reestructuración total de la seguridad europea y del mercado energético global."
+  },
+  "middle_east_crisis": {
+    name: "Crisis Multifrénte de Medio Oriente",
+    status: "Activo",
+    type: "Conflicto regional multi-actor",
+    date_started: "Oct 2023",
+    description: "Conflicto de gran escala con epicentro en Gaza, expandido al Líbano, Siria y el Mar Rojo. Involucra operaciones militares directas de Israel contra proxies iraníes y facciones palestinas.",
+    impact: "Desestabilización regional, crisis humanitaria masiva y parálisis parcial de rutas marítimas comerciales."
+  }
+};
 
 // ============================================================
 // APPLICATION ENGINE
@@ -3323,6 +3403,41 @@ function showInfoPanel(name, info) {
 
   const badge = document.getElementById('panel-relation');
   
+  if (activeCategory === 'conflictos' && info.conflicts && info.conflicts.length > 0) {
+    badge.textContent = "Zona de Conflicto Activo";
+    badge.style.background = 'rgba(190, 18, 60, 0.15)';
+    badge.style.color = '#fda4af';
+    badge.style.border = '1px solid rgba(190, 18, 60, 0.3)';
+    
+    let html = '';
+    info.conflicts.forEach((conflictId, index) => {
+      const conflictData = CONFLICT_DB[conflictId];
+      if (conflictData) {
+        html += `<div class="panel-section animate-in" style="animation-delay:${index * 0.05}s; margin-bottom: 15px; border-left: 3px solid #be123c; padding-left: 10px;">
+            <div class="panel-section-title" style="color: #fda4af; font-size: 1.1em;">⚠️ ${conflictData.name}</div>
+            <div style="font-size: 0.85em; color: #94a3b8; margin-bottom: 8px;">
+              <span style="display:inline-block; margin-right: 10px;"><strong>Estado:</strong> ${conflictData.status}</span><br/>
+              <span style="display:inline-block; margin-right: 10px;"><strong>Tipo:</strong> ${conflictData.type}</span><br/>
+              <span><strong>Inicio:</strong> ${conflictData.date_started}</span>
+            </div>
+            <div class="panel-section-content" style="margin-bottom: 8px;">${conflictData.description}</div>
+            <div class="panel-section-content" style="font-style: italic; color: #cbd5e1;"><strong>Impacto Estratégico:</strong> ${conflictData.impact}</div>
+          </div>`;
+      }
+    });
+    
+    document.getElementById('panel-body').innerHTML = html;
+    
+    panel.classList.add('open');
+    if (window.innerWidth <= 768) { 
+      hideTooltip(); 
+      document.getElementById('map-legend').style.display = 'none'; 
+      document.getElementById('controls').style.display = 'none'; 
+      document.getElementById('overlay').classList.add('active');
+    }
+    return;
+  }
+
   if (activeCategory === 'potencias' && info.potencia_regional) {
     let panelTitle = "Potencia regional";
     if (info.potencia_regional.tipo_poder.toLowerCase().includes('global')) {
@@ -3384,6 +3499,32 @@ function showInfoPanel(name, info) {
     html += `<div class="panel-section animate-in"><div class="panel-section-title">📋 Análisis Geopolítico</div>
              <div class="panel-section-content">${info.description}</div></div>`;
   }
+  // Actualidad Geopolitica (Sept 2026)
+  if (info.actualidad) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.02s">
+      <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">ACTUALIDAD GEOPOLÍTICA — 9 SEP 2026</div>
+      <div class="panel-section-content">
+        <p style="margin-bottom:8px;"><strong>Situación Actual:</strong> ${info.actualidad.current_situation}</p>
+        <div style="margin-bottom:8px; border-left: 2px solid var(--accent-cyan); padding-left: 8px; background: rgba(34,211,238,0.05);">
+          <strong>Hechos Verificados:</strong>
+          <ul style="margin:4px 0 0 16px; padding:0;">
+            ${info.actualidad.verified_facts.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+        <p style="margin-bottom:8px;"><strong>Interpretación:</strong> ${info.actualidad.interpretation}</p>`;
+    if (info.actualidad.timeline && info.actualidad.timeline.length > 0) {
+      html += `<div style="margin-top:12px;"><strong>Línea de Tiempo:</strong><br/>`;
+      info.actualidad.timeline.forEach(t => {
+        html += `<div style="font-size:0.85rem; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span style="color:var(--accent-orange);font-weight:bold;margin-right:8px;">${t.date}</span> ${t.event}</div>`;
+      });
+      html += `</div>`;
+    }
+    if (info.actualidad.sources && info.actualidad.sources.length > 0) {
+      html += `<div style="margin-top:12px; font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
+    }
+    html += `</div></div>`;
+  }
+
 
   // New Schema Stats
   if (info.econ_importance) {

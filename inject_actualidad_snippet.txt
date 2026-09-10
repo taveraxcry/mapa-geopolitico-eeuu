@@ -1,0 +1,25 @@
+  // Actualidad Geopolitica (Sept 2026)
+  if (info.actualidad) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.02s">
+      <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">ACTUALIDAD GEOPOLÍTICA — 9 SEP 2026</div>
+      <div class="panel-section-content">
+        <p style="margin-bottom:8px;"><strong>Situación Actual:</strong> ${info.actualidad.current_situation}</p>
+        <div style="margin-bottom:8px; border-left: 2px solid var(--accent-cyan); padding-left: 8px; background: rgba(34,211,238,0.05);">
+          <strong>Hechos Verificados:</strong>
+          <ul style="margin:4px 0 0 16px; padding:0;">
+            ${info.actualidad.verified_facts.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+        <p style="margin-bottom:8px;"><strong>Interpretación:</strong> ${info.actualidad.interpretation}</p>`;
+    if (info.actualidad.timeline && info.actualidad.timeline.length > 0) {
+      html += `<div style="margin-top:12px;"><strong>Línea de Tiempo:</strong><br/>`;
+      info.actualidad.timeline.forEach(t => {
+        html += `<div style="font-size:0.85rem; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span style="color:var(--accent-orange);font-weight:bold;margin-right:8px;">${t.date}</span> ${t.event}</div>`;
+      });
+      html += `</div>`;
+    }
+    if (info.actualidad.sources && info.actualidad.sources.length > 0) {
+      html += `<div style="margin-top:12px; font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
+    }
+    html += `</div></div>`;
+  }
