@@ -1307,7 +1307,7 @@ const GEO_DB = {
     "China": {
       name_es: "China", flag: "cn", capital: "Pekín",
       continent: "asia", region: "Asia Oriental",
-      relation: "competitor", relation_es: "Competidor estratégico",
+      relation: "competitor", relation_es: "Rival sistémico",
       population: "1,425M", gdp: "$18.53T", gdp_pc: "$13,136",
       orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
       description: "Principal competidor estratégico de EE.UU. Segunda economía mundial. Competencia en tecnología (IA, semiconductores, 5G), militar (mayor armada del mundo) y geopolítica (Mar de China Meridional, Taiwán, Iniciativa de la Franja y la Ruta). Miembro del P5.",
@@ -1320,12 +1320,13 @@ const GEO_DB = {
         strengths: "manufactura, comercio, tecnología, infraestructura, finanzas, población, poder naval y cadenas de suministro.",
         strategic: "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
       },
-      keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"]
+      keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"],
+      rival_class: "sistémico"
     },
     "Russia": {
       name_es: "Rusia", flag: "ru", capital: "Moscú",
       continent: "europe", region: "Europa del Este / Asia del Norte",
-      relation: "adversary", relation_es: "Adversario",
+      relation: "adversary", relation_es: "Rival estratégico",
       population: "144M", gdp: "$2.02T", gdp_pc: "$14,403",
       orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
       description: "Adversario principal tras la invasión de Ucrania (2022). Mayor arsenal nuclear del mundo. Miembro del P5. Sanciones occidentales masivas. Alianza estratégica creciente con China. Proveedor de energía (gas, petróleo) y desestabilizador en Europa.",
@@ -1339,12 +1340,13 @@ const GEO_DB = {
         strategic: "Control de espacios euroasiáticos, rutas energéticas, acceso al Ártico y posición de puente intercontinental."
       },
       keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"],
-      conflicts: ["ukraine_russia"]
+      conflicts: ["ukraine_russia"],
+      rival_class: "estratégico"
     },
     "Iran": {
       name_es: "Irán", flag: "ir", capital: "Teherán",
       continent: "middle-east", region: "Medio Oriente",
-      relation: "adversary", relation_es: "Adversario",
+      relation: "adversary", relation_es: "Rival estratégico",
       population: "88M", gdp: "$401B", gdp_pc: "$4,556",
       orgs: ["BRICS","OPEP"],
       description: "Adversario desde la Revolución Islámica de 1979. Programa nuclear controvertido. Apoya milicias proxy (Hezbollah, Houthis, milicias en Irak). Tensiones por el Estrecho de Ormuz (21% del petróleo mundial transita allí). Miembro de BRICS desde 2024.",
@@ -1376,17 +1378,19 @@ const GEO_DB = {
           { name: "Fuentes de Defensa (Feb 2026)", url: "#" }
         ]
       },
-      conflicts: ["us_iran_escalation", "middle_east_crisis"]
+      conflicts: ["us_iran_escalation", "middle_east_crisis"],
+      rival_class: "estratégico"
     },
     "North Korea": {
       name_es: "Corea del Norte", flag: "kp", capital: "Pyongyang",
       continent: "asia", region: "Asia Oriental",
-      relation: "adversary", relation_es: "Adversario",
+      relation: "adversary", relation_es: "Adversario / amenaza militar",
       population: "26M", gdp: "$~18B", gdp_pc: "$~700",
       orgs: [],
       description: "Estado altamente aislado con arsenal nuclear. Amenaza directa a aliados de EE.UU. (Corea del Sur, Japón). Programa de misiles balísticos intercontinentales. Apoyo militar a Rusia en la guerra de Ucrania.",
       allies: ["China","Russia"],
-      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"]
+      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"],
+      rival_class: "amenaza"
     },
     "Taiwan": {
       aliado_secundario: {
@@ -1502,12 +1506,13 @@ const GEO_DB = {
     "Cuba": {
       name_es: "Cuba", flag: "cu", capital: "La Habana",
       continent: "north-america", region: "Caribe",
-      relation: "adversary", relation_es: "Adversario",
+      relation: "adversary", relation_es: "Rival regional",
       population: "11M", gdp: "$~107B", gdp_pc: "$~9,500",
       orgs: ["BRICS (socio)"],
       description: "Embargo comercial de EE.UU. desde 1962. Estado socialista de partido único. Breve deshielo bajo Obama (2014-2016) revertido posteriormente. Base naval de Guantánamo operada por EE.UU.",
       allies: ["Venezuela","Russia","China"],
-      keywords: ["embargo","socialismo","Guantánamo"]
+      keywords: ["embargo","socialismo","Guantánamo"],
+      rival_class: "regional"
     },
     "Italy": {
       name_es: "Italia", flag: "it", capital: "Roma",
@@ -2150,12 +2155,13 @@ const GEO_DB = {
     "Syria": {
       name_es: "Siria", flag: "sy", capital: "Damasco",
       continent: "middle-east", region: "Medio Oriente",
-      relation: "adversary", relation_es: "Adversario",
+      relation: "adversary", relation_es: "Rival regional",
       population: "22M", gdp: "$~11B", gdp_pc: "$~530",
       orgs: [],
       description: "Guerra civil desde 2011. Presencia militar de EE.UU. en el noreste (con fuerzas kurdas SDF). Apoyo ruso e iraní al régimen de Assad. Sanciones extensivas.",
       allies: ["Russia","Iran"],
-      keywords: ["guerra civil","Assad","sanciones","kurdos"]
+      keywords: ["guerra civil","Assad","sanciones","kurdos"],
+      rival_class: "regional"
     },
     "Jordan": {
       aliado_secundario: {
@@ -2502,12 +2508,13 @@ const GEO_DB = {
     "Nicaragua": {
       name_es: "Nicaragua", flag: "ni", capital: "Managua",
       continent: "north-america", region: "América Central",
-      relation: "adversary", relation_es: "Adversario",
+      relation: "adversary", relation_es: "Rival regional",
       population: "7M", gdp: "$~17B", gdp_pc: "$~2,400",
       orgs: [],
       description: "Régimen de Ortega. Sanciones de EE.UU. Represión de oposición. Relaciones con Rusia, China e Irán. Canal interoceánico propuesto con inversión china.",
       allies: ["Russia","Venezuela","Cuba"],
-      keywords: ["sanciones","Ortega","autoritarismo"]
+      keywords: ["sanciones","Ortega","autoritarismo"],
+      rival_class: "regional"
     },
     "Uruguay": {
       name_es: "Uruguay", flag: "uy", capital: "Montevideo",
@@ -4699,8 +4706,14 @@ function applyCategory(cat) {
       }
     }
     else if (cat === 'rivales') {
-      if (info && info.rivals && info.rivals.length > 0) el.style('fill', '#dc2626').style('opacity', 1);
-      else el.style('opacity', 0.15);
+      if (info && info.rival_class) {
+        if (info.rival_class === 'sistémico') el.style('fill', '#7f1d1d').style('opacity', 1);
+        else if (info.rival_class === 'estratégico') el.style('fill', '#dc2626').style('opacity', 1);
+        else if (info.rival_class === 'amenaza') el.style('fill', '#ef4444').style('opacity', 1);
+        else if (info.rival_class === 'regional') el.style('fill', '#f97316').style('opacity', 1);
+      } else {
+        el.style('opacity', 0.08);
+      }
     }
     else if (cat === 'conflictos') {
       if (info && info.conflicts && info.conflicts.length > 0) el.style('fill', '#be123c').style('opacity', 1);
@@ -4794,8 +4807,11 @@ function updateLegend(cat) {
               <div style="font-size:9px;color:#64748b;margin-top:4px;line-height:1.3">*Clic en países o marcadores para detalles</div>`;
       break;
     case 'rivales':
-      html = `<div class="legend-title">Rivales Sistémicos</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Rival / Adversario</div>`;
+      html = `<div class="legend-title">Rivales & Adversarios</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#7f1d1d"></div>🔴 Rival sistémico</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>🔴 Rival estratégico</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>🔴 Adversario / amenaza militar</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>🟠 Rival regional</div>`;
       break;
     case 'zonas':
       html = `<div class="legend-title">Zonas de Influencia</div>`;
