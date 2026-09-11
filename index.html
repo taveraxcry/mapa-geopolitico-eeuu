@@ -4829,10 +4829,14 @@ function updateLegend(cat) {
       `;
       break;
     case 'aliados':
-      html = `<div class="legend-title" style="color:#4ade80">🤝 Aliados Principales EE.UU.</div>
+      html = `<div class="legend-title" style="color:#4ade80">🤝 Aliados de EE.UU.</div>
               <div class="legend-item"><div class="legend-dot" style="background:#166534;border:1px solid #4ade80"></div>Aliado Principal</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#166534;font-size:9px;line-height:16px;text-align:center">🛡️</div>Base / Instalación Militar</div>
-              <div style="font-size:9px;color:#64748b;margin-top:4px;line-height:1.3">*Clic en marcadores para detalles</div>`;
+              <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Aliado estratégico</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Socio estratégico</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#86efac"></div>Socio regional</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#bbf7d0"></div>Cooperación puntual</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#166534;font-size:9px;line-height:16px;text-align:center">🛡️</div>Instalación militar</div>
+              <div style="font-size:9px;color:#64748b;margin-top:4px;line-height:1.3">*Clic en países o marcadores para detalles</div>`;
       break;
     case 'rivales':
       html = `<div class="legend-title">Rivales Sistémicos</div>
