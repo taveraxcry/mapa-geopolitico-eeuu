@@ -4131,11 +4131,11 @@ let currentSearchHighlight = null;
       icon: "🕊️",
       color: "#0d9488",
       legend_label: "Estado miembro",
-      legend_note: "La ONU tiene 193 Estados miembros oficiales; 28 de ellos (microestados y países muy pequeños) no aparecen como polígonos individuales en la resolución de este mapa, por lo que se resaltan 165.",
+      legend_note: "193 Estados miembros oficiales. 165 de ellos se resaltan en este mapa; los 28 restantes (microestados y países muy pequeños) no tienen polígono individual en la resolución de este mapa, pero siguen siendo miembros oficiales de la ONU.",
       scope: "Global",
       founded: "24 de octubre de 1945 (entrada en vigor de la Carta de las Naciones Unidas)",
       headquarters: "Nueva York, Estados Unidos (con oficinas en Ginebra, Viena y Nairobi)",
-      member_count: 165,
+      member_count: 193,
       us_role: "Miembro fundador (1945), miembro permanente del Consejo de Seguridad con derecho a veto, principal contribuyente financiero y país anfitrión de la sede en Nueva York.",
       function: "Foro universal para el mantenimiento de la paz y la seguridad internacional, el desarrollo de relaciones de amistad entre naciones, la cooperación internacional, el desarrollo sostenible y la promoción de los derechos humanos, articulado a través de la Asamblea General, el Consejo de Seguridad y sus organismos especializados.",
       us_relation: "EE. UU. es miembro fundador, uno de los cinco miembros permanentes del Consejo de Seguridad con derecho a veto, y el mayor contribuyente al presupuesto regular y a las operaciones de mantenimiento de la paz.",
@@ -4325,12 +4325,216 @@ let currentSearchHighlight = null;
       }
     },
     "ue": {
-      name: "Unión Europea (UE)",
-      type: "Organización regional"
+      name: "Unión Europea",
+      acronym: "UE / EU",
+      type: "Unión política y económica supranacional",
+      icon: "🇪🇺",
+      color: "#eab308",
+      legend_label: "Estado miembro",
+      legend_note: "La Unión Europea tiene 27 Estados miembros. El Reino Unido NO es miembro (se retiró en 2020, 'Brexit'). Malta es miembro oficial pero no tiene representación cartográfica individual en esta versión del mapa.",
+      scope: "Europa",
+      founded: "1 de noviembre de 1993 (entrada en vigor del Tratado de Maastricht); con antecedentes en la integración europea desde 1951 (Comunidad Europea del Carbón y del Acero)",
+      headquarters: "Bruselas, Bélgica (principal centro institucional; el Parlamento Europeo también tiene sede en Estrasburgo y el Tribunal de Justicia en Luxemburgo)",
+      member_count: 27,
+      us_role: "EE. UU. no es miembro (la UE es una unión exclusivamente europea), pero es su principal socio comercial y de seguridad, coordinando estrechamente política exterior, sanciones y comercio con Washington.",
+      function: "Unión supranacional con mercado único, unión aduanera y moneda común (el euro) que coordina política comercial, regulación, cooperación política, política exterior y de seguridad, energía y tecnología entre sus Estados miembros a través de sus instituciones.",
+      us_relation: "La UE y EE. UU. son los principales socios comerciales y de inversión mutuos del mundo, y coordinan estrechamente sanciones contra Rusia, políticas tecnológicas y seguridad energética, aunque mantienen fricciones comerciales puntuales.",
+      relation_other: "La UE NO es una alianza militar equivalente a la OTAN: 23 de sus 27 Estados miembros también pertenecen a la OTAN, pero son estructuras jurídicas y funcionales distintas — la UE es una unión política y económica supranacional, mientras que la OTAN es una alianza de defensa colectiva.",
+      geo_importance: "Es el mayor mercado único del mundo y uno de los tres grandes polos económicos globales junto a EE. UU. y China; su política de sanciones, regulación tecnológica y comercio exterior tiene alcance global, aunque su autonomía estratégica en defensa sigue siendo limitada frente a EE. UU.",
+      updated: "11 de septiembre de 2026",
+      institutions: [
+        "Comisión Europea",
+        "Consejo Europeo",
+        "Consejo de la Unión Europea",
+        "Parlamento Europeo",
+        "Tribunal de Justicia de la Unión Europea",
+        "Banco Central Europeo"
+      ],
+      leadership_note: "Presidente del Consejo Europeo: António Costa. Presidenta de la Comisión Europea: Ursula von der Leyen. Presidenta del Parlamento Europeo: Roberta Metsola. Presidencia rotatoria del Consejo de la UE en 2026: Chipre (enero-junio) e Irlanda (julio-diciembre).",
+      actualidad: {
+        current_situation: "La UE enfrenta en 2026 un doble desafío de seguridad y competitividad: sostener su apoyo a Ucrania frente a la invasión rusa mientras avanza en su autonomía estratégica en defensa y energía, en un contexto de relación transatlántica exigente y competencia geoeconómica con China.",
+        verified_facts: [
+          "Chipre ejerce la presidencia rotatoria del Consejo de la UE durante el primer semestre de 2026, e Irlanda durante el segundo semestre.",
+          "António Costa preside el Consejo Europeo, Ursula von der Leyen la Comisión Europea y Roberta Metsola el Parlamento Europeo.",
+          "La UE mantiene y amplía regímenes de sanciones económicas contra Rusia desde 2022 en coordinación con el G7 y EE. UU."
+        ],
+        interpretation: "La Unión Europea intenta equilibrar su dependencia histórica de la garantía de seguridad estadounidense con un impulso hacia mayor autonomía estratégica propia, en energía, defensa y tecnología, mientras sostiene su apoyo a Ucrania frente a Rusia.",
+        sources: [
+          { name: "Unión Europea — Sitio oficial", url: "https://european-union.europa.eu/" },
+          { name: "Consejo Europeo y Consejo de la UE", url: "https://www.consilium.europa.eu/es/" },
+          { name: "Comisión Europea", url: "https://commission.europa.eu/" }
+        ]
+      },
+      members: {
+        "Germany": { role: "Estado miembro" },
+        "Austria": { role: "Estado miembro" },
+        "Belgium": { role: "Estado miembro" },
+        "Bulgaria": { role: "Estado miembro" },
+        "Croatia": { role: "Estado miembro" },
+        "Cyprus": { role: "Estado miembro; presidencia rotatoria del Consejo de la UE en el primer semestre de 2026" },
+        "Czechia": { role: "Estado miembro" },
+        "Denmark": { role: "Estado miembro" },
+        "Slovakia": { role: "Estado miembro" },
+        "Slovenia": { role: "Estado miembro" },
+        "Spain": { role: "Estado miembro" },
+        "Estonia": { role: "Estado miembro" },
+        "Finland": { role: "Estado miembro" },
+        "France": { role: "Estado miembro" },
+        "Greece": { role: "Estado miembro" },
+        "Hungary": { role: "Estado miembro" },
+        "Ireland": { role: "Estado miembro; presidencia rotatoria del Consejo de la UE en el segundo semestre de 2026" },
+        "Italy": { role: "Estado miembro" },
+        "Latvia": { role: "Estado miembro" },
+        "Lithuania": { role: "Estado miembro" },
+        "Luxembourg": { role: "Estado miembro" },
+        "Malta": { role: "Estado miembro", noPolygon: true },
+        "Netherlands": { role: "Estado miembro" },
+        "Poland": { role: "Estado miembro" },
+        "Portugal": { role: "Estado miembro" },
+        "Romania": { role: "Estado miembro" },
+        "Sweden": { role: "Estado miembro" }
+      }
     },
     "asean": {
-      name: "Asociación de Naciones del Sudeste Asiático (ASEAN)",
-      type: "Organización regional"
+      name: "Asociación de Naciones del Sudeste Asiático",
+      acronym: "ASEAN",
+      type: "Organización regional intergubernamental",
+      icon: "🌏",
+      color: "#059669",
+      legend_label: "Estado miembro",
+      legend_note: "ASEAN tiene 11 Estados miembros (Timor-Leste es el miembro número 11, no un observador). Singapur es miembro oficial pero no tiene representación cartográfica individual en esta versión del mapa.",
+      scope: "Sudeste Asiático",
+      founded: "8 de agosto de 1967 (Declaración de Bangkok)",
+      headquarters: "Yakarta, Indonesia",
+      member_count: 11,
+      us_role: "EE. UU. no es miembro (ASEAN es una organización exclusivamente del Sudeste Asiático), pero mantiene una Asociación Estratégica Integral con el bloque y participa en el Diálogo EE. UU.-ASEAN y la Cumbre de Asia Oriental.",
+      function: "Integración regional del Sudeste Asiático en cooperación política, económica, de seguridad, conectividad, comercio y cooperación sociocultural, bajo el principio de la 'centralidad de ASEAN' en la arquitectura del Indo-Pacífico.",
+      us_relation: "EE. UU. promueve la centralidad de ASEAN como plataforma diplomática del Indo-Pacífico y contrapeso a la influencia china en la región, sin que ello implique una alianza militar formal con el bloque.",
+      relation_other: "ASEAN NO es una alianza militar ni un bloque anti-China: es un foro de integración regional que mantiene relaciones de diálogo tanto con China como con EE. UU., Japón e India, evitando alinearse militarmente con ninguna potencia externa.",
+      geo_importance: "Ocupa una posición geoestratégica central en el Indo-Pacífico, entre China y el océano Índico, junto a rutas marítimas críticas para el comercio mundial y el disputado Mar de China Meridional.",
+      updated: "11 de septiembre de 2026",
+      leadership_note: "Secretario General de ASEAN: Kao Kim Hourn (Camboya).",
+      actualidad: {
+        current_situation: "Filipinas ejerce la presidencia de ASEAN en 2026 bajo el lema 'Navigating Our Future, Together', año que también marca avances en la implementación de la visión ASEAN 2045: Our Shared Future.",
+        verified_facts: [
+          "Filipinas asumió la presidencia rotatoria de ASEAN para 2026.",
+          "Las prioridades de la presidencia filipina de 2026 se organizan en tres pilares: Peace and Security Anchors, Prosperity Corridors y People Empowerment.",
+          "Timor-Leste se incorporó como el undécimo miembro pleno de ASEAN, formalizando su adhesión tras años de participación como observador."
+        ],
+        interpretation: "ASEAN mantiene su papel de plataforma diplomática central del Indo-Pacífico, buscando preservar su autonomía frente a la competencia estratégica entre EE. UU. y China, mientras gestiona disputas territoriales en el Mar de China Meridional y avanza en su integración económica interna.",
+        sources: [
+          { name: "ASEAN — Sitio oficial", url: "https://asean.org/" }
+        ]
+      },
+      members: {
+        "Brunei": { role: "Estado miembro" },
+        "Cambodia": { role: "Estado miembro" },
+        "Philippines": { role: "Estado miembro; presidencia de ASEAN en 2026" },
+        "Indonesia": { role: "Estado miembro fundador (1967)" },
+        "Laos": { role: "Estado miembro" },
+        "Malaysia": { role: "Estado miembro fundador (1967)" },
+        "Myanmar": { role: "Estado miembro" },
+        "Singapore": { role: "Estado miembro fundador (1967)", noPolygon: true },
+        "Thailand": { role: "Estado miembro fundador (1967)" },
+        "Vietnam": { role: "Estado miembro" },
+        "Timor-Leste": { role: "Estado miembro número 11 (incorporación más reciente)" }
+      }
+    },
+    "union_africana": {
+      name: "Unión Africana",
+      acronym: "UA / AU",
+      type: "Organización continental intergubernamental",
+      icon: "🌍",
+      color: "#e11d48",
+      legend_label: "Estado miembro",
+      legend_note: "La Unión Africana tiene 55 Estados miembros oficiales; 50 se resaltan en este mapa. Cabo Verde, Comoras, Mauricio, Santo Tomé y Príncipe y Seychelles son miembros oficiales sin representación cartográfica individual en esta versión del mapa.",
+      scope: "África",
+      founded: "9 de julio de 2002 (sucesora de la Organización de la Unidad Africana, fundada en 1963)",
+      headquarters: "Adís Abeba, Etiopía",
+      member_count: 55,
+      us_role: "EE. UU. no es miembro (la UA es una organización exclusivamente africana), pero mantiene una misión diplomática ante la UA en Adís Abeba y coopera en seguridad (AFRICOM), salud y desarrollo (AGOA).",
+      function: "Integración continental africana en paz y seguridad, desarrollo económico, cooperación política y representación diplomática común de África, bajo el marco de la Agenda 2063.",
+      us_relation: "EE. UU. coopera con la UA en seguridad (contraterrorismo, AFRICOM), salud pública y comercio (Ley de Crecimiento y Oportunidad para África, AGOA), y apoyó la incorporación de la UA como miembro permanente del G20 en 2023.",
+      relation_other: "La Unión Africana NO es un Estado federal ni una alianza militar: es una organización intergubernamental continental cuyo Consejo de Paz y Seguridad coordina —pero no sustituye— a las fuerzas armadas de sus Estados miembros.",
+      geo_importance: "Representa a 55 Estados con más de 1.400 millones de personas y vastos recursos estratégicos (minerales críticos, energía, tierras cultivables), con creciente peso en la gobernanza económica global como miembro permanente del G20 desde 2023.",
+      updated: "11 de septiembre de 2026",
+      leadership_note: "Presidente de la Unión Africana (rotatorio, jefe de Estado): Évariste Ndayishimiye, presidente de Burundi. Presidente de la Comisión de la Unión Africana: Mahmoud Ali Youssouf.",
+      institutions: [
+        "Asamblea de Jefes de Estado y de Gobierno",
+        "Comisión de la Unión Africana",
+        "Consejo de Paz y Seguridad",
+        "Parlamento Panafricano"
+      ],
+      actualidad: {
+        current_situation: "La Unión Africana consolida en 2026 su papel como miembro permanente del G20 (incorporado en 2023) mientras enfrenta crisis de seguridad en el Sahel, los Grandes Lagos y el Cuerno de África, en un contexto de creciente competencia de potencias externas por influencia en el continente.",
+        verified_facts: [
+          "Évariste Ndayishimiye, presidente de Burundi, ejerce la presidencia rotatoria de la Unión Africana.",
+          "Mahmoud Ali Youssouf preside la Comisión de la Unión Africana.",
+          "La Unión Africana fue incorporada como miembro permanente del G20 en la cumbre de Nueva Delhi de septiembre de 2023."
+        ],
+        interpretation: "La UA busca consolidar una voz diplomática africana unificada en foros globales como el G20 y la ONU, mientras gestiona crisis de seguridad internas y compite por atraer inversión e influencia entre EE. UU., China, la UE y Rusia.",
+        sources: [
+          { name: "African Union — Sitio oficial", url: "https://au.int/" },
+          { name: "African Union — Organs", url: "https://au.int/en/organs" }
+        ]
+      },
+      members: {
+        "Algeria": { role: "Estado miembro" },
+        "Angola": { role: "Estado miembro" },
+        "Benin": { role: "Estado miembro" },
+        "Botswana": { role: "Estado miembro" },
+        "Burkina Faso": { role: "Estado miembro" },
+        "Burundi": { role: "Estado miembro; presidencia rotatoria de la Unión Africana" },
+        "Cameroon": { role: "Estado miembro" },
+        "Cape Verde": { role: "Estado miembro", noPolygon: true },
+        "Central African Rep.": { role: "Estado miembro" },
+        "Chad": { role: "Estado miembro" },
+        "Comoros": { role: "Estado miembro", noPolygon: true },
+        "Congo": { role: "Estado miembro" },
+        "Côte d'Ivoire": { role: "Estado miembro" },
+        "Djibouti": { role: "Estado miembro" },
+        "Dem. Rep. Congo": { role: "Estado miembro" },
+        "Egypt": { role: "Estado miembro" },
+        "Eq. Guinea": { role: "Estado miembro" },
+        "Eritrea": { role: "Estado miembro" },
+        "eSwatini": { role: "Estado miembro" },
+        "Ethiopia": { role: "Estado miembro; sede de la Comisión de la Unión Africana (Adís Abeba)" },
+        "Gabon": { role: "Estado miembro" },
+        "Gambia": { role: "Estado miembro" },
+        "Ghana": { role: "Estado miembro" },
+        "Guinea": { role: "Estado miembro" },
+        "Guinea-Bissau": { role: "Estado miembro" },
+        "Kenya": { role: "Estado miembro" },
+        "Lesotho": { role: "Estado miembro" },
+        "Liberia": { role: "Estado miembro" },
+        "Libya": { role: "Estado miembro" },
+        "Madagascar": { role: "Estado miembro" },
+        "Malawi": { role: "Estado miembro" },
+        "Mali": { role: "Estado miembro" },
+        "Mauritania": { role: "Estado miembro" },
+        "Mauritius": { role: "Estado miembro", noPolygon: true },
+        "Morocco": { role: "Estado miembro" },
+        "Mozambique": { role: "Estado miembro" },
+        "Namibia": { role: "Estado miembro" },
+        "Niger": { role: "Estado miembro" },
+        "Nigeria": { role: "Estado miembro" },
+        "Rwanda": { role: "Estado miembro" },
+        "W. Sahara": { role: "Estado miembro (República Árabe Saharaui Democrática)" },
+        "São Tomé and Príncipe": { role: "Estado miembro", noPolygon: true },
+        "Senegal": { role: "Estado miembro" },
+        "Seychelles": { role: "Estado miembro", noPolygon: true },
+        "Sierra Leone": { role: "Estado miembro" },
+        "Somalia": { role: "Estado miembro" },
+        "South Africa": { role: "Estado miembro" },
+        "S. Sudan": { role: "Estado miembro" },
+        "Sudan": { role: "Estado miembro" },
+        "Tanzania": { role: "Estado miembro" },
+        "Togo": { role: "Estado miembro" },
+        "Tunisia": { role: "Estado miembro" },
+        "Uganda": { role: "Estado miembro" },
+        "Zambia": { role: "Estado miembro" },
+        "Zimbabwe": { role: "Estado miembro" }
+      }
     },
     "g7": {
       name: "Grupo de los Siete",
@@ -4434,8 +4638,53 @@ let currentSearchHighlight = null;
       }
     },
     "ocs": {
-      name: "Organización de Cooperación de Shanghái (OCS)",
-      type: "Organización de seguridad"
+      name: "Organización de Cooperación de Shanghái",
+      acronym: "OCS / SCO",
+      type: "Organización intergubernamental regional euroasiática",
+      icon: "🏔️",
+      color: "#7f1d1d",
+      legend_label: "Estado miembro",
+      legend_note: "La OCS tiene 10 Estados miembros plenos. Afganistán y Mongolia son Estados observadores, NO miembros, y no se resaltan en el mapa.",
+      scope: "Eurasia",
+      founded: "15 de junio de 2001 (con antecedente en el mecanismo 'Shanghai Five', de 1996)",
+      headquarters: "Secretaría en Pekín, China",
+      member_count: 10,
+      us_role: "EE. UU. no es miembro ni observador de la OCS; Washington no participa en esta organización, vista históricamente como un espacio de coordinación política y de seguridad liderado por China y Rusia fuera de las estructuras occidentales.",
+      function: "Cooperación intergubernamental euroasiática en seguridad regional (lucha contra el terrorismo, el separatismo y el extremismo), cooperación política, económica, energética y de transporte entre sus Estados miembros, con idiomas oficiales ruso y chino.",
+      us_relation: "EE. UU. no participa en la OCS; observa su papel como plataforma de coordinación entre China, Rusia, India, Irán y los Estados de Asia Central, un espacio donde Washington tiene influencia diplomática limitada.",
+      relation_other: "La OCS NO es un equivalente euroasiático de la OTAN ni una alianza militar: es una organización intergubernamental con una agenda amplia de seguridad, política, económica y humanitaria, sin cláusula de defensa colectiva vinculante.",
+      geo_importance: "Reúne a China, Rusia, India, Irán y los Estados de Asia Central en un mismo foro, consolidándose como el principal espacio de coordinación política y de seguridad no occidental en Eurasia.",
+      updated: "11 de septiembre de 2026",
+      leadership_note: "Secretario General de la OCS: Nurlan Yermekbayev. La presidencia rotatoria de la organización en el ciclo 2026-2027 corresponde a Kirguistán, con la próxima reunión del Consejo de Jefes de Estado prevista en Bishkek en otoño de 2026.",
+      actualidad: {
+        current_situation: "Kirguistán ejerce la presidencia rotatoria de la OCS en el ciclo 2026-2027, con la reunión del Consejo de Jefes de Estado prevista en Bishkek en otoño de 2026.",
+        verified_facts: [
+          "Bielorrusia se incorporó como Estado miembro pleno de la OCS en julio de 2024, en la cumbre de Astaná.",
+          "Irán se incorporó como Estado miembro pleno de la OCS en julio de 2023.",
+          "Afganistán y Mongolia mantienen estatus de Estados observadores, sin ser miembros plenos de la organización."
+        ],
+        interpretation: "La ampliación reciente de la OCS (incorporación de Irán y Bielorrusia) refleja su consolidación como principal plataforma de coordinación política y de seguridad entre China, Rusia y sus socios de Asia Central, Oriente Medio y el sur de Asia, fuera de las estructuras occidentales.",
+        sources: [
+          { name: "Ministerio de Asuntos Exteriores de la Federación de Rusia — OCS", url: "https://www.mid.ru/" },
+          { name: "Ministerio de Asuntos Exteriores de la República Popular China", url: "https://www.mfa.gov.cn/" }
+        ]
+      },
+      members: {
+        "Belarus": { role: "Estado miembro pleno (incorporado en julio de 2024)" },
+        "China": { role: "Estado miembro fundador (2001); sede de la Secretaría en Pekín" },
+        "India": { role: "Estado miembro pleno (incorporado en 2017)" },
+        "Iran": { role: "Estado miembro pleno (incorporado en julio de 2023)" },
+        "Kazakhstan": { role: "Estado miembro fundador (2001)" },
+        "Kyrgyzstan": { role: "Estado miembro fundador (2001); presidencia rotatoria 2026-2027" },
+        "Pakistan": { role: "Estado miembro pleno (incorporado en 2017)" },
+        "Russia": { role: "Estado miembro fundador (2001)" },
+        "Tajikistan": { role: "Estado miembro fundador (2001)" },
+        "Uzbekistan": { role: "Estado miembro fundador (2001)" }
+      },
+      observers: {
+        "Afghanistan": { note: "Afganistán es Estado observador de la OCS, no miembro pleno." },
+        "Mongolia": { note: "Mongolia es Estado observador de la OCS desde 2004, no miembro pleno." }
+      }
     },
     "omc": {
       name: "Organización Mundial del Comercio (OMC)",
@@ -5738,6 +5987,12 @@ function showOrgPanel(orgId) {
   if (!org) return;
   const panel = document.getElementById('info-panel');
   const color = org.color || '#2563eb';
+  // Distingue el total OFICIAL de miembros (member_count, o el tamaño de
+  // members si no se declara) de cuántos de ellos tienen representación
+  // cartográfica en este mapa (los marcados con noPolygon quedan fuera).
+  const officialCount = org.member_count || (org.members ? Object.keys(org.members).length : null);
+  const mappedCount = org.members ? Object.values(org.members).filter(m => !m.noPolygon).length : null;
+  const hasCartographicGap = officialCount !== null && mappedCount !== null && mappedCount !== officialCount;
 
   const panelFlag = document.getElementById('panel-flag');
   panelFlag.textContent = org.icon || '🌐';
@@ -5774,7 +6029,9 @@ function showOrgPanel(orgId) {
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.1s">
       <div class="panel-section-title" style="text-transform:uppercase;">Estados miembros / participantes</div>
-      <div class="panel-section-content">${org.member_count || (org.members ? Object.keys(org.members).length : '—')}</div>
+      <div class="panel-section-content">${hasCartographicGap
+        ? `${officialCount} Estados miembros oficiales<br><span style="font-size:12px;color:#94a3b8;">${mappedCount} representados cartográficamente en este mapa</span>`
+        : (officialCount !== null ? officialCount : '—')}</div>
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.12s;border-left:3px solid ${color};padding-left:10px;">
       <div class="panel-section-title" style="color:${color};text-transform:uppercase;">🇺🇸 Participación de EE. UU.</div>
@@ -5805,6 +6062,14 @@ function showOrgPanel(orgId) {
       <div class="panel-section-content" style="font-size:12px;">
         ${org.institutional_participants.map(p => `<p style="margin-bottom:6px;"><strong>${p.name}:</strong> ${p.note}</p>`).join('')}
       </div>
+    </div>` : ''}${org.institutions && org.institutions.length > 0 ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Instituciones principales</div>
+      <div class="panel-tags">${org.institutions.map(i => `<span class="panel-tag">${i}</span>`).join('')}</div>
+    </div>` : ''}${org.leadership_note ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Liderazgo actual</div>
+      <div class="panel-section-content" style="font-size:12px;">${org.leadership_note}</div>
     </div>` : ''}`;
 
   if (org.actualidad) {
@@ -5895,6 +6160,26 @@ function buildOrgMemberBullets(orgId, member) {
         'Foro internacional de coordinación económica y política',
         'No es una organización internacional clásica ni una alianza militar'
       ];
+    case 'ue':
+      return [
+        member.role || 'Estado miembro',
+        'Unión política y económica supranacional (no es un Estado ni una alianza militar equivalente a la OTAN)'
+      ];
+    case 'asean':
+      return [
+        member.role || 'Estado miembro',
+        'Organización regional intergubernamental del Sudeste Asiático (no es una alianza militar)'
+      ];
+    case 'union_africana':
+      return [
+        member.role || 'Estado miembro',
+        'Organización continental intergubernamental (no es un Estado federal ni una alianza militar)'
+      ];
+    case 'ocs':
+      return [
+        member.role || 'Estado miembro',
+        'Organización intergubernamental regional euroasiática (no es una alianza militar equivalente a la OTAN)'
+      ];
     default:
       return ['País participante'];
   }
@@ -5919,6 +6204,7 @@ function showOrgCountryPanel(name, orgId) {
   const badge = document.getElementById('panel-relation');
   const member = org.members && org.members[name];
   const special = org.special_status && org.special_status[name];
+  const observer = org.observers && org.observers[name];
 
   let html;
   if (member) {
@@ -5941,6 +6227,21 @@ function showOrgCountryPanel(name, orgId) {
         <div class="panel-section-title" style="color:#94a3b8;text-transform:uppercase;">Situación especial</div>
         <div class="panel-section-content">${special.note}</div>
       </div>` : ''}
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${org.acronym || org.name}</div>
+        <div class="panel-section-content">${org.function}</div>
+      </div>`;
+  } else if (observer) {
+    badge.textContent = `Estado observador — ${org.acronym || org.name}`;
+    badge.style.background = 'rgba(234, 179, 8, 0.15)';
+    badge.style.color = '#fbbf24';
+    badge.style.border = '1px solid rgba(234, 179, 8, 0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #eab308;padding-left:10px;">
+        <div class="panel-section-title" style="color:#fbbf24;text-transform:uppercase;">Estado observador, no miembro</div>
+        <div class="panel-section-content">${observer.note}</div>
+      </div>
       <div class="panel-section animate-in" style="animation-delay:0.05s">
         <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${org.acronym || org.name}</div>
         <div class="panel-section-content">${org.function}</div>
