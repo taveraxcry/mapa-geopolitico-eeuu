@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1321,7 +1321,7 @@ const GEO_DB = {
         strategic: "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
       },
       keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"],
-      rival_class: "sistémico"
+      rival_class: "sistemico"
     },
     "Russia": {
       name_es: "Rusia", flag: "ru", capital: "Moscú",
@@ -1341,7 +1341,7 @@ const GEO_DB = {
       },
       keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"],
       conflicts: ["ukraine_russia"],
-      rival_class: "estratégico"
+      rival_class: "estrategico"
     },
     "Iran": {
       name_es: "Irán", flag: "ir", capital: "Teherán",
@@ -1379,7 +1379,7 @@ const GEO_DB = {
         ]
       },
       conflicts: ["us_iran_escalation", "middle_east_crisis"],
-      rival_class: "estratégico"
+      rival_class: "estrategico"
     },
     "North Korea": {
       name_es: "Corea del Norte", flag: "kp", capital: "Pyongyang",
@@ -4707,8 +4707,8 @@ function applyCategory(cat) {
     }
     else if (cat === 'rivales') {
       if (info && info.rival_class) {
-        if (info.rival_class === 'sistémico') el.style('fill', '#7f1d1d').style('opacity', 1);
-        else if (info.rival_class === 'estratégico') el.style('fill', '#dc2626').style('opacity', 1);
+        if (info.rival_class === 'sistemico') el.style('fill', '#7f1d1d').style('opacity', 1);
+        else if (info.rival_class === 'estrategico') el.style('fill', '#dc2626').style('opacity', 1);
         else if (info.rival_class === 'amenaza') el.style('fill', '#ef4444').style('opacity', 1);
         else if (info.rival_class === 'regional') el.style('fill', '#f97316').style('opacity', 1);
       } else {
@@ -5407,3 +5407,4 @@ document.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
 </html>
+
