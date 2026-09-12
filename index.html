@@ -3951,11 +3951,11 @@ let currentSearchHighlight = null;
       icon: "🌎",
       color: "#0891b2",
       legend_label: "Estado miembro activo",
-      legend_note: "Cuba es miembro pero no participa desde 1962. Venezuela (2019) y Nicaragua (2023) se retiraron formalmente y ya no son miembros.",
+      legend_note: "Cuba es miembro pero no participa desde 1962. Venezuela (2019) y Nicaragua (2023) se retiraron formalmente y ya no son miembros. La OEA tiene 33 Estados miembros oficiales; 7 microestados caribeños (p. ej. Antigua y Barbuda, Barbados, Granada) no aparecen como polígonos individuales en la resolución de este mapa.",
       scope: "Américas",
       founded: "30 de abril de 1948 (Carta de Bogotá)",
       headquarters: "Washington, D.C., Estados Unidos",
-      member_count: 33,
+      member_count: 26,
       us_role: "Miembro fundador y principal contribuyente financiero; la sede permanente está en Washington, D.C.",
       function: "Foro político interamericano para el diálogo, la seguridad colectiva, la promoción de la democracia, los derechos humanos y la cooperación multidimensional entre los Estados de las Américas.",
       us_relation: "EE. UU. es miembro fundador y financiador principal, y utiliza la OEA como su principal instrumento multilateral de coordinación política y electoral en el hemisferio occidental.",
@@ -4000,7 +4000,8 @@ let currentSearchHighlight = null;
         "Haiti": { role: "Estado miembro" },
         "Dominican Rep.": { role: "Estado miembro" },
         "Bahamas": { role: "Estado miembro" },
-        "Trinidad and Tobago": { role: "Estado miembro" }
+        "Trinidad and Tobago": { role: "Estado miembro" },
+        "Cuba": { role: "Estado miembro (participación suspendida desde 1962)" }
       },
       special_status: {
         "Cuba": { note: "Cuba es Estado miembro de la OEA, pero su gobierno fue excluido de participar en 1962. La exclusión se levantó sin condiciones en 2009, pero Cuba ha declarado que no retomará su participación." },
@@ -5410,6 +5411,8 @@ function toggleOrgMenu(show) {
 }
 
 function closeOrgMenu() {
+  selectedOrg = null;
+  document.querySelectorAll('.org-item').forEach(item => item.classList.remove('active'));
   activeCategory = 'all';
   document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
   const worldPill = document.querySelector('.cat-pill[data-cat="all"]');
@@ -5621,7 +5624,11 @@ function showOrgCountryPanel(name, orgId) {
             ${bullets.map(b => `<li>${b}</li>`).join('')}
           </ul>
         </div>
-      </div>
+      </div>${special ? `
+      <div class="panel-section animate-in" style="animation-delay:0.04s;border-left:3px solid #64748b;padding-left:10px;">
+        <div class="panel-section-title" style="color:#94a3b8;text-transform:uppercase;">Situación especial</div>
+        <div class="panel-section-content">${special.note}</div>
+      </div>` : ''}
       <div class="panel-section animate-in" style="animation-delay:0.05s">
         <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${org.acronym || org.name}</div>
         <div class="panel-section-content">${org.function}</div>
