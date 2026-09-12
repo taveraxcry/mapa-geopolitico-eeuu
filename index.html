@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -3184,6 +3184,52 @@ const GEO_DB = {
 let currentSearchHighlight = null;
 
 // Helper to convert ISO code to emoji
+  // ============================================================
+  // ORGANIZACIONES SELECCIONADAS (Relevancia Geopolítica respecto a EE.UU. - Sept 2026)
+  // ============================================================
+  const ORGANIZACIONES_DB = {
+    "otan": {
+      name: "Organización del Tratado del Atlántico Norte (OTAN)",
+      type: "Organización de seguridad"
+    },
+    "onu": {
+      name: "Organización de las Naciones Unidas (ONU)",
+      type: "Organización internacional"
+    },
+    "ue": {
+      name: "Unión Europea (UE)",
+      type: "Organización regional"
+    },
+    "oea": {
+      name: "Organización de los Estados Americanos (OEA)",
+      type: "Organización regional"
+    },
+    "asean": {
+      name: "Asociación de Naciones del Sudeste Asiático (ASEAN)",
+      type: "Organización regional"
+    },
+    "g7": {
+      name: "Grupo de los Siete (G7)",
+      type: "Foro internacional"
+    },
+    "g20": {
+      name: "Grupo de los Veinte (G20)",
+      type: "Foro internacional"
+    },
+    "ocs": {
+      name: "Organización de Cooperación de Shanghái (OCS)",
+      type: "Organización de seguridad"
+    },
+    "five_eyes": {
+      name: "Five Eyes (FVEY)",
+      type: "Red de cooperación de inteligencia"
+    },
+    "omc": {
+      name: "Organización Mundial del Comercio (OMC)",
+      type: "Organización económica"
+    }
+  };
+
 function getFlagEmoji(countryCode) {
   if (!countryCode || countryCode.length !== 2) return countryCode;
   const codePoints = countryCode
