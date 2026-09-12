@@ -250,6 +250,100 @@ body {
 .cont-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.08); }
 .cont-btn.active { background: var(--accent-blue); color: white; }
 
+/* ===== ORGANIZACIONES SIDE MENU ===== */
+#org-menu {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 56px);
+  background: rgba(10, 14, 26, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border-glass);
+  z-index: 850;
+  transform: translateX(-300px);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+#org-menu.open { transform: translateX(0); }
+
+#org-menu::-webkit-scrollbar { width: 5px; }
+#org-menu::-webkit-scrollbar-track { background: transparent; }
+#org-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+.org-menu-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  background: rgba(10, 14, 26, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-glass);
+  z-index: 1;
+}
+
+.org-menu-close {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-glass);
+  background: rgba(255,255,255,0.05);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: var(--transition-fast);
+}
+
+.org-menu-close:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+
+.org-menu-body { padding: 12px 10px 24px; }
+
+.org-group { margin-bottom: 18px; }
+
+.org-group-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  padding: 0 8px 8px;
+}
+
+.org-item {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+
+.org-item:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+.org-item.active {
+  background: rgba(37, 99, 235, 0.18);
+  color: #60a5fa;
+  border-color: rgba(37, 99, 235, 0.4);
+  font-weight: 600;
+}
+
 /* ===== MAP CONTAINER ===== */
 #map-container {
   position: fixed;
@@ -860,6 +954,25 @@ body {
     right: 10px !important;
     flex-direction: column;
   }
+
+  #org-menu {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 60dvh !important;
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.3, 1, 0.3, 1);
+    border-right: none !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 2000;
+  }
+  #org-menu.open { transform: translateY(0); left: 0 !important; }
+  .org-menu-body { padding-bottom: env(safe-area-inset-bottom, 20px); }
 }
 </style>
 </head>
@@ -908,6 +1021,43 @@ body {
   <button class="cont-btn" data-continent="oceania">Oceanía</button>
   <button class="cont-btn" data-continent="middle-east">Medio Oriente</button>
 </nav>
+
+<!-- Organizaciones Side Menu -->
+<aside id="org-menu">
+  <div class="org-menu-header">
+    <span>🌐 ORGANIZACIONES</span>
+    <button class="org-menu-close" onclick="closeOrgMenu()" title="Cerrar" aria-label="Cerrar menú de organizaciones">✕</button>
+  </div>
+  <div class="org-menu-body">
+    <div class="org-group">
+      <div class="org-group-title">🛡️ Seguridad e Inteligencia</div>
+      <div class="org-item" data-org="otan">OTAN</div>
+      <div class="org-item" data-org="oea">OEA</div>
+      <div class="org-item" data-org="five_eyes">Five Eyes</div>
+      <div class="org-item" data-org="aukus">AUKUS</div>
+      <div class="org-item" data-org="quad">QUAD</div>
+    </div>
+    <div class="org-group">
+      <div class="org-group-title">🌐 Gobernanza Global</div>
+      <div class="org-item" data-org="onu">ONU</div>
+      <div class="org-item" data-org="g7">G7</div>
+      <div class="org-item" data-org="g20">G20</div>
+    </div>
+    <div class="org-group">
+      <div class="org-group-title">🌎 Organizaciones Regionales</div>
+      <div class="org-item" data-org="ue">Unión Europea</div>
+      <div class="org-item" data-org="asean">ASEAN</div>
+      <div class="org-item" data-org="union_africana">Unión Africana</div>
+      <div class="org-item" data-org="ocs">OCS</div>
+    </div>
+    <div class="org-group">
+      <div class="org-group-title">💰 Instituciones Económicas</div>
+      <div class="org-item" data-org="omc">OMC</div>
+      <div class="org-item" data-org="fmi">FMI</div>
+      <div class="org-item" data-org="banco_mundial">Banco Mundial</div>
+    </div>
+  </div>
+</aside>
 
 <!-- Map Container -->
 <div id="map-container"></div>
@@ -3828,6 +3978,7 @@ let svg, g, projection, path, zoom, tooltip, width, height;
 let selectedCountry = null;
 let compareCountry = null;
 let activeCategory = 'all';
+let selectedOrg = null;
 let countryPaths = {};
 let worldData = null;
 
@@ -3895,6 +4046,7 @@ function initApp() {
   setupSearch();
   setupCategories();
   setupContinentNav();
+  setupOrgMenu();
 
   // Tooltip
   tooltip = document.getElementById('tooltip');
@@ -4997,6 +5149,46 @@ function setupCategories() {
   });
 }
 
+// ============================================================
+// ORGANIZACIONES — SIDE MENU (selección de una organización a la vez)
+// ============================================================
+
+function setupOrgMenu() {
+  document.querySelectorAll('.org-item').forEach(item => {
+    item.addEventListener('click', () => selectOrganization(item.dataset.org));
+  });
+}
+
+function toggleOrgMenu(show) {
+  const menu = document.getElementById('org-menu');
+  if (!menu) return;
+  if (show) {
+    menu.classList.add('open');
+  } else {
+    menu.classList.remove('open');
+  }
+}
+
+function closeOrgMenu() {
+  activeCategory = 'all';
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  const worldPill = document.querySelector('.cat-pill[data-cat="all"]');
+  if (worldPill) worldPill.classList.add('active');
+  applyCategory('all');
+}
+
+function selectOrganization(orgId) {
+  if (selectedOrg === orgId) {
+    // Volver a seleccionar la organización activa la desactiva
+    selectedOrg = null;
+  } else {
+    selectedOrg = orgId;
+  }
+  document.querySelectorAll('.org-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.org === selectedOrg);
+  });
+}
+
 function applyCategory(cat) {
   g.selectAll('.country-path').each(function(d) {
     const name = d.properties.name;
@@ -5089,6 +5281,9 @@ function applyCategory(cat) {
   } else {
     hideMilitaryBases();
   }
+
+  // Organizaciones side menu: only show when organizaciones is active
+  toggleOrgMenu(cat === 'organizaciones');
 
   // Ensure markers stay on top after category updates
   g.selectAll('.mesh-borders').raise();
