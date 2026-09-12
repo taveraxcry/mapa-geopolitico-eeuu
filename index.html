@@ -1323,7 +1323,27 @@ const GEO_DB = {
         strengths: "manufactura, comercio, tecnología, infraestructura, finanzas, población, poder naval y cadenas de suministro.",
         strategic: "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
       },
-      keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"]
+      keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"],
+      geo_importance: "Máximo desafío sistémico a largo plazo para EE. UU.: expansión de su armada (la mayor del mundo por número de buques), presión militar sostenida sobre Taiwán y disputas territoriales con aliados y socios de EE. UU. en el Mar de China Meridional, además de la Iniciativa de la Franja y la Ruta para ampliar su influencia global.",
+      technology: "Controles de exportación de EE. UU. (Departamento de Comercio/BIS) sobre semiconductores avanzados y equipos de litografía a China, en respuesta a su avance en inteligencia artificial, 5G y modernización militar.",
+      actualidad: {
+        current_situation: "Competencia estratégica sostenida en comercio, tecnología y seguridad del Indo-Pacífico, con fricción constante por Taiwán y el Mar de China Meridional.",
+        verified_facts: [
+          "El Departamento de Comercio (BIS) mantiene y amplía controles de exportación sobre semiconductores avanzados y equipos de fabricación de chips hacia China.",
+          "El Departamento de Defensa documenta anualmente la modernización militar china —incluida la expansión naval y de misiles— en su informe 'Military and Security Developments Involving the People's Republic of China'.",
+          "Buques y aeronaves chinas mantienen presencia recurrente cerca de Taiwán y en aguas disputadas del Mar de China Meridional, generando protestas de EE. UU. y sus aliados regionales (Filipinas, Japón)."
+        ],
+        interpretation: "Washington considera a Pekín su competidor estratégico de mayor alcance, combinando presión económica (controles de exportación, aranceles) con el refuerzo de alianzas en el Indo-Pacífico (QUAD, AUKUS, Filipinas) para contener su expansión.",
+        timeline: [
+          { date: "2018–2026", event: "Escalada sostenida de aranceles y controles de exportación de tecnología entre EE. UU. y China." },
+          { date: "2022–2026", event: "Expansión de ejercicios militares chinos alrededor de Taiwán tras el aumento de visitas oficiales de EE. UU. a la isla." }
+        ],
+        sources: [
+          { name: "U.S. Department of Defense — China Military Power Report", url: "https://www.defense.gov/" },
+          { name: "U.S. Department of Commerce — Bureau of Industry and Security", url: "https://www.bis.gov/" },
+          { name: "U.S. Department of State — China", url: "https://www.state.gov/countries-areas/china/" }
+        ]
+      }
     },
     "Russia": {
       rival_class: "rival_estrategico",
@@ -1345,7 +1365,28 @@ const GEO_DB = {
         strategic: "Control de espacios euroasiáticos, rutas energéticas, acceso al Ártico y posición de puente intercontinental."
       },
       keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"],
-      conflicts: ["ukraine_russia"]
+      conflicts: ["ukraine_russia"],
+      geo_importance: "Amenaza directa a la seguridad europea y al orden euroatlántico: su invasión a gran escala de Ucrania (2022) impulsó la mayor expansión de la OTAN en décadas (ingreso de Finlandia y Suecia) y un régimen de sanciones sin precedentes liderado por EE. UU. y sus aliados.",
+      technology: "Guerra híbrida y ciberataques contra infraestructura crítica occidental; cooperación militar-tecnológica creciente con Irán (drones) y Corea del Norte (municiones, misiles y tropas) para sostener su esfuerzo bélico bajo sanciones.",
+      actualidad: {
+        current_situation: "Guerra a gran escala en Ucrania en curso desde febrero de 2022, con apoyo militar sostenido de EE. UU. y la OTAN a Kiev y un régimen de sanciones económicas de gran escala contra Moscú.",
+        verified_facts: [
+          "El Departamento del Tesoro (OFAC) mantiene y amplía sanciones contra el sector energético, financiero, tecnológico y de defensa ruso.",
+          "EE. UU. y sus aliados de la OTAN han enviado asistencia militar multimillonaria a Ucrania desde 2022, incluidos sistemas de defensa aérea y municiones de largo alcance.",
+          "Rusia ha profundizado su asociación estratégica con China, Irán y Corea del Norte —incluido el envío de tropas norcoreanas al frente— para sostener su base industrial de defensa bajo sanciones."
+        ],
+        interpretation: "La rivalidad se centra en la arquitectura de seguridad europea, la disuasión nuclear y la competencia por influencia en el espacio postsoviético y el Ártico.",
+        timeline: [
+          { date: "Feb 2022", event: "Invasión rusa a gran escala de Ucrania." },
+          { date: "2023–2024", event: "Ingreso de Finlandia y Suecia a la OTAN como respuesta directa a la agresión rusa." },
+          { date: "2024", event: "Corea del Norte despliega tropas para apoyar el esfuerzo bélico ruso en Ucrania." }
+        ],
+        sources: [
+          { name: "U.S. Department of State — Russia", url: "https://www.state.gov/countries-areas/russia/" },
+          { name: "U.S. Department of the Treasury — Russia-related Sanctions (OFAC)", url: "https://ofac.treasury.gov/sanctions-programs-and-country-information/russia-related-sanctions" },
+          { name: "U.S. Department of Defense", url: "https://www.defense.gov/" }
+        ]
+      }
     },
     "Iran": {
       rival_class: "rival_estrategico",
@@ -1356,8 +1397,8 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Adversario",
       population: "88M", gdp: "$401B", gdp_pc: "$4,556",
       orgs: ["BRICS","OPEP"],
-      description: "Adversario desde la Revolución Islámica de 1979. Programa nuclear controvertido. Apoya milicias proxy (Hezbollah, Houthis, milicias en Irak). Tensiones por el Estrecho de Ormuz (21% del petróleo mundial transita allí). Miembro de BRICS desde 2024.",
-      allies: ["Russia","China","Syria"],
+      description: "Adversario desde la Revolución Islámica de 1979. Programa nuclear controvertido. Apoya milicias proxy (Hezbolá, hutíes, milicias en Irak). Tensiones por el Estrecho de Ormuz (~21% del petróleo mundial transita allí). Miembro de BRICS desde 2024. La caída de su aliado Bashar al-Ásad en Siria (dic. 2024) cortó su corredor terrestre histórico hacia Hezbolá en Líbano.",
+      allies: ["Russia","China"],
       potencia_regional: {
         tipo_poder: "Potencia regional principal asimétrica de Medio Oriente.",
         region_poder: "Golfo Pérsico, Medio Oriente y Asia Occidental.",
@@ -1367,22 +1408,25 @@ const GEO_DB = {
         strategic: "Capacidad de disrupción en el Estrecho de Ormuz (ruta petrolera crítica) y consolidación del arco de influencia chiita hasta el Mediterráneo."
       },
       keywords: ["adversario","nuclear","proxy","Ormuz","sanciones"],
+      geo_importance: "Proyecta poder asimétrico mediante su red de milicias aliadas (el 'Eje de la Resistencia': Hezbolá, hutíes, milicias iraquíes) y su capacidad de disrupción sobre el Estrecho de Ormuz, aunque debilitada tras la caída de Asad en Siria y los golpes israelíes a Hezbolá en 2024.",
+      technology: "Programa nuclear con enriquecimiento de uranio muy por encima de los límites del JCPOA de 2015 (del que EE. UU. se retiró en 2018), monitoreado por el OIEA; extensa producción de misiles balísticos y drones, exportados también a Rusia para la guerra en Ucrania.",
       actualidad: {
-        current_situation: "Alta tensión tras la Operación 'Epic Fury' (Feb 2026), que neutralizó instalaciones subterráneas en Isfahán.",
+        current_situation: "Tensión sostenida por el avance del programa nuclear iraní, la red de milicias aliadas en la región y el riesgo de disrupción en el Estrecho de Ormuz, en un contexto de debilitamiento regional tras la caída del régimen de Asad en Siria y los golpes a Hezbolá.",
         verified_facts: [
-          "El 28 de febrero de 2026, una coalición liderada por EE. UU. (con apoyo logístico regional) ejecutó ataques de precisión (Epic Fury).",
-          "Irán respondió bloqueando parcialmente el Estrecho de Ormuz durante 72 horas.",
-          "El enriquecimiento de uranio alcanzó picos críticos antes de la operación."
+          "El Organismo Internacional de Energía Atómica (OIEA) reporta niveles de enriquecimiento de uranio muy superiores a los límites del JCPOA de 2015, acuerdo del que EE. UU. se retiró en 2018.",
+          "El Departamento del Tesoro mantiene un extenso régimen de sanciones sobre los sectores petrolero, financiero y de defensa de Irán.",
+          "Irán e Israel protagonizaron intercambios directos de ataques con misiles y drones en abril y octubre de 2024, una escalada sin precedentes entre ambos países."
         ],
-        interpretation: "El régimen de Teherán enfrenta una crisis de legitimidad interna combinada con una capacidad militar reducida, aunque mantiene sus redes proxy intactas.",
+        interpretation: "Washington considera el binomio programa nuclear-red de milicias proxy la principal amenaza estratégica de Irán en Medio Oriente, mientras Teherán utiliza ambos como instrumentos de disuasión frente a la presión de sanciones y el aislamiento regional creciente.",
         timeline: [
-          { date: "28 Feb 2026", event: "Operación 'Epic Fury'." },
-          { date: "1 Mar 2026", event: "Bloqueo intermitente de Ormuz." },
-          { date: "5 Mar 2026", event: "Reapertura de rutas bajo escolta internacional." }
+          { date: "2018", event: "EE. UU. se retira del JCPOA y restablece sanciones máximas." },
+          { date: "Abr y Oct 2024", event: "Intercambios directos de ataques con misiles y drones entre Irán e Israel." },
+          { date: "Dic 2024", event: "Caída del régimen de Bashar al-Ásad en Siria, aliado clave de Irán en la región." }
         ],
         sources: [
-          { name: "Reportes de Seguridad Marítima (Mar 2026)", url: "#" },
-          { name: "Fuentes de Defensa (Feb 2026)", url: "#" }
+          { name: "U.S. Department of State — Iran", url: "https://www.state.gov/countries-areas/iran/" },
+          { name: "International Atomic Energy Agency (IAEA)", url: "https://www.iaea.org/" },
+          { name: "U.S. Department of the Treasury — Iran Sanctions (OFAC)", url: "https://ofac.treasury.gov/sanctions-programs-and-country-information/iran-sanctions" }
         ]
       },
       conflicts: ["us_iran_escalation", "middle_east_crisis"]
@@ -1396,9 +1440,29 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Adversario",
       population: "26M", gdp: "$~18B", gdp_pc: "$~700",
       orgs: [],
-      description: "Estado altamente aislado con arsenal nuclear. Amenaza directa a aliados de EE.UU. (Corea del Sur, Japón). Programa de misiles balísticos intercontinentales. Apoyo militar a Rusia en la guerra de Ucrania.",
+      description: "Estado altamente aislado con arsenal nuclear. Amenaza directa a aliados de EE.UU. (Corea del Sur, Japón). Programa de misiles balísticos intercontinentales. Apoyo militar a Rusia en la guerra de Ucrania mediante el envío de tropas y municiones.",
       allies: ["China","Russia"],
-      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"]
+      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"],
+      geo_importance: "Amenaza militar directa a Corea del Sur y Japón, aliados con tratado de EE. UU., y su programa de misiles balísticos intercontinentales (ICBM) busca alcanzar el territorio continental estadounidense.",
+      technology: "Programa nuclear y de misiles balísticos en desarrollo constante, con pruebas recurrentes de corto, mediano y largo alcance; cooperación militar y de misiles cada vez más estrecha con Rusia a cambio de tecnología y apoyo económico.",
+      actualidad: {
+        current_situation: "Programa nuclear y de misiles balísticos en expansión, junto con un giro estratégico hacia una alianza militar más estrecha con Rusia.",
+        verified_facts: [
+          "Corea del Norte ha realizado numerosas pruebas de misiles balísticos, incluidos misiles de alcance intercontinental, en violación de resoluciones del Consejo de Seguridad de la ONU.",
+          "Pyongyang y Moscú firmaron en 2024 un tratado de asociación estratégica integral que incluye una cláusula de defensa mutua.",
+          "Corea del Norte envió miles de soldados a Rusia en 2024 para apoyar operaciones militares en la guerra contra Ucrania, según confirmaron EE. UU. y Corea del Sur."
+        ],
+        interpretation: "La creciente cooperación militar entre Pyongyang y Moscú —incluido el envío de tropas y municiones norcoreanas a Ucrania a cambio de tecnología rusa— profundiza la preocupación de EE. UU. y sus aliados en el Indo-Pacífico.",
+        timeline: [
+          { date: "2024", event: "Tratado de asociación estratégica integral entre Rusia y Corea del Norte." },
+          { date: "Oct–Nov 2024", event: "Despliegue de tropas norcoreanas para apoyar a Rusia en la guerra de Ucrania." }
+        ],
+        sources: [
+          { name: "U.S. Department of State — North Korea", url: "https://www.state.gov/countries-areas/north-korea/" },
+          { name: "U.S. Department of Defense", url: "https://www.defense.gov/" },
+          { name: "U.S. Department of the Treasury — DPRK Sanctions (OFAC)", url: "https://ofac.treasury.gov/sanctions-programs-and-country-information/north-korea-sanctions" }
+        ]
+      }
     },
     "Taiwan": {
       aliado_secundario: {
@@ -1558,16 +1622,35 @@ const GEO_DB = {
     },
     "Cuba": {
       rival_class: "rival_regional",
-      rival_why: "Rival regional por diferencias políticas y de seguridad en el Caribe y sus vínculos estratégicos con Rusia y China.",
+      rival_why: "Rival regional por representar un riesgo de seguridad a solo ~150 km de Florida: aloja instalaciones de inteligencia de señales vinculadas a China y ha recibido despliegues navales militares rusos, además de su designación como Estado Patrocinador del Terrorismo.",
       rivals: [{ country: "Cuba", reason: "Rival regional" }],
       name_es: "Cuba", flag: "cu", capital: "La Habana",
       continent: "north-america", region: "Caribe",
       relation: "adversary", relation_es: "Adversario",
       population: "11M", gdp: "$~107B", gdp_pc: "$~9,500",
       orgs: ["BRICS (socio)"],
-      description: "Embargo comercial de EE.UU. desde 1962. Estado socialista de partido único. Breve deshielo bajo Obama (2014-2016) revertido posteriormente. Base naval de Guantánamo operada por EE.UU.",
+      description: "Embargo comercial de EE.UU. desde 1962. Estado socialista de partido único. Breve deshielo bajo Obama (2014-2016) revertido posteriormente. Base naval de Guantánamo operada por EE.UU. Designada Estado Patrocinador del Terrorismo por el Departamento de Estado desde enero de 2021.",
       allies: ["Venezuela","Russia","China"],
-      keywords: ["embargo","socialismo","Guantánamo"]
+      keywords: ["embargo","socialismo","Guantánamo","SIGINT"],
+      geo_importance: "Su proximidad geográfica a EE. UU. (a solo 150 km de Florida) convierte cualquier presencia militar o de inteligencia de potencias rivales en su territorio en un asunto de seguridad nacional directa para Washington, en línea con la histórica Doctrina Monroe.",
+      actualidad: {
+        current_situation: "Cuba figura en la lista de Estados Patrocinadores del Terrorismo de EE. UU. y ha profundizado su cooperación militar y de inteligencia con Rusia y China a pocos kilómetros de territorio estadounidense.",
+        verified_facts: [
+          "El Departamento de Estado mantiene a Cuba en la lista de Estados Patrocinadores del Terrorismo desde enero de 2021.",
+          "Funcionarios de EE. UU. confirmaron públicamente en 2023 la existencia de una instalación de inteligencia de señales china en Cuba, activa desde al menos 2019.",
+          "Buques de guerra rusos, incluido un submarino de propulsión nuclear, realizaron visitas portuarias en La Habana en junio de 2024 como parte de ejercicios navales."
+        ],
+        interpretation: "Washington percibe la profundización de los lazos militares de Cuba con Rusia y China como un riesgo de seguridad regional, dada su proximidad geográfica a EE. UU. y su historial como punto de apoyo de potencias rivales en el hemisferio occidental.",
+        timeline: [
+          { date: "Ene 2021", event: "EE. UU. redesigna a Cuba como Estado Patrocinador del Terrorismo." },
+          { date: "2023", event: "EE. UU. confirma la existencia de una instalación de inteligencia china en la isla." },
+          { date: "Jun 2024", event: "Visita de buques de guerra rusos, incluido un submarino nuclear, a La Habana." }
+        ],
+        sources: [
+          { name: "U.S. Department of State — Cuba", url: "https://www.state.gov/countries-areas/cuba/" },
+          { name: "U.S. Southern Command (SOUTHCOM)", url: "https://www.southcom.mil/" }
+        ]
+      }
     },
     "Italy": {
       aliado_principal: {
@@ -2209,16 +2292,35 @@ const GEO_DB = {
     },
     "Syria": {
       rival_class: "rival_regional",
-      rival_why: "Rival regional y foco de confrontación por la situación de seguridad, presencia de actores militares extranjeros (Irán, Rusia) y los intereses estadounidenses en Oriente Medio.",
+      rival_why: "Rival regional por la inestabilidad estructural tras la caída del régimen de Asad, el riesgo de resurgimiento de ISIS en zonas donde operan tropas de EE. UU. junto a las FDS kurdas, y la incertidumbre sobre la orientación del nuevo gobierno de transición, cuyo liderazgo procede de un grupo antes designado organización terrorista por EE. UU.",
       rivals: [{ country: "Syria", reason: "Rival regional" }],
       name_es: "Siria", flag: "sy", capital: "Damasco",
       continent: "middle-east", region: "Medio Oriente",
       relation: "adversary", relation_es: "Adversario",
       population: "22M", gdp: "$~11B", gdp_pc: "$~530",
       orgs: [],
-      description: "Guerra civil desde 2011. Presencia militar de EE.UU. en el noreste (con fuerzas kurdas SDF). Apoyo ruso e iraní al régimen de Assad. Sanciones extensivas.",
-      allies: ["Russia","Iran"],
-      keywords: ["guerra civil","Assad","sanciones","kurdos"]
+      description: "Guerra civil desde 2011. El régimen de Bashar al-Ásad colapsó en diciembre de 2024 tras una ofensiva liderada por Hayat Tahrir al-Sham (HTS); un gobierno de transición encabezado por Ahmed al-Sharaa gobierna Damasco. EE. UU. mantiene presencia militar en el noreste junto a las Fuerzas Democráticas Sirias (FDS) contra el resurgimiento de ISIS, mientras evalúa el ritmo del alivio de sanciones (Ley César) hacia el nuevo gobierno.",
+      allies: [],
+      keywords: ["transición","HTS","al-Sharaa","ISIS","sanciones","kurdos"],
+      geo_importance: "La caída de Asad puso fin al corredor terrestre Irán-Hezbolá y a las bases militares rusas garantizadas por el antiguo régimen; el vacío de seguridad y la naturaleza yihadista del nuevo liderazgo generan incertidumbre sobre la estabilidad futura del país y el riesgo de resurgimiento de ISIS.",
+      actualidad: {
+        current_situation: "Gobierno de transición liderado por Ahmed al-Sharaa tras la caída del régimen de Asad (dic. 2024); EE. UU. mantiene tropas en el noreste sirio junto a las FDS kurdas contra ISIS mientras evalúa el ritmo de normalización con Damasco.",
+        verified_facts: [
+          "El régimen de Bashar al-Ásad colapsó en diciembre de 2024 tras una ofensiva relámpago liderada por Hayat Tahrir al-Sham (HTS).",
+          "EE. UU. mantiene tropas desplegadas en el noreste de Siria apoyando a las Fuerzas Democráticas Sirias (FDS) en la misión contra ISIS.",
+          "El Departamento de Estado ha ido flexibilizando gradualmente sanciones (Ley César) para facilitar la reconstrucción, mientras monitorea la conducta del nuevo gobierno."
+        ],
+        interpretation: "La rivalidad ya no gira en torno al eje Asad-Irán-Rusia, sino en torno al riesgo de un vacío de seguridad que permita el resurgimiento de ISIS y a la incertidumbre sobre si el nuevo liderazgo sirio, de origen yihadista, consolidará un gobierno estable y no hostil a los intereses de EE. UU.",
+        timeline: [
+          { date: "Dic 2024", event: "Caída del régimen de Bashar al-Ásad; HTS toma Damasco." },
+          { date: "2025", event: "Formación de un gobierno de transición liderado por Ahmed al-Sharaa; inicio de la flexibilización gradual de sanciones." }
+        ],
+        sources: [
+          { name: "U.S. Department of State — Syria", url: "https://www.state.gov/countries-areas/syria/" },
+          { name: "U.S. Central Command (CENTCOM)", url: "https://www.centcom.mil/" },
+          { name: "U.S. Department of the Treasury — Syria Sanctions (OFAC)", url: "https://ofac.treasury.gov/sanctions-programs-and-country-information/syria-sanctions" }
+        ]
+      }
     },
     "Jordan": {
       aliado_secundario: {
@@ -2564,16 +2666,34 @@ const GEO_DB = {
     },
     "Nicaragua": {
       rival_class: "rival_regional",
-      rival_why: "Rival regional por diferencias políticas y de seguridad y su creciente cooperación estratégica con Rusia y China.",
+      rival_why: "Rival regional por autorizar de forma permanente el ingreso de tropas y buques militares rusos y chinos a su territorio, romper relaciones con Taiwán en favor de Pekín, y sostener sanciones estadounidenses por represión política, en un país centroamericano próximo a rutas marítimas estratégicas del Caribe.",
       rivals: [{ country: "Nicaragua", reason: "Rival regional" }],
       name_es: "Nicaragua", flag: "ni", capital: "Managua",
       continent: "north-america", region: "América Central",
       relation: "adversary", relation_es: "Adversario",
       population: "7M", gdp: "$~17B", gdp_pc: "$~2,400",
       orgs: [],
-      description: "Régimen de Ortega. Sanciones de EE.UU. Represión de oposición. Relaciones con Rusia, China e Irán. Canal interoceánico propuesto con inversión china.",
+      description: "Régimen de Ortega-Murillo. Sanciones de EE.UU. por represión de la oposición. Alineación creciente con Rusia y China; ruptura de relaciones con Taiwán en 2021. Canal interoceánico propuesto con inversión china (sin avances significativos).",
       allies: ["Russia","Venezuela","Cuba"],
-      keywords: ["sanciones","Ortega","autoritarismo"]
+      keywords: ["sanciones","Ortega","autoritarismo","SIGINT"],
+      geo_importance: "Su autorización anual al ingreso de fuerzas militares rusas y chinas, sumada a su ubicación en el istmo centroamericano, es vista por Washington como una vía de entrada de presencia militar extranjera rival cerca de rutas marítimas estratégicas del Caribe y el Pacífico.",
+      actualidad: {
+        current_situation: "El gobierno de Daniel Ortega y Rosario Murillo mantiene una alineación cada vez más estrecha con Rusia y China, mientras EE. UU. sostiene sanciones específicas por represión política.",
+        verified_facts: [
+          "La Asamblea Nacional de Nicaragua aprueba anualmente decretos que autorizan el ingreso de tropas, buques y aeronaves militares de Rusia, China y otros países aliados para ejercicios y entrenamiento.",
+          "Nicaragua rompió relaciones diplomáticas con Taiwán en diciembre de 2021 y reconoció a la República Popular China.",
+          "EE. UU. mantiene sanciones bajo la Ley RENACER (2021) y la Ley de Derechos Humanos y Anticorrupción de Nicaragua contra funcionarios del gobierno de Ortega."
+        ],
+        interpretation: "Washington considera que la alineación de Managua con Moscú y Pekín, sumada a la represión interna, erosiona la estabilidad democrática de Centroamérica y abre la puerta a una mayor presencia militar rusa y china en el istmo.",
+        timeline: [
+          { date: "Dic 2021", event: "Nicaragua rompe relaciones con Taiwán y reconoce a la República Popular China." },
+          { date: "2021", event: "EE. UU. sanciona al gobierno de Ortega bajo la Ley RENACER." }
+        ],
+        sources: [
+          { name: "U.S. Department of State — Nicaragua", url: "https://www.state.gov/countries-areas/nicaragua/" },
+          { name: "U.S. Department of the Treasury — Nicaragua Sanctions (OFAC)", url: "https://ofac.treasury.gov/sanctions-programs-and-country-information/nicaragua-sanctions" }
+        ]
+      }
     },
     "Uruguay": {
       name_es: "Uruguay", flag: "uy", capital: "Montevideo",
@@ -4180,7 +4300,37 @@ function showInfoPanel(name, info) {
   document.getElementById('panel-capital').textContent = `Capital: ${capital} • ${region}`;
 
   const badge = document.getElementById('panel-relation');
-  
+
+  if (activeCategory === 'rivales' && name === 'United States of America') {
+    badge.textContent = "🎯 Actor de Referencia";
+    badge.style.background = 'rgba(37, 99, 235, 0.15)';
+    badge.style.color = '#60a5fa';
+    badge.style.border = '1px solid rgba(37, 99, 235, 0.3)';
+
+    const html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #3b82f6;padding-left:10px;">
+        <div class="panel-section-title" style="color:#60a5fa;text-transform:uppercase;">🎯 Actor de Referencia</div>
+        <div class="panel-section-content">Estados Unidos es el punto de referencia de este atlas geopolítico. La categoría "Rivales" muestra los Estados con los que EE. UU. mantiene rivalidades, competencias estratégicas o confrontaciones de seguridad relevantes — no se le aplica a sí mismo una clasificación de rivalidad.</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Países clasificados como rivales en este atlas</div>
+        <div class="panel-section-content" style="font-size:12px;">China (rival sistémico), Rusia (rival estratégico), Irán (rival estratégico), Corea del Norte (amenaza militar), Cuba, Siria y Nicaragua (rivales regionales).</div>
+      </div>`;
+
+    document.getElementById('panel-body').innerHTML = html;
+    panel.classList.add('open');
+    if (window.innerWidth <= 768) {
+      hideTooltip();
+      const legend = document.getElementById('map-legend');
+      const controls = document.getElementById('controls');
+      const overlay = document.getElementById('overlay');
+      if (legend) legend.style.display = 'none';
+      if (controls) controls.style.display = 'none';
+      if (overlay) overlay.classList.add('active');
+    }
+    return;
+  }
+
   if (activeCategory === 'conflictos' && info.conflicts && info.conflicts.length > 0) {
     badge.textContent = "Zona de Conflicto Activo";
     badge.style.background = 'rgba(190, 18, 60, 0.15)';
