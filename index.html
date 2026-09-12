@@ -3879,14 +3879,22 @@ let currentSearchHighlight = null;
     "otan": {
       name: "Organización del Tratado del Atlántico Norte",
       acronym: "OTAN / NATO",
-      type: "Alianza político-militar institucionalizada",
+      type: "Alianza política y militar",
+      icon: "🛡️",
+      color: "#2563eb",
+      legend_label: "País miembro",
+      legend_note: "EE. UU. se resalta igual que el resto por ser miembro; su rol de miembro fundador se detalla al hacer clic. Los países socios (ej. Colombia, Ucrania) NO son miembros y no se resaltan aquí.",
       scope: "Transatlántico",
       founded: "4 de abril de 1949",
       headquarters: "Bruselas, Bélgica",
       member_count: 32,
       us_role: "Miembro fundador desde 1949",
-      function: "Defensa colectiva mediante el Artículo 5 del Tratado del Atlántico Norte.",
+      function: "Defensa colectiva mediante el Artículo 5 del Tratado del Atlántico Norte: un ataque armado contra un aliado se considera un ataque contra todos.",
+      us_relation: "Estados Unidos es miembro fundador y el principal proveedor de capacidades militares de la Alianza; aporta el grueso de la disuasión nuclear extendida y del mando militar integrado (SACEUR es tradicionalmente un general estadounidense).",
+      relation_other: "Se diferencia de Five Eyes (cooperación de inteligencia, sin compromiso de defensa mutua) y de AUKUS/QUAD (asociaciones de seguridad limitadas al Indo-Pacífico, sin cláusula de defensa colectiva).",
+      partners_note: "Países como Colombia (socio global) o Ucrania y Georgia (aspirantes/socios) cooperan con la OTAN pero NO son Estados miembros y no están sujetos al Artículo 5.",
       geo_importance: "La OTAN constituye la principal estructura institucionalizada de defensa colectiva transatlántica en la que participa Estados Unidos.",
+      updated: "11 de septiembre de 2026",
       actualidad: {
         current_situation: "La Cumbre de Ankara del 7–8 de julio de 2026 reafirmó el compromiso con la defensa colectiva y el Artículo 5, en el marco de la transformación de la Alianza hacia la llamada \"OTAN 3.0\".",
         verified_facts: [
@@ -3936,16 +3944,191 @@ let currentSearchHighlight = null;
         "Sweden": { founding: false, since: 2024 }
       }
     },
+    "oea": {
+      name: "Organización de los Estados Americanos",
+      acronym: "OEA / OAS",
+      type: "Organización internacional regional",
+      icon: "🌎",
+      color: "#0891b2",
+      legend_label: "Estado miembro activo",
+      legend_note: "Cuba es miembro pero no participa desde 1962. Venezuela (2019) y Nicaragua (2023) se retiraron formalmente y ya no son miembros.",
+      scope: "Américas",
+      founded: "30 de abril de 1948 (Carta de Bogotá)",
+      headquarters: "Washington, D.C., Estados Unidos",
+      member_count: 33,
+      us_role: "Miembro fundador y principal contribuyente financiero; la sede permanente está en Washington, D.C.",
+      function: "Foro político interamericano para el diálogo, la seguridad colectiva, la promoción de la democracia, los derechos humanos y la cooperación multidimensional entre los Estados de las Américas.",
+      us_relation: "EE. UU. es miembro fundador y financiador principal, y utiliza la OEA como su principal instrumento multilateral de coordinación política y electoral en el hemisferio occidental.",
+      relation_other: "A diferencia de la OTAN, la OEA no tiene cláusula de defensa militar colectiva vinculante en la práctica; es un foro político e institucional, no una alianza de seguridad.",
+      geo_importance: "Es el principal foro multilateral hemisférico en el que EE. UU. coordina política exterior con América Latina y el Caribe, aunque su legitimidad es cuestionada por gobiernos que la consideran alineada con Washington.",
+      updated: "11 de septiembre de 2026",
+      actualidad: {
+        current_situation: "La OEA continúa como principal foro político interamericano, con Cuba fuera de participación activa desde 1962 y Venezuela y Nicaragua formalmente retiradas de la organización.",
+        verified_facts: [
+          "Venezuela formalizó su retiro de la OEA en abril de 2019, dos años después de notificarlo conforme al artículo 143 de la Carta de la OEA.",
+          "Nicaragua formalizó su retiro de la OEA en noviembre de 2023, dos años después de notificarlo en 2021.",
+          "El gobierno cubano fue excluido de participar en el sistema interamericano en 1962; la exclusión se levantó sin condiciones en 2009, pero Cuba no ha retomado su participación activa."
+        ],
+        interpretation: "Washington utiliza la OEA como su principal instrumento multilateral de coordinación política, electoral y de derechos humanos en el hemisferio, en un contexto de tensión con los gobiernos que se han retirado o distanciado de la organización.",
+        sources: [
+          { name: "OEA — Acerca de la Organización", url: "https://www.oas.org/es/acerca/quienes_somos.asp" },
+          { name: "U.S. Department of State — OAS", url: "https://www.state.gov/the-organization-of-american-states/" }
+        ]
+      },
+      members: {
+        "United States of America": { role: "Miembro fundador" },
+        "Canada": { role: "Estado miembro" },
+        "Mexico": { role: "Estado miembro" },
+        "Guatemala": { role: "Estado miembro" },
+        "Belize": { role: "Estado miembro" },
+        "Honduras": { role: "Estado miembro" },
+        "El Salvador": { role: "Estado miembro" },
+        "Costa Rica": { role: "Estado miembro" },
+        "Panama": { role: "Estado miembro" },
+        "Colombia": { role: "Estado miembro" },
+        "Ecuador": { role: "Estado miembro" },
+        "Peru": { role: "Estado miembro" },
+        "Brazil": { role: "Estado miembro" },
+        "Bolivia": { role: "Estado miembro" },
+        "Paraguay": { role: "Estado miembro" },
+        "Chile": { role: "Estado miembro" },
+        "Argentina": { role: "Estado miembro" },
+        "Uruguay": { role: "Estado miembro" },
+        "Guyana": { role: "Estado miembro" },
+        "Suriname": { role: "Estado miembro" },
+        "Jamaica": { role: "Estado miembro" },
+        "Haiti": { role: "Estado miembro" },
+        "Dominican Rep.": { role: "Estado miembro" },
+        "Bahamas": { role: "Estado miembro" },
+        "Trinidad and Tobago": { role: "Estado miembro" }
+      },
+      special_status: {
+        "Cuba": { note: "Cuba es Estado miembro de la OEA, pero su gobierno fue excluido de participar en 1962. La exclusión se levantó sin condiciones en 2009, pero Cuba ha declarado que no retomará su participación." },
+        "Venezuela": { note: "Venezuela ya NO es Estado miembro: notificó su retiro en 2017 y este se formalizó en abril de 2019, conforme a la Carta de la OEA." },
+        "Nicaragua": { note: "Nicaragua ya NO es Estado miembro: notificó su retiro en 2021 y este se formalizó en noviembre de 2023." }
+      }
+    },
+    "five_eyes": {
+      name: "Five Eyes",
+      acronym: "FVEY",
+      type: "Mecanismo de cooperación de inteligencia",
+      icon: "👁️",
+      color: "#7c3aed",
+      legend_label: "País participante",
+      legend_note: "Solo 5 países. NO es una alianza militar: es un mecanismo de intercambio de inteligencia de señales, distinto de la OTAN, AUKUS y QUAD.",
+      scope: "Angloesfera (global en su alcance de inteligencia)",
+      founded: "1946 (Acuerdo UKUSA), ampliado a los cinco países actuales en los años posteriores",
+      headquarters: "Sin sede única — coordinación entre agencias nacionales de inteligencia",
+      member_count: 5,
+      us_role: "Miembro fundador (junto al Reino Unido) a través del Acuerdo UKUSA de 1946; la NSA es el nodo central de intercambio.",
+      function: "Intercambio de inteligencia de señales (SIGINT) y cooperación en ciberseguridad entre las agencias de inteligencia de los cinco países participantes.",
+      us_relation: "EE. UU., a través de la NSA, es el socio central y el mayor aportante de capacidades técnicas del mecanismo.",
+      relation_other: "A diferencia de la OTAN, no implica ningún compromiso de defensa militar mutua; es exclusivamente un mecanismo de intercambio de inteligencia entre agencias, sin secretaría ni tratado público único.",
+      geo_importance: "Es la red de intercambio de inteligencia de señales más integrada del mundo, clave para la ciberdefensa y la ventaja informacional de sus cinco participantes.",
+      updated: "11 de septiembre de 2026",
+      actualidad: {
+        current_situation: "El mecanismo mantiene su papel como la red de intercambio de inteligencia de señales más integrada del mundo, con creciente atención a la seguridad de infraestructuras críticas y la competencia tecnológica con China.",
+        verified_facts: [
+          "Los cinco países coordinan de forma rutinaria alertas conjuntas de ciberseguridad a través de sus agencias nacionales (NSA, GCHQ, ASD, CSE, GCSB).",
+          "El mecanismo se originó en el Acuerdo UKUSA de 1946 y se ha ampliado informalmente hacia la cooperación en ciberseguridad y tecnología crítica.",
+          "No existe un tratado público único que formalice a Five Eyes como alianza: opera mediante acuerdos bilaterales y multilaterales de intercambio de inteligencia entre agencias."
+        ],
+        interpretation: "Washington y sus socios angloparlantes utilizan Five Eyes como su principal canal de intercambio de inteligencia de señales, complementario pero independiente de estructuras de defensa como la OTAN.",
+        sources: [
+          { name: "Office of the Director of National Intelligence (EE. UU.)", url: "https://www.dni.gov/" },
+          { name: "GCHQ — Reino Unido", url: "https://www.gchq.gov.uk/" }
+        ]
+      },
+      members: {
+        "United States of America": { role: "Miembro fundador (Acuerdo UKUSA, 1946)" },
+        "United Kingdom": { role: "Miembro fundador (Acuerdo UKUSA, 1946)" },
+        "Canada": { role: "Participante desde 1948 (adhesión al acuerdo UKUSA)" },
+        "Australia": { role: "Participante desde 1948 (adhesión al acuerdo UKUSA)" },
+        "New Zealand": { role: "Participante desde 1956 (adhesión al acuerdo UKUSA)" }
+      }
+    },
+    "aukus": {
+      name: "AUKUS",
+      acronym: "AUKUS",
+      type: "Asociación de seguridad trilateral",
+      icon: "⚓",
+      color: "#ea580c",
+      legend_label: "País miembro",
+      legend_note: "Solo 3 países. NO es una organización internacional clásica ni tiene secretaría permanente: es una asociación de seguridad centrada en el Indo-Pacífico.",
+      scope: "Indo-Pacífico",
+      founded: "15 de septiembre de 2021",
+      headquarters: "Sin sede — coordinación trilateral entre Australia, Reino Unido y Estados Unidos",
+      member_count: 3,
+      us_role: "Socio fundador y principal proveedor de tecnología de propulsión naval nuclear a Australia.",
+      function: "Desarrollo conjunto de capacidades de defensa avanzadas mediante dos pilares: el Pilar I (submarinos de propulsión nuclear para Australia) y el Pilar II (tecnologías avanzadas: inteligencia artificial, computación cuántica, hipersónica y guerra submarina).",
+      us_relation: "EE. UU. es el principal proveedor de tecnología de submarinos de propulsión nuclear a Australia y coordina el desarrollo tecnológico del Pilar II junto con el Reino Unido.",
+      relation_other: "Se diferencia de Five Eyes (que es solo intercambio de inteligencia) y del QUAD (diálogo estratégico sin componente de transferencia de tecnología militar); AUKUS SÍ implica transferencia de tecnología de defensa sensible entre sus tres socios.",
+      geo_importance: "Representa la transferencia de tecnología de defensa más significativa de EE. UU. en décadas, orientada a reforzar la disuasión en el Indo-Pacífico frente a la expansión naval china.",
+      updated: "11 de septiembre de 2026",
+      actualidad: {
+        current_situation: "AUKUS avanza en la implementación de su Pilar I (submarinos de propulsión nuclear para Australia) y su Pilar II (tecnologías avanzadas: inteligencia artificial, computación cuántica, hipersónica y guerra submarina).",
+        verified_facts: [
+          "En 2023 se anunció la ruta óptima de submarinos: Australia adquirirá submarinos de la clase Virginia de EE. UU. antes de construir, junto con el Reino Unido, la nueva clase SSN-AUKUS.",
+          "Los tres países desarrollan infraestructura e rotaciones conjuntas en bases navales australianas, incluida HMAS Stirling, como parte de la presencia rotacional de submarinos.",
+          "El Pilar II incluye proyectos conjuntos en guerra electrónica, sistemas hipersónicos y ciberseguridad."
+        ],
+        interpretation: "AUKUS constituye el eje tecnológico-militar central de la estrategia de EE. UU., el Reino Unido y Australia para sostener la disuasión submarina en el Indo-Pacífico frente al avance naval de China.",
+        sources: [
+          { name: "U.S. Department of Defense — AUKUS", url: "https://www.defense.gov/" },
+          { name: "Australian Department of Defence — AUKUS", url: "https://www.defence.gov.au/aukus" }
+        ]
+      },
+      members: {
+        "United States of America": { pillar: "Socio fundador — Pilares I y II" },
+        "United Kingdom": { pillar: "Socio fundador — Pilares I y II" },
+        "Australia": { pillar: "Socio fundador — receptor de submarinos de propulsión nuclear (Pilar I)" }
+      }
+    },
+    "quad": {
+      name: "Diálogo de Seguridad Cuadrilateral",
+      acronym: "QUAD",
+      type: "Diálogo y asociación estratégica",
+      icon: "🌊",
+      color: "#db2777",
+      legend_label: "País participante",
+      legend_note: "Solo 4 países. NO es una alianza militar: es un diálogo estratégico informal sin tratado de defensa mutua, distinto de la OTAN y AUKUS.",
+      scope: "Indo-Pacífico",
+      founded: "2007 (iniciado); relanzado a nivel de líderes en 2017",
+      headquarters: "Sin sede — cumbres rotativas entre los cuatro países participantes",
+      member_count: 4,
+      us_role: "Impulsor clave del relanzamiento del QUAD en 2017 y anfitrión frecuente de sus cumbres de líderes.",
+      function: "Diálogo estratégico y coordinación entre EE. UU., India, Japón y Australia en seguridad marítima, resiliencia de cadenas de suministro, tecnología crítica e infraestructura en el Indo-Pacífico.",
+      us_relation: "EE. UU. impulsa el QUAD como mecanismo central de su estrategia de \"Indo-Pacífico libre y abierto\" para coordinar con India, Japón y Australia sin necesidad de un tratado de defensa formal.",
+      relation_other: "A diferencia de AUKUS, el QUAD no incluye transferencia de tecnología militar sensible ni compromisos de defensa mutua; es un foro de coordinación estratégica, marítima y tecnológica, no una alianza militar.",
+      geo_importance: "Es el mecanismo central mediante el cual EE. UU. coordina con India, Japón y Australia para contrarrestar el expansionismo chino en el Indo-Pacífico sin constituir una alianza militar formal.",
+      updated: "11 de septiembre de 2026",
+      actualidad: {
+        current_situation: "El QUAD mantiene su carácter de diálogo estratégico informal, sin estructura de tratado, enfocado en seguridad marítima, resiliencia de cadenas de suministro, tecnología crítica e infraestructura en el Indo-Pacífico.",
+        verified_facts: [
+          "El QUAD coordina la Asociación para la Conciencia del Dominio Marítimo del Indo-Pacífico (IPMDA) para el monitoreo marítimo regional.",
+          "Los líderes del QUAD (EE. UU., India, Japón y Australia) se reúnen en cumbres desde su relanzamiento a nivel de líderes en 2021.",
+          "El QUAD no cuenta con secretaría, cuartel general permanente ni cláusula de defensa mutua."
+        ],
+        interpretation: "Washington utiliza el QUAD como mecanismo flexible de coordinación estratégica con India, Japón y Australia, complementario a AUKUS pero deliberadamente sin el componente de alianza militar formal.",
+        sources: [
+          { name: "U.S. Department of State — Quad", url: "https://www.state.gov/the-quadrilateral-security-dialogue/" },
+          { name: "Ministry of Foreign Affairs of Japan — Quad", url: "https://www.mofa.go.jp/" },
+          { name: "Ministry of External Affairs of India — Quad", url: "https://www.mea.gov.in/" }
+        ]
+      },
+      members: {
+        "United States of America": { role: "Impulsor del relanzamiento del QUAD (2017)" },
+        "India": { role: "Participante fundador" },
+        "Japan": { role: "Participante fundador — propuso el diálogo original en 2007" },
+        "Australia": { role: "Participante fundador" }
+      }
+    },
     "onu": {
       name: "Organización de las Naciones Unidas (ONU)",
       type: "Organización internacional"
     },
     "ue": {
       name: "Unión Europea (UE)",
-      type: "Organización regional"
-    },
-    "oea": {
-      name: "Organización de los Estados Americanos (OEA)",
       type: "Organización regional"
     },
     "asean": {
@@ -3963,10 +4146,6 @@ let currentSearchHighlight = null;
     "ocs": {
       name: "Organización de Cooperación de Shanghái (OCS)",
       type: "Organización de seguridad"
-    },
-    "five_eyes": {
-      name: "Five Eyes (FVEY)",
-      type: "Red de cooperación de inteligencia"
     },
     "omc": {
       name: "Organización Mundial del Comercio (OMC)",
@@ -4509,42 +4688,8 @@ function showInfoPanel(name, info) {
 
   const badge = document.getElementById('panel-relation');
 
-  if (activeCategory === 'organizaciones' && selectedOrg === 'otan' && NATO_NAMES.includes(name)) {
-    const membership = ORGANIZACIONES_DB.otan.members[name];
-    const isFounding = membership && membership.founding;
-    badge.textContent = isFounding ? '🛡️ Miembro fundador de la OTAN' : '🛡️ Miembro de la OTAN';
-    badge.style.background = 'rgba(37, 99, 235, 0.15)';
-    badge.style.color = '#60a5fa';
-    badge.style.border = '1px solid rgba(37, 99, 235, 0.3)';
-
-    const html = `
-      <div class="panel-section animate-in" style="border-left:3px solid #2563eb;padding-left:10px;">
-        <div class="panel-section-title" style="color:#60a5fa;text-transform:uppercase;">🛡️ Participación en OTAN</div>
-        <div class="panel-section-content">
-          <ul style="margin:0 0 0 16px; padding:0;">
-            <li>${isFounding ? 'Miembro fundador' : 'Estado miembro'}</li>
-            <li>Desde ${membership ? membership.since : '—'}</li>
-            <li>Alianza de defensa colectiva (Artículo 5 del Tratado del Atlántico Norte)</li>
-            <li>Papel dentro de la estructura transatlántica de seguridad</li>
-          </ul>
-        </div>
-      </div>
-      <div class="panel-section animate-in" style="animation-delay:0.05s">
-        <div class="panel-section-title" style="text-transform:uppercase;">Sobre la OTAN</div>
-        <div class="panel-section-content">${ORGANIZACIONES_DB.otan.function}</div>
-      </div>`;
-
-    document.getElementById('panel-body').innerHTML = html;
-    panel.classList.add('open');
-    if (window.innerWidth <= 768) {
-      hideTooltip();
-      const legend = document.getElementById('map-legend');
-      const controls = document.getElementById('controls');
-      const overlay = document.getElementById('overlay');
-      if (legend) legend.style.display = 'none';
-      if (controls) controls.style.display = 'none';
-      if (overlay) overlay.classList.add('active');
-    }
+  if (activeCategory === 'organizaciones' && selectedOrg) {
+    showOrgCountryPanel(name, selectedOrg);
     return;
   }
 
@@ -5300,18 +5445,19 @@ function showOrgPanel(orgId) {
   const org = ORGANIZACIONES_DB[orgId];
   if (!org) return;
   const panel = document.getElementById('info-panel');
+  const color = org.color || '#2563eb';
 
   const panelFlag = document.getElementById('panel-flag');
-  panelFlag.textContent = '🌐';
+  panelFlag.textContent = org.icon || '🌐';
   panelFlag.className = 'panel-flag';
   document.getElementById('panel-name').textContent = org.name;
   document.getElementById('panel-capital').textContent = `${org.acronym || ''} • ${org.headquarters || ''}`;
 
   const badge = document.getElementById('panel-relation');
   badge.textContent = org.type || 'Organización';
-  badge.style.background = 'rgba(37, 99, 235, 0.15)';
-  badge.style.color = '#60a5fa';
-  badge.style.border = '1px solid rgba(37, 99, 235, 0.3)';
+  badge.style.background = color + '26';
+  badge.style.color = color;
+  badge.style.border = `1px solid ${color}55`;
 
   let html = `
     <div class="panel-section animate-in">
@@ -5335,21 +5481,33 @@ function showOrgPanel(orgId) {
       <div class="panel-section-content">${org.headquarters || '—'}</div>
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.1s">
-      <div class="panel-section-title" style="text-transform:uppercase;">Miembros</div>
+      <div class="panel-section-title" style="text-transform:uppercase;">Estados miembros / participantes</div>
       <div class="panel-section-content">${org.member_count || (org.members ? Object.keys(org.members).length : '—')}</div>
     </div>
-    <div class="panel-section animate-in" style="animation-delay:0.12s;border-left:3px solid #2563eb;padding-left:10px;">
-      <div class="panel-section-title" style="color:#60a5fa;text-transform:uppercase;">🇺🇸 Participación de EE. UU.</div>
+    <div class="panel-section animate-in" style="animation-delay:0.12s;border-left:3px solid ${color};padding-left:10px;">
+      <div class="panel-section-title" style="color:${color};text-transform:uppercase;">🇺🇸 Participación de EE. UU.</div>
       <div class="panel-section-content" style="font-weight:600;">${org.us_role || '—'}</div>
     </div>
-    <div class="panel-section animate-in" style="animation-delay:0.14s">
-      <div class="panel-section-title" style="text-transform:uppercase;">Función</div>
+    <div class="panel-section animate-in" style="animation-delay:0.13s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Función principal</div>
       <div class="panel-section-content">${org.function || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.14s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Relación con EE. UU.</div>
+      <div class="panel-section-content">${org.us_relation || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.15s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Relación con otras estructuras</div>
+      <div class="panel-section-content">${org.relation_other || '—'}</div>
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.16s">
       <div class="panel-section-title" style="text-transform:uppercase;">🌐 Importancia Geopolítica</div>
       <div class="panel-section-content">${org.geo_importance || '—'}</div>
-    </div>`;
+    </div>${org.partners_note ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Miembros vs. socios</div>
+      <div class="panel-section-content" style="font-size:12px;">${org.partners_note}</div>
+    </div>` : ''}`;
 
   if (org.actualidad) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.18s">
@@ -5371,9 +5529,123 @@ function showOrgPanel(orgId) {
       </div>`;
     }
   }
+  if (org.updated) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.22s">
+      <div class="panel-section-content" style="font-size:0.75rem; color:#64748b;">🗓️ Actualizado: ${org.updated}</div>
+    </div>`;
+  }
 
   document.getElementById('panel-body').innerHTML = html;
   panel.classList.add('open');
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
+function buildOrgMemberBullets(orgId, member) {
+  switch (orgId) {
+    case 'otan':
+      return [
+        member.founding ? 'Miembro fundador' : 'Estado miembro',
+        `Desde ${member.since}`,
+        'Alianza de defensa colectiva (Artículo 5 del Tratado del Atlántico Norte)',
+        'Papel dentro de la estructura transatlántica de seguridad'
+      ];
+    case 'oea':
+      return [
+        member.role || 'Estado miembro',
+        'Participa en el sistema interamericano de diálogo político, seguridad, democracia y derechos humanos'
+      ];
+    case 'five_eyes':
+      return [
+        member.role || 'País participante',
+        'Intercambio de inteligencia de señales (SIGINT) entre agencias nacionales',
+        'No es un tratado de defensa militar'
+      ];
+    case 'aukus':
+      return [
+        member.pillar || 'Socio de AUKUS',
+        'Asociación de seguridad trilateral centrada en el Indo-Pacífico',
+        'No es una organización internacional con secretaría permanente'
+      ];
+    case 'quad':
+      return [
+        member.role || 'País participante',
+        'Cooperación estratégica, marítima, tecnológica y regional en el Indo-Pacífico',
+        'No constituye una alianza militar ni implica defensa mutua'
+      ];
+    default:
+      return ['País participante'];
+  }
+}
+
+function showOrgCountryPanel(name, orgId) {
+  const org = ORGANIZACIONES_DB[orgId];
+  if (!org) return;
+  const info = GEO_DB.countries[name] || {};
+  const color = org.color || '#2563eb';
+  const flag = info.identity ? info.identity.flag : info.flag;
+  const name_es = info.identity ? info.identity.name_es : (info.name_es || name);
+  const capital = info.identity ? info.identity.capital : info.capital;
+  const region = info.identity ? info.identity.region : info.region;
+
+  const panelFlag = document.getElementById('panel-flag');
+  panelFlag.textContent = getFlagEmoji(flag) || (org.icon || '🌐');
+  panelFlag.className = 'panel-flag';
+  document.getElementById('panel-name').textContent = name_es;
+  document.getElementById('panel-capital').textContent = capital ? `Capital: ${capital} • ${region || ''}` : (region || '');
+
+  const badge = document.getElementById('panel-relation');
+  const member = org.members && org.members[name];
+  const special = org.special_status && org.special_status[name];
+
+  let html;
+  if (member) {
+    badge.textContent = `${org.icon || '🛡️'} Participa en ${org.acronym || org.name}`;
+    badge.style.background = color + '26';
+    badge.style.color = color;
+    badge.style.border = `1px solid ${color}55`;
+
+    const bullets = buildOrgMemberBullets(orgId, member);
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid ${color};padding-left:10px;">
+        <div class="panel-section-title" style="color:${color};text-transform:uppercase;">${org.icon || '🌐'} Participación en ${org.acronym || org.name}</div>
+        <div class="panel-section-content">
+          <ul style="margin:0 0 0 16px; padding:0;">
+            ${bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${org.acronym || org.name}</div>
+        <div class="panel-section-content">${org.function}</div>
+      </div>`;
+  } else {
+    const note = special ? special.note : `${name_es} no participa en ${org.acronym || org.name}.`;
+    badge.textContent = `No participa en ${org.acronym || org.name}`;
+    badge.style.background = 'rgba(100,116,139,0.15)';
+    badge.style.color = '#94a3b8';
+    badge.style.border = '1px solid rgba(100,116,139,0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #64748b;padding-left:10px;">
+        <div class="panel-section-title" style="color:#94a3b8;text-transform:uppercase;">Relación con ${org.acronym || org.name}</div>
+        <div class="panel-section-content">${note}</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${org.acronym || org.name}</div>
+        <div class="panel-section-content">${org.function}</div>
+      </div>`;
+  }
+
+  document.getElementById('panel-body').innerHTML = html;
+  document.getElementById('info-panel').classList.add('open');
   if (window.innerWidth <= 768) {
     hideTooltip();
     const legend = document.getElementById('map-legend');
@@ -5447,12 +5719,12 @@ function applyCategory(cat) {
       else el.style('opacity', 0.15);
     }
     else if (cat === 'organizaciones') {
-      if (selectedOrg === 'otan') {
-        if (NATO_NAMES.includes(name)) el.style('fill', '#2563eb').style('opacity', 1);
-        else el.style('opacity', 0.15);
+      // El resaltado depende exclusivamente de la organización elegida en el
+      // menú lateral (selectedOrg). Sin selección, ningún país se resalta.
+      const org = selectedOrg ? ORGANIZACIONES_DB[selectedOrg] : null;
+      if (org && org.members && org.members[name]) {
+        el.style('fill', org.color || '#2563eb').style('opacity', 1);
       } else {
-        // Ninguna organización seleccionada todavía (o una aún no implementada):
-        // no se resalta ningún país hasta elegir una desde el menú lateral.
         el.style('opacity', 0.15);
       }
     }
@@ -5514,14 +5786,14 @@ function updateLegend(cat) {
         </div>
       `;
       break;
-    case 'organizaciones':
-      if (selectedOrg === 'otan') {
+    case 'organizaciones': {
+      const org = selectedOrg ? ORGANIZACIONES_DB[selectedOrg] : null;
+      if (org) {
+        const count = org.member_count || (org.members ? Object.keys(org.members).length : '');
         html = `
-          <div class="legend-title">OTAN</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>País miembro (32)</div>
-          <div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">
-            EE. UU. se resalta igual que el resto por ser miembro; su rol de miembro fundador se detalla al hacer clic.
-          </div>
+          <div class="legend-title">${org.icon || ''} ${org.acronym || org.name}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${org.color}"></div>${org.legend_label || 'País participante'} (${count})</div>
+          ${org.legend_note ? `<div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${org.legend_note}</div>` : ''}
         `;
       } else {
         html = `
@@ -5530,6 +5802,7 @@ function updateLegend(cat) {
         `;
       }
       break;
+    }
     case 'bloques':
       html = `
         <div class="legend-title">Bloques Económicos</div>
