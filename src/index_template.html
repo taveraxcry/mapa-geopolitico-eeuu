@@ -4291,19 +4291,15 @@ function showInfoPanel(name, info) {
   const badge = document.getElementById('panel-relation');
 
   if (activeCategory === 'rivales' && name === 'United States of America') {
-    badge.textContent = "🎯 Actor de Referencia";
+    badge.textContent = "🇺🇸 Actor de referencia";
     badge.style.background = 'rgba(37, 99, 235, 0.15)';
     badge.style.color = '#60a5fa';
     badge.style.border = '1px solid rgba(37, 99, 235, 0.3)';
 
     const html = `
       <div class="panel-section animate-in" style="border-left:3px solid #3b82f6;padding-left:10px;">
-        <div class="panel-section-title" style="color:#60a5fa;text-transform:uppercase;">🎯 Actor de Referencia</div>
-        <div class="panel-section-content">Estados Unidos es el punto de referencia de este atlas geopolítico. La categoría "Rivales" muestra los Estados con los que EE. UU. mantiene rivalidades, competencias estratégicas o confrontaciones de seguridad relevantes — no se le aplica a sí mismo una clasificación de rivalidad.</div>
-      </div>
-      <div class="panel-section animate-in" style="animation-delay:0.05s">
-        <div class="panel-section-title" style="text-transform:uppercase;">Países clasificados como rivales en este atlas</div>
-        <div class="panel-section-content" style="font-size:12px;">China (rival sistémico), Rusia (rival estratégico), Irán (rival estratégico), Corea del Norte (amenaza militar), Cuba, Siria y Nicaragua (rivales regionales).</div>
+        <div class="panel-section-title" style="color:#60a5fa;text-transform:uppercase;">🇺🇸 Actor de referencia</div>
+        <div class="panel-section-content">Estados Unidos es el punto de referencia de esta categoría. RIVALES identifica a los Estados con los que mantiene rivalidades o confrontaciones geopolíticas relevantes.</div>
       </div>`;
 
     document.getElementById('panel-body').innerHTML = html;
@@ -4563,6 +4559,7 @@ function showInfoPanel(name, info) {
   badge.style.border = `1px solid ${getRelationColor(relation_es, 0.3)}`;
 
   let html = '';
+  let rivalPriorityRendered = false;
 
   // ⚔️ Por qué es rival (only in rivales category)
   if (activeCategory === 'rivales' && info.rival_class && info.rival_why) {
@@ -4585,8 +4582,64 @@ function showInfoPanel(name, info) {
       <div style="font-size:0.78rem;font-weight:600;color:#94a3b8;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase;">${classLabel}</div>
       <div class="panel-section-content">${info.rival_why}</div>
     </div>`;
+
+    // Contenido específico de RIVALES, priorizado antes que los datos generales del país
+    if (info.summary) {
+      html += `<div class="panel-section animate-in" style="animation-delay:0.02s"><div class="panel-section-title">🧭 Naturaleza de la Rivalidad</div>
+               <div class="panel-section-content" style="font-weight:600;">${info.summary}</div></div>`;
+    } else if (info.description) {
+      html += `<div class="panel-section animate-in" style="animation-delay:0.02s"><div class="panel-section-title">🧭 Naturaleza de la Rivalidad</div>
+               <div class="panel-section-content">${info.description}</div></div>`;
+    }
+    if (info.population || info.econ_importance) {
+      const gdp = info.econ_importance ? info.econ_importance.gdp : info.gdp;
+      const gdpPc = info.econ_importance ? info.econ_importance.gdp_pc : info.gdp_pc;
+      html += `<div class="panel-section animate-in" style="animation-delay:0.04s"><div class="panel-section-title">💰 Dimensión Económica</div>
+        <div class="panel-stat-row"><span class="panel-stat-label">PIB</span><span class="panel-stat-value">${gdp || '-'}</span></div>
+        <div class="panel-stat-row"><span class="panel-stat-label">PIB per cápita</span><span class="panel-stat-value">${gdpPc || '-'}</span></div>
+      </div>`;
+    }
+    if (info.geo_importance) {
+      html += `<div class="panel-section animate-in" style="animation-delay:0.06s">
+        <div class="panel-section-title">🌐 Dimensión Estratégica y Diplomática</div>
+        <div class="panel-section-content">${info.geo_importance}</div>
+      </div>`;
+    }
+    if (info.technology) {
+      html += `<div class="panel-section animate-in" style="animation-delay:0.08s">
+        <div class="panel-section-title">🔬 Dimensión Tecnológica y Militar</div>
+        <div class="panel-section-content">${info.technology}</div>
+      </div>`;
+    }
+    if (info.actualidad) {
+      html += `<div class="panel-section animate-in" style="animation-delay:0.1s">
+        <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">ACTUALIDAD — SITUACIÓN Y HECHOS RECIENTES</div>
+        <div class="panel-section-content">
+          <p style="margin-bottom:8px;"><strong>Situación Actual:</strong> ${info.actualidad.current_situation}</p>
+          <div style="margin-bottom:8px; border-left: 2px solid var(--accent-cyan); padding-left: 8px; background: rgba(34,211,238,0.05);">
+            <strong>Hechos Verificados:</strong>
+            <ul style="margin:4px 0 0 16px; padding:0;">
+              ${info.actualidad.verified_facts.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+          </div>
+          <p style="margin-bottom:8px;"><strong>Interpretación:</strong> ${info.actualidad.interpretation}</p>`;
+      if (info.actualidad.timeline && info.actualidad.timeline.length > 0) {
+        html += `<div style="margin-top:12px;"><strong>Línea de Tiempo:</strong><br/>`;
+        info.actualidad.timeline.forEach(t => {
+          html += `<div style="font-size:0.85rem; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span style="color:var(--accent-orange);font-weight:bold;margin-right:8px;">${t.date}</span> ${t.event}</div>`;
+        });
+        html += `</div>`;
+      }
+      if (info.actualidad.sources && info.actualidad.sources.length > 0) {
+        html += `<div style="margin-top:12px; font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
+      }
+      html += `</div></div>`;
+    }
+
+    rivalPriorityRendered = true;
   }
 
+  if (!rivalPriorityRendered) {
   if (info.summary) {
     html += `<div class="panel-section animate-in"><div class="panel-section-title">📋 Resumen Geopolítico</div>
              <div class="panel-section-content" style="font-weight:600;">${info.summary}</div></div>`;
@@ -4594,8 +4647,9 @@ function showInfoPanel(name, info) {
     html += `<div class="panel-section animate-in"><div class="panel-section-title">📋 Análisis Geopolítico</div>
              <div class="panel-section-content">${info.description}</div></div>`;
   }
+  }
   // Actualidad Geopolitica (Sept 2026)
-  if (info.actualidad) {
+  if (!rivalPriorityRendered && info.actualidad) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.02s">
       <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">ACTUALIDAD GEOPOLÍTICA — 9 SEP 2026</div>
       <div class="panel-section-content">
@@ -4734,17 +4788,17 @@ function showInfoPanel(name, info) {
   }
 
   // Geo & Econ Importance
-  if (info.geo_importance) {
+  if (info.geo_importance && !rivalPriorityRendered) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.18s">
       <div class="panel-section-title">🎯 Importancia Geopolítica</div>
       <div class="panel-section-content">${info.geo_importance}</div>
     </div>`;
   }
-  if (info.technology || info.minerals || info.energy) {
+  if ((info.technology && !rivalPriorityRendered) || info.minerals || info.energy) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.19s">
       <div class="panel-section-title">⚡ Recursos y Tecnología</div>
       <div class="panel-section-content" style="font-size:12px; opacity:0.9;">
-        ${info.technology ? `<b>Tecnología:</b> ${info.technology}<br><br>` : ''}
+        ${(info.technology && !rivalPriorityRendered) ? `<b>Tecnología:</b> ${info.technology}<br><br>` : ''}
         ${info.energy ? `<b>Energía:</b> ${info.energy}<br><br>` : ''}
         ${info.minerals ? `<b>Minerales Críticos:</b> ${info.minerals}` : ''}
       </div>
