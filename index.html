@@ -3815,8 +3815,22 @@ function renderCountries(data) {
     .enter()
     .append('path')
     .attr('class', d => {
-      const name = d.properties.name;
-      const info = GEO_DB.countries[name];
+      let name = d.properties.name;
+      let info = GEO_DB.countries[name];
+
+      if (!info) {
+        const match = Object.entries(GEO_DB.countries).find(([k, v]) => {
+          if (k.toLowerCase() === name.toLowerCase()) return true;
+          const es = v.identity ? v.identity.name_es : v.name_es;
+          if (es && es.toLowerCase() === name.toLowerCase()) return true;
+          if (v.name_long && v.name_long.toLowerCase() === name.toLowerCase()) return true;
+          return false;
+        });
+        if (match) {
+          name = match[0];
+          info = match[1];
+        }
+      }
       let classes = 'country-path';
       if (name === 'United States of America') classes += ' usa';
       if (info) {
@@ -4045,8 +4059,22 @@ function showStrategicPanel(loc) {
 // ============================================================
 
 function handleMouseOver(event, d) {
-  const name = d.properties.name;
-  const info = GEO_DB.countries[name];
+  let name = d.properties.name;
+  let info = GEO_DB.countries[name];
+
+  if (!info) {
+    const match = Object.entries(GEO_DB.countries).find(([k, v]) => {
+      if (k.toLowerCase() === name.toLowerCase()) return true;
+      const es = v.identity ? v.identity.name_es : v.name_es;
+      if (es && es.toLowerCase() === name.toLowerCase()) return true;
+      if (v.name_long && v.name_long.toLowerCase() === name.toLowerCase()) return true;
+      return false;
+    });
+    if (match) {
+      name = match[0];
+      info = match[1];
+    }
+  }
 
   d3.select(this).raise();
   
@@ -4080,8 +4108,22 @@ function handleMouseOut() {
 }
 
 function handleClick(event, d) {
-  const name = d.properties.name;
-  const info = GEO_DB.countries[name];
+  let name = d.properties.name;
+  let info = GEO_DB.countries[name];
+
+  if (!info) {
+    const match = Object.entries(GEO_DB.countries).find(([k, v]) => {
+      if (k.toLowerCase() === name.toLowerCase()) return true;
+      const es = v.identity ? v.identity.name_es : v.name_es;
+      if (es && es.toLowerCase() === name.toLowerCase()) return true;
+      if (v.name_long && v.name_long.toLowerCase() === name.toLowerCase()) return true;
+      return false;
+    });
+    if (match) {
+      name = match[0];
+      info = match[1];
+    }
+  }
 
   // Deselect previous
   g.selectAll('.country-path.selected').classed('selected', false);
@@ -4793,8 +4835,22 @@ function setupCategories() {
 
 function applyCategory(cat) {
   g.selectAll('.country-path').each(function(d) {
-    const name = d.properties.name;
-    const info = GEO_DB.countries[name];
+    let name = d.properties.name;
+    let info = GEO_DB.countries[name];
+
+    if (!info) {
+      const match = Object.entries(GEO_DB.countries).find(([k, v]) => {
+        if (k.toLowerCase() === name.toLowerCase()) return true;
+        const es = v.identity ? v.identity.name_es : v.name_es;
+        if (es && es.toLowerCase() === name.toLowerCase()) return true;
+        if (v.name_long && v.name_long.toLowerCase() === name.toLowerCase()) return true;
+        return false;
+      });
+      if (match) {
+        name = match[0];
+        info = match[1];
+      }
+    }
     const el = d3.select(this);
 
     // Remove legacy classes and clear inline styles
