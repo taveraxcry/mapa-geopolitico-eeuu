@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1321,7 +1321,8 @@ const GEO_DB = {
         strategic: "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
       },
       keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"],
-      rival_class: "rival_sistemico"
+      rival_class: "rival_sistemico",
+      rivals: [{ country: "China", reason: "Rival sistémico" }]
     },
     "Russia": {
       name_es: "Rusia", flag: "ru", capital: "Moscú",
@@ -1341,7 +1342,8 @@ const GEO_DB = {
       },
       keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"],
       conflicts: ["ukraine_russia"],
-      rival_class: "rival_estrategico"
+      rival_class: "rival_estrategico",
+      rivals: [{ country: "Russia", reason: "Rival estratégico" }]
     },
     "Iran": {
       name_es: "Irán", flag: "ir", capital: "Teherán",
@@ -1379,7 +1381,8 @@ const GEO_DB = {
         ]
       },
       conflicts: ["us_iran_escalation", "middle_east_crisis"],
-      rival_class: "rival_estrategico"
+      rival_class: "rival_estrategico",
+      rivals: [{ country: "Iran", reason: "Rival estratégico" }]
     },
     "North Korea": {
       name_es: "Corea del Norte", flag: "kp", capital: "Pyongyang",
@@ -1390,7 +1393,8 @@ const GEO_DB = {
       description: "Estado altamente aislado con arsenal nuclear. Amenaza directa a aliados de EE.UU. (Corea del Sur, Japón). Programa de misiles balísticos intercontinentales. Apoyo militar a Rusia en la guerra de Ucrania.",
       allies: ["China","Russia"],
       keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"],
-      rival_class: "amenaza_militar"
+      rival_class: "amenaza_militar",
+      rivals: [{ country: "North Korea", reason: "Adversario / amenaza militar" }]
     },
     "Taiwan": {
       aliado_secundario: {
@@ -1512,7 +1516,8 @@ const GEO_DB = {
       description: "Embargo comercial de EE.UU. desde 1962. Estado socialista de partido único. Breve deshielo bajo Obama (2014-2016) revertido posteriormente. Base naval de Guantánamo operada por EE.UU.",
       allies: ["Venezuela","Russia","China"],
       keywords: ["embargo","socialismo","Guantánamo"],
-      rival_class: "rival_regional"
+      rival_class: "rival_regional",
+      rivals: [{ country: "Cuba", reason: "Rival regional" }]
     },
     "Italy": {
       name_es: "Italia", flag: "it", capital: "Roma",
@@ -2161,7 +2166,8 @@ const GEO_DB = {
       description: "Guerra civil desde 2011. Presencia militar de EE.UU. en el noreste (con fuerzas kurdas SDF). Apoyo ruso e iraní al régimen de Assad. Sanciones extensivas.",
       allies: ["Russia","Iran"],
       keywords: ["guerra civil","Assad","sanciones","kurdos"],
-      rival_class: "rival_regional"
+      rival_class: "rival_regional",
+      rivals: [{ country: "Syria", reason: "Rival regional" }]
     },
     "Jordan": {
       aliado_secundario: {
@@ -2514,7 +2520,8 @@ const GEO_DB = {
       description: "Régimen de Ortega. Sanciones de EE.UU. Represión de oposición. Relaciones con Rusia, China e Irán. Canal interoceánico propuesto con inversión china.",
       allies: ["Russia","Venezuela","Cuba"],
       keywords: ["sanciones","Ortega","autoritarismo"],
-      rival_class: "rival_regional"
+      rival_class: "rival_regional",
+      rivals: [{ country: "Nicaragua", reason: "Rival regional" }]
     },
     "Uruguay": {
       name_es: "Uruguay", flag: "uy", capital: "Montevideo",
