@@ -4125,8 +4125,204 @@ let currentSearchHighlight = null;
       }
     },
     "onu": {
-      name: "Organización de las Naciones Unidas (ONU)",
-      type: "Organización internacional"
+      name: "Organización de las Naciones Unidas",
+      acronym: "ONU / UN",
+      type: "Organización internacional intergubernamental universal",
+      icon: "🕊️",
+      color: "#0d9488",
+      legend_label: "Estado miembro",
+      legend_note: "La ONU tiene 193 Estados miembros oficiales; 28 de ellos (microestados y países muy pequeños) no aparecen como polígonos individuales en la resolución de este mapa, por lo que se resaltan 165.",
+      scope: "Global",
+      founded: "24 de octubre de 1945 (entrada en vigor de la Carta de las Naciones Unidas)",
+      headquarters: "Nueva York, Estados Unidos (con oficinas en Ginebra, Viena y Nairobi)",
+      member_count: 165,
+      us_role: "Miembro fundador (1945), miembro permanente del Consejo de Seguridad con derecho a veto, principal contribuyente financiero y país anfitrión de la sede en Nueva York.",
+      function: "Foro universal para el mantenimiento de la paz y la seguridad internacional, el desarrollo de relaciones de amistad entre naciones, la cooperación internacional, el desarrollo sostenible y la promoción de los derechos humanos, articulado a través de la Asamblea General, el Consejo de Seguridad y sus organismos especializados.",
+      us_relation: "EE. UU. es miembro fundador, uno de los cinco miembros permanentes del Consejo de Seguridad con derecho a veto, y el mayor contribuyente al presupuesto regular y a las operaciones de mantenimiento de la paz.",
+      relation_other: "A diferencia del G7, el G20, la OEA o la OTAN, la ONU es la única organización de vocación verdaderamente universal (193 Estados), con una estructura de tratado formal (la Carta de la ONU) y un Consejo de Seguridad con capacidad vinculante para autorizar el uso de la fuerza y aplicar sanciones.",
+      geo_importance: "Es el único foro verdaderamente universal de gobernanza internacional; el Consejo de Seguridad, donde EE. UU. tiene poder de veto, es el órgano con mayor autoridad formal del sistema internacional para la paz y la seguridad.",
+      updated: "11 de septiembre de 2026",
+      actualidad: {
+        current_situation: "La 81.ª sesión del debate general de la Asamblea General se inaugura en septiembre de 2026 en Nueva York, en un contexto de parálisis recurrente del Consejo de Seguridad por el uso del veto entre sus miembros permanentes.",
+        verified_facts: [
+          "El Consejo de Seguridad está compuesto por 15 miembros: 5 permanentes con derecho a veto (Estados Unidos, Reino Unido, Francia, Rusia y China) y 10 no permanentes elegidos por períodos de dos años.",
+          "Estados Unidos es el mayor contribuyente al presupuesto regular y a las operaciones de mantenimiento de la paz de la ONU.",
+          "La Asamblea General se reúne cada año en septiembre para su debate general de alto nivel en la sede de Nueva York."
+        ],
+        interpretation: "Washington utiliza su asiento permanente en el Consejo de Seguridad y su peso financiero para influir en la agenda de seguridad global, mientras la parálisis del Consejo por el veto de sus miembros permanentes limita su capacidad de acción en crisis como Ucrania o Medio Oriente.",
+        sources: [
+          { name: "United Nations — Member States", url: "https://www.un.org/en/about-us/member-states" },
+          { name: "United Nations Security Council", url: "https://www.un.org/securitycouncil/" },
+          { name: "U.S. Department of State — The United States and the United Nations", url: "https://www.state.gov/policy-issues/united-nations/" }
+        ]
+      },
+      members: {
+        "United States of America": { role: "Miembro fundador (Conferencia de San Francisco, 1945), miembro permanente del Consejo de Seguridad (con derecho a veto) y país anfitrión de la sede" },
+        "Canada": { role: "Estado miembro" },
+        "Mexico": { role: "Estado miembro" },
+        "United Kingdom": { role: "Estado miembro y miembro permanente del Consejo de Seguridad (con derecho a veto)" },
+        "France": { role: "Estado miembro y miembro permanente del Consejo de Seguridad (con derecho a veto)" },
+        "Germany": { role: "Estado miembro" },
+        "Japan": { role: "Estado miembro" },
+        "South Korea": { role: "Estado miembro" },
+        "Australia": { role: "Estado miembro" },
+        "New Zealand": { role: "Estado miembro" },
+        "India": { role: "Estado miembro" },
+        "China": { role: "Estado miembro y miembro permanente del Consejo de Seguridad (con derecho a veto)" },
+        "Russia": { role: "Estado miembro y miembro permanente del Consejo de Seguridad (con derecho a veto)" },
+        "Iran": { role: "Estado miembro" },
+        "North Korea": { role: "Estado miembro" },
+        "Colombia": { role: "Estado miembro" },
+        "Brazil": { role: "Estado miembro" },
+        "Argentina": { role: "Estado miembro" },
+        "Chile": { role: "Estado miembro" },
+        "Peru": { role: "Estado miembro" },
+        "Venezuela": { role: "Estado miembro" },
+        "Cuba": { role: "Estado miembro" },
+        "Italy": { role: "Estado miembro" },
+        "Spain": { role: "Estado miembro" },
+        "Poland": { role: "Estado miembro" },
+        "Turkey": { role: "Estado miembro" },
+        "Israel": { role: "Estado miembro" },
+        "Saudi Arabia": { role: "Estado miembro" },
+        "United Arab Emirates": { role: "Estado miembro" },
+        "Egypt": { role: "Estado miembro" },
+        "Indonesia": { role: "Estado miembro" },
+        "Philippines": { role: "Estado miembro" },
+        "Vietnam": { role: "Estado miembro" },
+        "Thailand": { role: "Estado miembro" },
+        "Singapore": { role: "Estado miembro" },
+        "Malaysia": { role: "Estado miembro" },
+        "Ukraine": { role: "Estado miembro" },
+        "Norway": { role: "Estado miembro" },
+        "Sweden": { role: "Estado miembro" },
+        "Finland": { role: "Estado miembro" },
+        "Estonia": { role: "Estado miembro" },
+        "Latvia": { role: "Estado miembro" },
+        "Lithuania": { role: "Estado miembro" },
+        "Romania": { role: "Estado miembro" },
+        "Bulgaria": { role: "Estado miembro" },
+        "Greece": { role: "Estado miembro" },
+        "Netherlands": { role: "Estado miembro" },
+        "Belgium": { role: "Estado miembro" },
+        "Denmark": { role: "Estado miembro" },
+        "Portugal": { role: "Estado miembro" },
+        "Iceland": { role: "Estado miembro" },
+        "Czechia": { role: "Estado miembro" },
+        "Slovakia": { role: "Estado miembro" },
+        "Hungary": { role: "Estado miembro" },
+        "Croatia": { role: "Estado miembro" },
+        "Slovenia": { role: "Estado miembro" },
+        "Montenegro": { role: "Estado miembro" },
+        "Albania": { role: "Estado miembro" },
+        "Macedonia": { role: "Estado miembro" },
+        "Luxembourg": { role: "Estado miembro" },
+        "Ireland": { role: "Estado miembro" },
+        "Switzerland": { role: "Estado miembro" },
+        "Austria": { role: "Estado miembro" },
+        "Pakistan": { role: "Estado miembro" },
+        "Afghanistan": { role: "Estado miembro" },
+        "Iraq": { role: "Estado miembro" },
+        "Syria": { role: "Estado miembro" },
+        "Jordan": { role: "Estado miembro" },
+        "Lebanon": { role: "Estado miembro" },
+        "Kuwait": { role: "Estado miembro" },
+        "Qatar": { role: "Estado miembro" },
+        "Bahrain": { role: "Estado miembro" },
+        "Oman": { role: "Estado miembro" },
+        "South Africa": { role: "Estado miembro" },
+        "Nigeria": { role: "Estado miembro" },
+        "Ethiopia": { role: "Estado miembro" },
+        "Kenya": { role: "Estado miembro" },
+        "Morocco": { role: "Estado miembro" },
+        "Tunisia": { role: "Estado miembro" },
+        "Algeria": { role: "Estado miembro" },
+        "Libya": { role: "Estado miembro" },
+        "Sudan": { role: "Estado miembro" },
+        "S. Sudan": { role: "Estado miembro" },
+        "Dem. Rep. Congo": { role: "Estado miembro" },
+        "Tanzania": { role: "Estado miembro" },
+        "Somalia": { role: "Estado miembro" },
+        "Ecuador": { role: "Estado miembro" },
+        "Panama": { role: "Estado miembro" },
+        "Costa Rica": { role: "Estado miembro" },
+        "Dominican Rep.": { role: "Estado miembro" },
+        "Guatemala": { role: "Estado miembro" },
+        "Honduras": { role: "Estado miembro" },
+        "El Salvador": { role: "Estado miembro" },
+        "Nicaragua": { role: "Estado miembro" },
+        "Uruguay": { role: "Estado miembro" },
+        "Paraguay": { role: "Estado miembro" },
+        "Bolivia": { role: "Estado miembro" },
+        "Mongolia": { role: "Estado miembro" },
+        "Myanmar": { role: "Estado miembro" },
+        "Cambodia": { role: "Estado miembro" },
+        "Laos": { role: "Estado miembro" },
+        "Brunei": { role: "Estado miembro" },
+        "Fiji": { role: "Estado miembro" },
+        "Papua New Guinea": { role: "Estado miembro" },
+        "Kazakhstan": { role: "Estado miembro" },
+        "Uzbekistan": { role: "Estado miembro" },
+        "Turkmenistan": { role: "Estado miembro" },
+        "Tajikistan": { role: "Estado miembro" },
+        "Kyrgyzstan": { role: "Estado miembro" },
+        "Georgia": { role: "Estado miembro" },
+        "Armenia": { role: "Estado miembro" },
+        "Azerbaijan": { role: "Estado miembro" },
+        "Belarus": { role: "Estado miembro" },
+        "Moldova": { role: "Estado miembro" },
+        "Serbia": { role: "Estado miembro" },
+        "Bosnia and Herz.": { role: "Estado miembro" },
+        "Yemen": { role: "Estado miembro" },
+        "Eritrea": { role: "Estado miembro" },
+        "Djibouti": { role: "Estado miembro" },
+        "Timor-Leste": { role: "Estado miembro" },
+        "Bangladesh": { role: "Estado miembro" },
+        "Sri Lanka": { role: "Estado miembro" },
+        "Nepal": { role: "Estado miembro" },
+        "Bhutan": { role: "Estado miembro" },
+        "Madagascar": { role: "Estado miembro" },
+        "Cyprus": { role: "Estado miembro" },
+        "Central African Rep.": { role: "Estado miembro" },
+        "Congo": { role: "Estado miembro" },
+        "Gabon": { role: "Estado miembro" },
+        "Cameroon": { role: "Estado miembro" },
+        "Eq. Guinea": { role: "Estado miembro" },
+        "Ghana": { role: "Estado miembro" },
+        "Côte d'Ivoire": { role: "Estado miembro" },
+        "Senegal": { role: "Estado miembro" },
+        "Mali": { role: "Estado miembro" },
+        "Burkina Faso": { role: "Estado miembro" },
+        "Niger": { role: "Estado miembro" },
+        "Chad": { role: "Estado miembro" },
+        "Mauritania": { role: "Estado miembro" },
+        "Guinea": { role: "Estado miembro" },
+        "Sierra Leone": { role: "Estado miembro" },
+        "Liberia": { role: "Estado miembro" },
+        "Guinea-Bissau": { role: "Estado miembro" },
+        "Gambia": { role: "Estado miembro" },
+        "Togo": { role: "Estado miembro" },
+        "Benin": { role: "Estado miembro" },
+        "Zambia": { role: "Estado miembro" },
+        "Zimbabwe": { role: "Estado miembro" },
+        "Mozambique": { role: "Estado miembro" },
+        "Botswana": { role: "Estado miembro" },
+        "Namibia": { role: "Estado miembro" },
+        "Angola": { role: "Estado miembro" },
+        "Rwanda": { role: "Estado miembro" },
+        "Uganda": { role: "Estado miembro" },
+        "Malawi": { role: "Estado miembro" },
+        "eSwatini": { role: "Estado miembro" },
+        "Lesotho": { role: "Estado miembro" },
+        "Burundi": { role: "Estado miembro" },
+        "Trinidad and Tobago": { role: "Estado miembro" },
+        "Jamaica": { role: "Estado miembro" },
+        "Haiti": { role: "Estado miembro" },
+        "Bahamas": { role: "Estado miembro" },
+        "Belize": { role: "Estado miembro" },
+        "Solomon Is.": { role: "Estado miembro" },
+        "Vanuatu": { role: "Estado miembro" }
+      }
     },
     "ue": {
       name: "Unión Europea (UE)",
@@ -4137,12 +4333,105 @@ let currentSearchHighlight = null;
       type: "Organización regional"
     },
     "g7": {
-      name: "Grupo de los Siete (G7)",
-      type: "Foro internacional"
+      name: "Grupo de los Siete",
+      acronym: "G7",
+      type: "Foro informal de coordinación política y económica",
+      icon: "🏛️",
+      color: "#ca8a04",
+      legend_label: "País miembro",
+      legend_note: "El G7 tiene 7 Estados miembros. La Unión Europea participa institucionalmente en las cumbres, pero NO es uno de los siete países ni se resalta como Estado.",
+      scope: "Global",
+      founded: "1975",
+      headquarters: "Sin sede permanente — presidencia y cumbre rotativas anuales",
+      member_count: 7,
+      us_role: "Miembro fundador (1975); coordina con el resto del grupo sanciones económicas, seguridad energética y políticas tecnológicas.",
+      function: "Coordinación política y económica entre economías avanzadas en materia de macroeconomía, comercio, seguridad económica, energía, tecnología y asuntos geopolíticos globales, mediante cumbres anuales y reuniones ministeriales.",
+      us_relation: "EE. UU. es miembro fundador y una de las voces centrales en la coordinación de sanciones (por ejemplo, contra Rusia), seguridad de cadenas de suministro y políticas tecnológicas del grupo.",
+      relation_other: "A diferencia de la OTAN, el G7 no tiene cláusula de defensa mutua ni estructura de tratado: es un foro informal de coordinación de políticas. Se distingue también de la Unión Europea, que participa como invitada institucional permanente pero no es uno de los Estados miembros.",
+      geo_importance: "Reúne a las principales economías democráticas avanzadas y funciona como la plataforma central para coordinar la respuesta económica y política occidental ante crisis globales.",
+      updated: "11 de septiembre de 2026",
+      institutional_participants: [
+        { name: "Unión Europea", note: "Participa institucionalmente en las cumbres y reuniones del G7 desde 1977, pero no es uno de los siete Estados miembros ni se resalta en el mapa." }
+      ],
+      actualidad: {
+        current_situation: "Francia ejerce la presidencia del G7 en 2026, tras la presidencia de Canadá en 2025, dentro del ciclo de rotación anual del grupo.",
+        verified_facts: [
+          "La presidencia del G7 rota anualmente entre sus siete miembros; Francia asumió la presidencia de 2026 después de Canadá (2025) e Italia (2024).",
+          "El G7 coordina de forma recurrente regímenes de sanciones económicas, en particular contra Rusia desde 2022, y políticas de seguridad de cadenas de suministro tecnológico.",
+          "La Unión Europea participa en todas las cumbres del G7 como miembro institucional desde 1977, sin ser uno de los siete Estados."
+        ],
+        interpretation: "El G7 funciona como el principal mecanismo informal de coordinación entre EE. UU. y sus socios democráticos avanzados para alinear políticas económicas y geopolíticas frente a Rusia y China.",
+        sources: [
+          { name: "Présidence française du G7 2026", url: "https://www.elysee.fr/" },
+          { name: "U.S. Department of State — G7", url: "https://www.state.gov/g7/" }
+        ]
+      },
+      members: {
+        "Canada": { role: "Estado miembro fundador (1975)" },
+        "France": { role: "Estado miembro fundador (1975); presidencia del G7 en 2026" },
+        "Germany": { role: "Estado miembro fundador (1975)" },
+        "Italy": { role: "Estado miembro fundador (1975)" },
+        "Japan": { role: "Estado miembro fundador (1975)" },
+        "United Kingdom": { role: "Estado miembro fundador (1975)" },
+        "United States of America": { role: "Estado miembro fundador (1975)" }
+      }
     },
     "g20": {
-      name: "Grupo de los Veinte (G20)",
-      type: "Foro internacional"
+      name: "Grupo de los Veinte",
+      acronym: "G20",
+      type: "Foro internacional de coordinación económica y política",
+      icon: "🌍",
+      color: "#6366f1",
+      legend_label: "País miembro",
+      legend_note: "El G20 tiene 19 Estados miembros más la Unión Europea y la Unión Africana como participantes institucionales; ninguna de las dos se resalta como país.",
+      scope: "Global",
+      founded: "1999 (nivel ministerial); cumbres de líderes desde 2008",
+      headquarters: "Sin sede permanente — presidencia y cumbre rotativas anuales",
+      member_count: 19,
+      us_role: "Miembro fundador; ejerce la presidencia del G20 en 2026, tras la presidencia de Sudáfrica en 2025.",
+      function: "Coordinación económica y financiera entre las principales economías del mundo en materia de comercio, crecimiento, estabilidad financiera, desarrollo sostenible y gobernanza económica global.",
+      us_relation: "EE. UU. es miembro fundador y ejerce la presidencia del foro en 2026, fijando la agenda de las cumbres y reuniones ministeriales de ese año.",
+      relation_other: "A diferencia del G7 (7 economías avanzadas) y de la OTAN (alianza político-militar), el G20 reúne a economías avanzadas y emergentes —incluidas Rusia y China— exclusivamente en torno a la coordinación económica y financiera, sin componente de defensa.",
+      geo_importance: "Representa aproximadamente el 85% del PIB mundial y reúne en un mismo foro a EE. UU., China, Rusia y las principales economías emergentes, siendo el principal espacio de negociación económica entre el Norte y el Sur globales.",
+      updated: "11 de septiembre de 2026",
+      institutional_participants: [
+        { name: "Unión Europea", note: "Participante institucional desde la creación del G20 (1999); no es uno de los 19 Estados miembros ni se resalta en el mapa." },
+        { name: "Unión Africana", note: "Incorporada como miembro permanente del G20 en la cumbre de Nueva Delhi de 2023; representa al bloque regional africano, no a un Estado, y no se resalta en el mapa." }
+      ],
+      actualidad: {
+        current_situation: "Estados Unidos ejerce la presidencia del G20 en 2026, después de la presidencia de Sudáfrica en 2025, en un contexto de tensiones comerciales y competencia tecnológica entre las principales economías del foro.",
+        verified_facts: [
+          "La presidencia del G20 rota anualmente entre sus miembros; Estados Unidos asumió la presidencia de 2026 tras Sudáfrica (2025), Brasil (2024) e India (2023).",
+          "La Unión Africana fue incorporada como miembro permanente del G20 en la cumbre de Nueva Delhi de 2023, con el mismo estatus institucional que la Unión Europea.",
+          "El G20 concentra aproximadamente el 85% del producto interno bruto mundial y cerca de dos tercios del comercio internacional."
+        ],
+        interpretation: "Washington utiliza su presidencia de 2026 para fijar la agenda económica del foro en un contexto de fricción comercial con China y de competencia por establecer reglas en tecnología crítica e inteligencia artificial.",
+        sources: [
+          { name: "G20", url: "https://www.g20.org/" },
+          { name: "The White House", url: "https://www.whitehouse.gov/" }
+        ]
+      },
+      members: {
+        "Argentina": { role: "Estado miembro" },
+        "Australia": { role: "Estado miembro" },
+        "Brazil": { role: "Estado miembro" },
+        "Canada": { role: "Estado miembro" },
+        "China": { role: "Estado miembro" },
+        "France": { role: "Estado miembro" },
+        "Germany": { role: "Estado miembro" },
+        "India": { role: "Estado miembro" },
+        "Indonesia": { role: "Estado miembro" },
+        "Italy": { role: "Estado miembro" },
+        "Japan": { role: "Estado miembro" },
+        "Mexico": { role: "Estado miembro" },
+        "South Korea": { role: "Estado miembro" },
+        "Russia": { role: "Estado miembro" },
+        "Saudi Arabia": { role: "Estado miembro" },
+        "South Africa": { role: "Estado miembro" },
+        "Turkey": { role: "Estado miembro" },
+        "United Kingdom": { role: "Estado miembro" },
+        "United States of America": { role: "Estado miembro fundador; presidencia del G20 en 2026" }
+      }
     },
     "ocs": {
       name: "Organización de Cooperación de Shanghái (OCS)",
@@ -5510,6 +5799,12 @@ function showOrgPanel(orgId) {
     <div class="panel-section animate-in" style="animation-delay:0.17s">
       <div class="panel-section-title" style="text-transform:uppercase;">Miembros vs. socios</div>
       <div class="panel-section-content" style="font-size:12px;">${org.partners_note}</div>
+    </div>` : ''}${org.institutional_participants && org.institutional_participants.length > 0 ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Participantes institucionales (no son Estados)</div>
+      <div class="panel-section-content" style="font-size:12px;">
+        ${org.institutional_participants.map(p => `<p style="margin-bottom:6px;"><strong>${p.name}:</strong> ${p.note}</p>`).join('')}
+      </div>
     </div>` : ''}`;
 
   if (org.actualidad) {
@@ -5582,6 +5877,23 @@ function buildOrgMemberBullets(orgId, member) {
         member.role || 'País participante',
         'Cooperación estratégica, marítima, tecnológica y regional en el Indo-Pacífico',
         'No constituye una alianza militar ni implica defensa mutua'
+      ];
+    case 'onu':
+      return [
+        member.role || 'Estado miembro',
+        'Organización internacional intergubernamental universal (no es una alianza militar)'
+      ];
+    case 'g7':
+      return [
+        member.role || 'Estado miembro',
+        'Foro informal de coordinación política y económica entre economías avanzadas',
+        'No es una organización internacional clásica ni una alianza militar'
+      ];
+    case 'g20':
+      return [
+        member.role || 'Estado miembro',
+        'Foro internacional de coordinación económica y política',
+        'No es una organización internacional clásica ni una alianza militar'
       ];
     default:
       return ['País participante'];
