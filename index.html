@@ -1310,17 +1310,27 @@ const GEO_DB = {
       relation: "competitor", relation_es: "Rival sistémico",
       population: "1,425M", gdp: "$18.53T", gdp_pc: "$13,136",
       orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
-      description: "Principal competidor estratégico de EE.UU. Segunda economía mundial. Competencia en tecnología (IA, semiconductores, 5G), militar (mayor armada del mundo) y geopolítica (Mar de China Meridional, Taiwán, Iniciativa de la Franja y la Ruta). Miembro del P5.",
-      allies: ["Russia"],
-      potencia_regional: {
-        tipo_poder: "Potencia global con predominio regional en Asia Oriental e Indo-Pacífico.",
-        region_poder: "Asia Oriental, Mar de China Meridional, Taiwán e Indo-Pacífico.",
-        long_reason: "Clasificada como superpotencia (Asia Power Index 2025). Combina una enorme capacidad económica e industrial con creciente poder tecnológico y militar. \u003cbr\u003e\u003csmall\u003e\u003ci\u003eLa investigación describe a China como superpotencia con capacidad para modificar el equilibrio estratégico del Indo-Pacífico. (\u003ca href=\"https://power.lowyinstitute.org/countries/china/\" target=\"_blank\" style=\"color:var(--accent-blue)\"\u003eLowy Institute\u003c/a\u003e)\u003c/i\u003e\u003c/small\u003e",
-        influence: "Asia Oriental, Sudeste Asiático, Asia Central y extensas redes comerciales internacionales.",
-        strengths: "manufactura, comercio, tecnología, infraestructura, finanzas, población, poder naval y cadenas de suministro.",
-        strategic: "Su posición frente a Taiwán, el Mar de China Meridional y las principales rutas marítimas del Indo-Pacífico la convierte en el actor central de Asia."
+      description: "Principal rival sistémico global de EE. UU. Busca reconfigurar el orden internacional a su favor mediante poderío económico, avance tecnológico y modernización militar acelerada.",
+      allies: ["Russia", "North Korea"],
+      usa_relation: { explanation: "Competencia sistémica en todos los frentes. Choques constantes por Taiwán, dominio del Mar de China Meridional, y hegemonía tecnológica global." },
+      geo_importance: "Mayor desafío a largo plazo para EE. UU. Lidera iniciativas como la Franja y la Ruta, BRICS y OCS para cimentar su influencia global.",
+      econ_importance: "Segunda economía mundial. Principal rival en cadenas de suministro estratégicas, semiconductores, IA y refinación de minerales críticos.",
+      actualidad: {
+        current_situation: "Alta tensión por Taiwán y guerra comercial y tecnológica.",
+        verified_facts: [
+          "Fricción continua por las restricciones estadounidenses a la exportación de semiconductores avanzados.",
+          "Maniobras militares persistentes en el Estrecho de Taiwán y disputas con Filipinas en el Mar de China Meridional."
+        ],
+        interpretation: "China acelera su modernización militar y autosuficiencia tecnológica ante lo que percibe como un cerco estratégico de Washington.",
+        timeline: [
+          { date: "2024-2026", event: "Consolidación de controles de exportación y tensiones marítimas." }
+        ],
+        sources: [
+          { name: "Department of Defense (DoD)", url: "https://www.defense.gov/" },
+          { name: "Department of Commerce", url: "https://www.commerce.gov/" }
+        ]
       },
-      keywords: ["competidor","tecnología","Taiwán","Mar de China","nuclear","P5"],
+      keywords: ["sistémico","tecnología","Taiwán","Mar de China","P5"],
       rival_class: "rival_sistemico",
       rivals: [{ country: "China", reason: "Rival sistémico" }]
     },
@@ -1330,17 +1340,26 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Rival estratégico",
       population: "144M", gdp: "$2.02T", gdp_pc: "$14,403",
       orgs: ["BRICS","P5 (CS-ONU)","OCS","G20"],
-      description: "Adversario principal tras la invasión de Ucrania (2022). Mayor arsenal nuclear del mundo. Miembro del P5. Sanciones occidentales masivas. Alianza estratégica creciente con China. Proveedor de energía (gas, petróleo) y desestabilizador en Europa.",
-      allies: ["China","North Korea","Iran"],
-      potencia_regional: {
-        tipo_poder: "Potencia global con predominio regional en Eurasia y potencia media en Asia.",
-        region_poder: "Europa Oriental, Cáucaso, Asia Central y Ártico.",
-        long_reason: "Clasificada como potencia media en Asia (Asia Power Index 2025), mantiene el estatus de potencia global por su arsenal nuclear y capacidad de disuasión. Posee territorio enorme y recursos energéticos que le permiten ejercer influencia sustancial.",
-        influence: "Europa Oriental, Cáucaso, Asia Central, Ártico y espacios estratégicos de Medio Oriente.",
-        strengths: "arsenal nuclear, fuerzas armadas, energía, territorio, recursos naturales, industria militar y disuasión estratégica.",
-        strategic: "Control de espacios euroasiáticos, rutas energéticas, acceso al Ártico y posición de puente intercontinental."
+      description: "Rival estratégico histórico. Principal amenaza para la seguridad de Europa tras la invasión de Ucrania. Mantiene el mayor arsenal nuclear del mundo y un veto en el Consejo de Seguridad de la ONU.",
+      allies: ["China","North Korea","Iran","Syria"],
+      usa_relation: { explanation: "Rivalidad aguda centrada en la expansión de la OTAN, el conflicto en Ucrania, y el desafío a la arquitectura de seguridad euroatlántica." },
+      geo_importance: "Vasto territorio euroasiático y enorme arsenal nuclear que garantizan su poder disuasorio. Actúa como fuerza desestabilizadora en Europa Oriental y diversas regiones de África.",
+      econ_importance: "Potencia energética (petróleo y gas natural), fundamental para mercados globales, aunque fuertemente impactada por regímenes de sanciones occidentales.",
+      actualidad: {
+        current_situation: "Guerra de desgaste en Ucrania y profundización de la asociación 'sin límites' con China.",
+        verified_facts: [
+          "Rusia sostiene operaciones militares continuas en Ucrania con apoyo material de Corea del Norte e Irán.",
+          "EE. UU. y sus aliados mantienen regímenes de sanciones sin precedentes y apoyo militar a Kiev."
+        ],
+        interpretation: "Moscú busca desgastar la voluntad política de Occidente mientras reorienta su economía e integración estratégica hacia Asia.",
+        timeline: [
+          { date: "2022-2026", event: "Guerra sostenida en Ucrania y escalada de sanciones." }
+        ],
+        sources: [
+          { name: "Department of State - Russia", url: "https://www.state.gov/countries-areas/russia/" }
+        ]
       },
-      keywords: ["adversario","nuclear","Ucrania","sanciones","energía","P5"],
+      keywords: ["nuclear","Ucrania","sanciones","energía","P5"],
       conflicts: ["ukraine_russia"],
       rival_class: "rival_estrategico",
       rivals: [{ country: "Russia", reason: "Rival estratégico" }]
@@ -1351,35 +1370,27 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Rival estratégico",
       population: "88M", gdp: "$401B", gdp_pc: "$4,556",
       orgs: ["BRICS","OPEP"],
-      description: "Adversario desde la Revolución Islámica de 1979. Programa nuclear controvertido. Apoya milicias proxy (Hezbollah, Houthis, milicias en Irak). Tensiones por el Estrecho de Ormuz (21% del petróleo mundial transita allí). Miembro de BRICS desde 2024.",
-      allies: ["Russia","China","Syria"],
-      potencia_regional: {
-        tipo_poder: "Potencia regional principal asimétrica de Medio Oriente.",
-        region_poder: "Golfo Pérsico, Medio Oriente y Asia Occidental.",
-        long_reason: "A pesar de las sanciones internacionales, proyecta enorme influencia mediante el apoyo a redes de actores no estatales (Eje de la Resistencia) y robustos programas de misiles y tecnología militar.",
-        influence: "Golfo Pérsico, Irak, Siria, Líbano, Yemen y Asia Occidental.",
-        strengths: "abundancia energética, inexpugnable topografía, doctrina de guerra asimétrica, redes milicianas aliadas y extensa producción de misiles/drones.",
-        strategic: "Capacidad de disrupción en el Estrecho de Ormuz (ruta petrolera crítica) y consolidación del arco de influencia chiita hasta el Mediterráneo."
-      },
-      keywords: ["adversario","nuclear","proxy","Ormuz","sanciones"],
+      description: "Rival estratégico principal de EE. UU. en Oriente Medio. Combina un avanzado programa nuclear, vasta producción de misiles balísticos/drones y una extensa red de milicias proxy en la región.",
+      allies: ["Russia","Syria","China"],
+      usa_relation: { explanation: "Hostilidad desde 1979. Conflicto por su programa nuclear, apoyo a milicias proxy en toda la región y amenazas al flujo comercial en el Golfo Pérsico." },
+      geo_importance: "Proyecta poder asimétrico en Irak, Líbano, Yemen y Siria (el Eje de la Resistencia). Posición crítica controlando el Estrecho de Ormuz.",
+      econ_importance: "Enormes reservas de hidrocarburos fuertemente limitadas por sanciones internacionales; creciente integración en la economía rusa y china (miembro pleno de BRICS).",
       actualidad: {
-        current_situation: "Alta tensión tras la Operación 'Epic Fury' (Feb 2026), que neutralizó instalaciones subterráneas en Isfahán.",
+        current_situation: "Alta tensión por el avance de su programa nuclear y conflicto constante en el Medio Oriente.",
         verified_facts: [
-          "El 28 de febrero de 2026, una coalición liderada por EE. UU. (con apoyo logístico regional) ejecutó ataques de precisión (Epic Fury).",
-          "Irán respondió bloqueando parcialmente el Estrecho de Ormuz durante 72 horas.",
-          "El enriquecimiento de uranio alcanzó picos críticos antes de la operación."
+          "Irán ha proporcionado drones y apoyo logístico tanto a Rusia en su guerra como a diversos grupos armados en el Levante.",
+          "Reportes del OIEA confirman altos niveles de enriquecimiento de uranio, acortando su 'breakout time' nuclear."
         ],
-        interpretation: "El régimen de Teherán enfrenta una crisis de legitimidad interna combinada con una capacidad militar reducida, aunque mantiene sus redes proxy intactas.",
+        interpretation: "Teherán capitaliza la inestabilidad de Oriente Medio para fortalecer su red de influencia mientras utiliza su programa nuclear como instrumento de disuasión.",
         timeline: [
-          { date: "28 Feb 2026", event: "Operación 'Epic Fury'." },
-          { date: "1 Mar 2026", event: "Bloqueo intermitente de Ormuz." },
-          { date: "5 Mar 2026", event: "Reapertura de rutas bajo escolta internacional." }
+          { date: "2024-2026", event: "Expansión del apoyo a facciones regionales y avance sostenido de enriquecimiento nuclear." }
         ],
         sources: [
-          { name: "Reportes de Seguridad Marítima (Mar 2026)", url: "#" },
-          { name: "Fuentes de Defensa (Feb 2026)", url: "#" }
+          { name: "U.S. Department of State - Iran", url: "https://www.state.gov/countries-areas/iran/" },
+          { name: "IAEA Reports", url: "https://www.iaea.org/" }
         ]
       },
+      keywords: ["nuclear","proxy","Ormuz","sanciones","chiita"],
       conflicts: ["us_iran_escalation", "middle_east_crisis"],
       rival_class: "rival_estrategico",
       rivals: [{ country: "Iran", reason: "Rival estratégico" }]
@@ -1390,9 +1401,27 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Adversario / amenaza militar",
       population: "26M", gdp: "$~18B", gdp_pc: "$~700",
       orgs: [],
-      description: "Estado altamente aislado con arsenal nuclear. Amenaza directa a aliados de EE.UU. (Corea del Sur, Japón). Programa de misiles balísticos intercontinentales. Apoyo militar a Rusia en la guerra de Ucrania.",
+      description: "Adversario y amenaza militar inminente en la región de Asia-Pacífico. Estado totalitario altamente militarizado con capacidades nucleares probadas y misiles intercontinentales (ICBM).",
       allies: ["China","Russia"],
-      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento"],
+      usa_relation: { explanation: "Amenaza existencial para Corea del Sur y Japón, principales aliados de EE. UU. Riesgo constante de proliferación nuclear e inestabilidad armada en la península." },
+      geo_importance: "Desafía la disuasión extendida de EE. UU. en Asia Oriental. Su acercamiento militar a Rusia amplifica su peligrosidad técnica y geopolítica.",
+      econ_importance: "Economía sancionada y aislada, fuertemente dependiente del comercio informal con China y del intercambio logístico militar con Rusia.",
+      actualidad: {
+        current_situation: "Pruebas constantes de misiles y pacto de defensa con Rusia.",
+        verified_facts: [
+          "Pyongyang ha suministrado transferencias masivas de artillería a Rusia para la guerra en Ucrania.",
+          "Corea del Norte continúa realizando pruebas sistemáticas de armamento, incluyendo ICBMs diseñados para alcanzar territorio continental estadounidense."
+        ],
+        interpretation: "Kim Jong-un utiliza la guerra en Europa para evadir sanciones y asegurar apoyo tecnológico de Moscú para modernizar sus fuerzas armadas.",
+        timeline: [
+          { date: "2024", event: "Firma de un acuerdo formal de asociación estratégica integral y defensa mutua con Rusia." }
+        ],
+        sources: [
+          { name: "U.S. Indo-Pacific Command", url: "https://www.pacom.mil/" },
+          { name: "Department of State", url: "https://www.state.gov/" }
+        ]
+      },
+      keywords: ["nuclear","misiles","Kim Jong-un","aislamiento","Rusia"],
       rival_class: "amenaza_militar",
       rivals: [{ country: "North Korea", reason: "Adversario / amenaza militar" }]
     },
@@ -1512,10 +1541,28 @@ const GEO_DB = {
       continent: "north-america", region: "Caribe",
       relation: "adversary", relation_es: "Rival regional",
       population: "11M", gdp: "$~107B", gdp_pc: "$~9,500",
-      orgs: ["BRICS (socio)"],
-      description: "Embargo comercial de EE.UU. desde 1962. Estado socialista de partido único. Breve deshielo bajo Obama (2014-2016) revertido posteriormente. Base naval de Guantánamo operada por EE.UU.",
-      allies: ["Venezuela","Russia","China"],
-      keywords: ["embargo","socialismo","Guantánamo"],
+      orgs: [],
+      description: "Rival político y estratégico en el Caribe. Régimen unipartidista de línea dura comunista con un historial de seis décadas de abierta confrontación ideológica y política con Washington.",
+      allies: ["Russia","China","Venezuela","Nicaragua"],
+      usa_relation: { explanation: "Relación bloqueada por el embargo comercial y la inclusión en la lista de Estados Patrocinadores del Terrorismo." },
+      geo_importance: "Su proximidad a Florida (90 millas) le permite servir como base de recolección de inteligencia y proyección de influencia militar para rivales extrahemisféricos (China y Rusia).",
+      econ_importance: "Profunda crisis económica estructural y alta dependencia de subsidios energéticos aliados. Foco crítico de emigración masiva hacia EE. UU.",
+      actualidad: {
+        current_situation: "Crisis económica interna y fortalecimiento de operaciones de inteligencia chinas y rusas en la isla.",
+        verified_facts: [
+          "Reportes oficiales estadounidenses han alertado sobre el establecimiento de bases de espionaje chinas en la isla.",
+          "Cuba alberga visitas frecuentes de flotillas militares de la Armada Rusa, incluyendo submarinos de propulsión nuclear."
+        ],
+        interpretation: "El régimen prioriza la supervivencia a través del respaldo de los principales adversarios de EE. UU., prestando su territorio para socavar la seguridad estadounidense en el Caribe.",
+        timeline: [
+          { date: "2023-2024", event: "Confirmación de presencia de inteligencia china y arribo de destacamentos navales rusos." }
+        ],
+        sources: [
+          { name: "U.S. Department of State - Cuba", url: "https://www.state.gov/countries-areas/cuba/" },
+          { name: "SOUTHCOM Posture Statement", url: "https://www.southcom.mil/" }
+        ]
+      },
+      keywords: ["embargo","inteligencia","Caribe","comunismo"],
       rival_class: "rival_regional",
       rivals: [{ country: "Cuba", reason: "Rival regional" }]
     },
@@ -2163,9 +2210,27 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Rival regional",
       population: "22M", gdp: "$~11B", gdp_pc: "$~530",
       orgs: [],
-      description: "Guerra civil desde 2011. Presencia militar de EE.UU. en el noreste (con fuerzas kurdas SDF). Apoyo ruso e iraní al régimen de Assad. Sanciones extensivas.",
+      description: "Rival regional y foco crítico de confrontación en Oriente Medio. El régimen de Bashar al-Assad es responsable de violaciones masivas a derechos humanos y destrucción estatal sistemática.",
       allies: ["Russia","Iran"],
-      keywords: ["guerra civil","Assad","sanciones","kurdos"],
+      usa_relation: { explanation: "Régimen altamente sancionado (Ley Caesar). EE. UU. mantiene tropas limitadas en el noreste para combatir a ISIS y contrarrestar la influencia iraní/rusa." },
+      geo_importance: "Centro neurálgico ('Land Bridge') que conecta logísticamente a Irán con Líbano y el Mediterráneo. Escenario principal de la confrontación militar directa entre EE. UU., milicias proiraníes y fuerzas rusas.",
+      econ_importance: "Estado fallido dependiente de economías ilícitas (Captagón) y del financiamiento externo de Moscú y Teherán. Economía devastada por la guerra civil.",
+      actualidad: {
+        current_situation: "Guerra civil de baja intensidad con presencia de potencias extranjeras e incidentes militares constantes.",
+        verified_facts: [
+          "Las bases estadounidenses en territorio sirio enfrentan ataques recurrentes por parte de milicias respaldadas por Irán.",
+          "El gobierno sirio facilita la transferencia de armamento avanzado hacia Hezbollah y otras facciones aliadas."
+        ],
+        interpretation: "Assad sobrevive como un estado cliente bajo la tutela de Rusia e Irán, asegurando que Siria siga siendo una plataforma para la desestabilización del Levante mediterráneo.",
+        timeline: [
+          { date: "2011-2026", event: "Guerra civil continua, intervención extranjera e institucionalización del narcotráfico estatal." }
+        ],
+        sources: [
+          { name: "Department of State - Syria", url: "https://www.state.gov/countries-areas/syria/" },
+          { name: "CENTCOM Press Releases", url: "https://www.centcom.mil/" }
+        ]
+      },
+      keywords: ["guerra civil","Assad","sanciones","Irán","Rusia"],
       rival_class: "rival_regional",
       rivals: [{ country: "Syria", reason: "Rival regional" }]
     },
@@ -2517,9 +2582,27 @@ const GEO_DB = {
       relation: "adversary", relation_es: "Rival regional",
       population: "7M", gdp: "$~17B", gdp_pc: "$~2,400",
       orgs: [],
-      description: "Régimen de Ortega. Sanciones de EE.UU. Represión de oposición. Relaciones con Rusia, China e Irán. Canal interoceánico propuesto con inversión china.",
-      allies: ["Russia","Venezuela","Cuba"],
-      keywords: ["sanciones","Ortega","autoritarismo"],
+      description: "Rival político y estratégico en Centroamérica. Régimen autoritario familiar bajo Daniel Ortega que desmanteló las instituciones democráticas y consolidó un estado policial.",
+      allies: ["Russia","China","Cuba", "Venezuela"],
+      usa_relation: { explanation: "Fuertes sanciones estadounidenses y ruptura diplomática ante violaciones sistemáticas de derechos humanos, encarcelamiento de opositores y apoyo a Moscú." },
+      geo_importance: "Punto de penetración para la influencia militar y de inteligencia rusa en el istmo centroamericano. Actor disruptivo para la estabilidad democrática de la región.",
+      econ_importance: "Economía pequeña y fuertemente sancionada; el régimen promueve la migración como arma política cobrando tarifas a migrantes extracontinentales en ruta hacia EE. UU.",
+      actualidad: {
+        current_situation: "Aislamiento internacional, represión interna absoluta y cooperación directa en seguridad con Rusia.",
+        verified_facts: [
+          "El gobierno autorizó repetidamente el ingreso de tropas y equipamiento militar ruso para supuestos ejercicios de 'entrenamiento'.",
+          "Mantiene una política de visado flexible que facilita redes de tráfico migratorio irregular hacia la frontera sur de EE. UU."
+        ],
+        interpretation: "Ortega asegura la continuidad de su poder absoluto alineándose completamente con el bloque anti-occidental, utilizando herramientas asimétricas contra Washington.",
+        timeline: [
+          { date: "2021-2026", event: "Fraudes electorales sucesivos, destierro masivo de opositores y radicalización exterior." }
+        ],
+        sources: [
+          { name: "Department of the Treasury - OFAC Sanctions", url: "https://home.treasury.gov/" },
+          { name: "Department of State - Nicaragua", url: "https://www.state.gov/countries-areas/nicaragua/" }
+        ]
+      },
+      keywords: ["sanciones","Ortega","autoritarismo","Centroamérica","migración"],
       rival_class: "rival_regional",
       rivals: [{ country: "Nicaragua", reason: "Rival regional" }]
     },
