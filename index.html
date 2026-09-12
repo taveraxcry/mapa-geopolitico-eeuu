@@ -3881,6 +3881,7 @@ function renderStrategicLocations() {
       .attr('dominant-baseline', 'central')
       .attr('font-size', '14px')
       .attr('y', 0.5)
+      .attr('font-family', '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif')
       .style('pointer-events', 'none')
       .style('user-select', 'none')
       .text(loc.icon || '⚓');
@@ -4088,6 +4089,12 @@ function handleClick(event, d) {
     showInfoPanel(name, info);
     showConnections(name, info);
   }
+  
+  // Ensure markers stay on top after click
+  g.selectAll('.mesh-borders').raise();
+  g.selectAll('.strategic-locations').raise();
+  g.selectAll('.military-bases-layer').raise();
+  g.selectAll('.connections-layer').raise();
 }
 
 function showTooltipAt(x, y, data) {
@@ -4846,6 +4853,12 @@ function applyCategory(cat) {
   } else {
     hideMilitaryBases();
   }
+
+  // Ensure markers stay on top after category updates
+  g.selectAll('.mesh-borders').raise();
+  g.selectAll('.strategic-locations').raise();
+  g.selectAll('.military-bases-layer').raise();
+  g.selectAll('.connections-layer').raise();
 }
 
 function updateLegend(cat) {
@@ -5218,6 +5231,7 @@ function renderMilitaryBases() {
       .attr('dominant-baseline', 'central')
       .attr('font-size', '14px')
       .attr('y', 0.5)
+      .attr('font-family', '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif')
       .style('pointer-events', 'none')
       .style('user-select', 'none')
       .text(base.emoji || '🛡️');
