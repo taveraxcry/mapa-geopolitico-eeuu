@@ -1332,6 +1332,7 @@ const GEO_DB = {
       },
       keywords: ["sistémico","tecnología","Taiwán","Mar de China","P5"],
       rival_class: "rival_sistemico",
+      rival_why: "Competencia estratégica global en poder, tecnología, comercio y cadenas de suministro. Los principales puntos de tensión son Taiwán, el Indo-Pacífico, semiconductores y seguridad regional. La relación también incluye negociación y cooperación económica.",
       rivals: [{ country: "China", reason: "Rival sistémico" }]
     },
     "Russia": {
@@ -1362,6 +1363,7 @@ const GEO_DB = {
       keywords: ["nuclear","Ucrania","sanciones","energía","P5"],
       conflicts: ["ukraine_russia"],
       rival_class: "rival_estrategico",
+      rival_why: "Confrontación principalmente por la guerra de Ucrania y la seguridad europea, además de capacidades nucleares, energía, ciberseguridad y proyección militar. En 2026 continúan los contactos diplomáticos para intentar poner fin a la guerra.",
       rivals: [{ country: "Russia", reason: "Rival estratégico" }]
     },
     "Iran": {
@@ -1393,6 +1395,7 @@ const GEO_DB = {
       keywords: ["nuclear","proxy","Ormuz","sanciones","chiita"],
       conflicts: ["us_iran_escalation", "middle_east_crisis"],
       rival_class: "rival_estrategico",
+      rival_why: "Confrontación por seguridad regional, programa nuclear, misiles, grupos armados aliados y el equilibrio de poder en Oriente Medio. En 2026 hubo hostilidades y posteriormente un alto el fuego; EE. UU. mantiene fuerte presión económica y de seguridad sobre Irán.",
       rivals: [{ country: "Iran", reason: "Rival estratégico" }]
     },
     "North Korea": {
@@ -1423,6 +1426,7 @@ const GEO_DB = {
       },
       keywords: ["nuclear","misiles","Kim Jong-un","aislamiento","Rusia"],
       rival_class: "amenaza_militar",
+      rival_why: "Su programa nuclear y de misiles balísticos constituye una amenaza directa para Corea del Sur, Japón y las fuerzas estadounidenses en la región. La desnuclearización de la península sigue siendo un objetivo central de EE. UU.",
       rivals: [{ country: "North Korea", reason: "Adversario / amenaza militar" }]
     },
     "Taiwan": {
@@ -1564,6 +1568,7 @@ const GEO_DB = {
       },
       keywords: ["embargo","inteligencia","Caribe","comunismo"],
       rival_class: "rival_regional",
+      rival_why: "La confrontación se centra en seguridad hemisférica, política exterior y vínculos del gobierno cubano con actores considerados adversarios por EE. UU. En 2026 Washington mantiene medidas económicas y sanciones dirigidas contra el régimen.",
       rivals: [{ country: "Cuba", reason: "Rival regional" }]
     },
     "Italy": {
@@ -2604,6 +2609,7 @@ const GEO_DB = {
       },
       keywords: ["sanciones","Ortega","autoritarismo","Centroamérica","migración"],
       rival_class: "rival_regional",
+      rival_why: "La relación está marcada por diferencias políticas, sanciones y deterioro democrático, junto con una creciente cooperación de Nicaragua con China y Rusia.",
       rivals: [{ country: "Nicaragua", reason: "Rival regional" }]
     },
     "Uruguay": {
@@ -4432,6 +4438,29 @@ function showInfoPanel(name, info) {
   badge.style.border = `1px solid ${getRelationColor(relation_es, 0.3)}`;
 
   let html = '';
+
+  // ⚔️ Por qué es rival (only in rivales category)
+  if (activeCategory === 'rivales' && info.rival_class && info.rival_why) {
+    const classLabels = {
+      rival_sistemico: 'Rival sistémico',
+      rival_estrategico: 'Rival estratégico',
+      amenaza_militar: 'Adversario / amenaza militar',
+      rival_regional: 'Rival regional'
+    };
+    const classLabel = classLabels[info.rival_class] || info.rival_class;
+    const classColors = {
+      rival_sistemico: '#7f1d1d',
+      rival_estrategico: '#dc2626',
+      amenaza_militar: '#ef4444',
+      rival_regional: '#f97316'
+    };
+    const borderColor = classColors[info.rival_class] || '#dc2626';
+    html += `<div class="panel-section animate-in" style="border-left:3px solid ${borderColor};padding-left:10px;">
+      <div class="panel-section-title" style="color:${borderColor};text-transform:uppercase;">⚔️ ¿Por qué es rival de EE. UU.?</div>
+      <div style="font-size:0.78rem;font-weight:600;color:#94a3b8;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase;">${classLabel}</div>
+      <div class="panel-section-content">${info.rival_why}</div>
+    </div>`;
+  }
 
   if (info.summary) {
     html += `<div class="panel-section animate-in"><div class="panel-section-title">📋 Resumen Geopolítico</div>
