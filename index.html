@@ -3864,13 +3864,13 @@ function renderStrategicLocations() {
 
     // Invisible hit area (large for mobile/touch)
     group.append('circle')
-      .attr('r', 18)
+      .attr('r', 24)
       .attr('fill', 'transparent')
       .attr('stroke', 'none');
 
     // Risk ring (colored border)
     group.append('circle')
-      .attr('r', 13)
+      .attr('r', 16)
       .attr('fill', 'rgba(15,23,42,0.85)')
       .attr('stroke', loc.risk_color || '#7c3aed')
       .attr('stroke-width', 2);
@@ -3879,7 +3879,7 @@ function renderStrategicLocations() {
     group.append('text')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')
-      .attr('font-size', '12px')
+      .attr('font-size', '14px')
       .attr('y', 0.5)
       .style('pointer-events', 'none')
       .style('user-select', 'none')
@@ -4041,6 +4041,12 @@ function handleMouseOver(event, d) {
   const info = GEO_DB.countries[name];
 
   d3.select(this).raise();
+  
+  // Ensure markers always stay on top
+  g.selectAll('.mesh-borders').raise();
+  g.selectAll('.strategic-locations').raise();
+  g.selectAll('.military-bases-layer').raise();
+  g.selectAll('.connections-layer').raise();
 
   if (info) {
     showTooltipAt(event.clientX, event.clientY, {
@@ -4921,6 +4927,39 @@ function updateLegend(cat) {
 // ============================================================
 
 const MILITARY_BASES_DB = [
+  {
+    id: "camp_lemonnier", country: "Djibouti",
+    name: "Camp Lemonnier", name_short: "Lemonnier",
+    emoji: "⚓", coords: [43.14, 11.54],
+    tipo: "Base Naval Expedicionaria",
+    established: "2001",
+    primary_function: "Única base permanente de EE.UU. en África. Apoyo logístico, seguridad marítima en el Cuerno de África y operaciones en el Mar Rojo.",
+    strategic_importance: "Control del acceso al Estrecho de Bab el-Mandeb. Contrapeso a la base naval china y presencia rusa en la región.",
+    current_status: "Operativo permanente (~4.000 efectivos).",
+    source: "AFRICOM / U.S. Navy"
+  },
+  {
+    id: "al_udeid", country: "Qatar",
+    name: "Al Udeid Air Base", name_short: "Al Udeid",
+    emoji: "✈️", coords: [51.31, 25.11],
+    tipo: "Base Aérea (Sede del CENTCOM Forward)",
+    established: "1996 (Presencia EE.UU. desde 2001)",
+    primary_function: "Centro neurálgico de operaciones aéreas de EE.UU. en Medio Oriente. Despliegue de bombarderos y control de espacio aéreo regional.",
+    strategic_importance: "Instalación militar más grande de EE.UU. en Medio Oriente. Esencial para proyección de fuerza y disuasión en el Golfo Pérsico.",
+    current_status: "Operativo permanente (~10.000 efectivos). Extensión de acuerdo por 10 años (2024).",
+    source: "CENTCOM / U.S. Air Force"
+  },
+  {
+    id: "nsa_rota", country: "Spain",
+    name: "Naval Station Rota", name_short: "NSA Rota",
+    emoji: "⚓", coords: [-6.33, 36.63],
+    tipo: "Base Naval (Uso Conjunto EE.UU.-España)",
+    established: "1953",
+    primary_function: "Soporte logístico naval y puerto base de destructores Aegis (sistema de defensa antimisiles de la OTAN en Europa).",
+    strategic_importance: "Posición clave entre el Atlántico y el Mediterráneo. Asegura el control del Estrecho de Gibraltar.",
+    current_status: "Operativo permanente. Mantiene rotación de destructores de la clase Arleigh Burke.",
+    source: "EUCOM / U.S. Navy"
+  },
   // CANADÁ
   {
     id: "norad_north_bay", country: "Canada",
@@ -5164,11 +5203,11 @@ function renderMilitaryBases() {
       .style('pointer-events', 'all');
 
     // Hit area (mobile touch)
-    group.append('circle').attr('r', 18).attr('fill', 'transparent').attr('stroke', 'none');
+    group.append('circle').attr('r', 24).attr('fill', 'transparent').attr('stroke', 'none');
 
     // Background circle
     group.append('circle')
-      .attr('r', 13)
+      .attr('r', 16)
       .attr('fill', 'rgba(15,23,42,0.92)')
       .attr('stroke', '#4ade80')
       .attr('stroke-width', 2.5);
@@ -5177,7 +5216,7 @@ function renderMilitaryBases() {
     group.append('text')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')
-      .attr('font-size', '11px')
+      .attr('font-size', '14px')
       .attr('y', 0.5)
       .style('pointer-events', 'none')
       .style('user-select', 'none')
@@ -5186,8 +5225,8 @@ function renderMilitaryBases() {
     // Short label
     group.append('text')
       .attr('text-anchor', 'middle')
-      .attr('y', 22)
-      .attr('font-size', '7.5px')
+      .attr('y', 26)
+      .attr('font-size', '8.5px')
       .attr('fill', '#4ade80')
       .attr('font-weight', '700')
       .attr('font-family', 'Inter, system-ui, sans-serif')
