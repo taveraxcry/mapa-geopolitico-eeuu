@@ -3832,7 +3832,7 @@ function showInfoPanel(name, info) {
   // New Schema Stats
   if (info.econ_importance) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.05s"><div class="panel-section-title">📊 Datos Clave</div>
-      <div class="panel-stat-row"><span class="panel-stat-label">Población</span><span class="panel-stat-value">${info.identity.pop}</span></div>
+      <div class="panel-stat-row"><span class="panel-stat-label">Población</span><span class="panel-stat-value">${info.population || '-'}</span></div>
       <div class="panel-stat-row"><span class="panel-stat-label">PIB</span><span class="panel-stat-value">${info.econ_importance.gdp}</span></div>
       <div class="panel-stat-row"><span class="panel-stat-label">PIB per cápita</span><span class="panel-stat-value">${info.econ_importance.gdp_pc}</span></div>
       <div class="panel-stat-row"><span class="panel-stat-label">Crecimiento</span><span class="panel-stat-value">${info.econ_importance.growth}</span></div>
@@ -3917,12 +3917,27 @@ function showInfoPanel(name, info) {
   if (info.conflicts && info.conflicts.length > 0) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.17s">
       <div class="panel-section-title">💥 Conflictos</div>
-      ${info.conflicts.map(c => `
-        <div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
-          <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${c.name} (${c.since})</div>
-          <div style="font-size:11px; color:var(--text-secondary);">${c.current}</div>
-        </div>
-      `).join('')}
+      ${info.conflicts.map(c => {
+        if (typeof c === 'string') {
+          const cd = (typeof CONFLICT_DB !== 'undefined' && CONFLICT_DB[c]) ? CONFLICT_DB[c] : null;
+          if (cd) {
+            return `<div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
+              <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${cd.name}</div>
+              <div style="font-size:11px; color:var(--text-secondary);">${cd.status} · ${cd.type}</div>
+            </div>`;
+          } else {
+            return `<div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
+              <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${c.replace(/_/g,' ')}</div>
+            </div>`;
+          }
+        } else if (c && typeof c === 'object') {
+          return `<div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
+            <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${c.name || ''} ${c.since ? '(' + c.since + ')' : ''}</div>
+            <div style="font-size:11px; color:var(--text-secondary);">${c.current || ''}</div>
+          </div>`;
+        }
+        return '';
+      }).join('')}
     </div>`;
   }
 
