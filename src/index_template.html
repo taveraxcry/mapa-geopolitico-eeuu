@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Atlas Geopolítico Digital Interactivo — Visualización de relaciones de poder en el sistema internacional">
 <title>Atlas Geopolítico Digital Interactivo</title>
+<!-- Montserrat vía Google Fonts, con font-display:swap para no bloquear el
+     render; si no hay conexión (uso offline), el navegador simplemente cae
+     al stack de fuentes del sistema definido en el CSS, sin romper nada. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ===== CSS RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,7 +59,7 @@
 /* Offline fonts and flags removed */
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-primary);
@@ -1445,7 +1451,7 @@ body {
 .panel-country-name { font-size: 24px; }
 .panel-capital { font-size: 14px; }
 .panel-section-title { font-size: 12.5px; }
-.panel-section-content { font-size: 14.5px; line-height: 1.65; }
+.panel-section-content { font-size: 15.5px; line-height: 1.7; }
 .panel-tag { font-size: 12.5px; }
 .panel-stat-row { font-size: 14px; }
 .compare-btn { font-size: 14px; }
@@ -6982,6 +6988,9 @@ let selectedZona = null;
 let selectedTerritorio = null;
 let countryPaths = {};
 let worldData = null;
+// Último nivel de zoom (k) para el que se recalculó el despeje visual de
+// marcadores (bases militares + puntos estratégicos). Ver declutterMarkers().
+let lastDeclutterK = 1;
 
 function initApp() {
   width = window.innerWidth;
@@ -7007,18 +7016,22 @@ function initApp() {
       g.attr('transform', event.transform);
       g.selectAll('.mesh-borders').attr('stroke-width', 1 / event.transform.k);
       g.selectAll('.country-path').attr('stroke-width', 1 / event.transform.k);
-      // Counter-scale strategic points to maintain their visual size
-      g.selectAll('.strategic-point').attr('transform', function() {
-        const cx = d3.select(this).attr('data-x');
-        const cy = d3.select(this).attr('data-y');
-        if (cx && cy) {
-          return `translate(${cx},${cy}) scale(${1 / event.transform.k})`;
-        }
-        return '';
-      });
+      // Reposiciona todos los marcadores (contra-escalado + offset de
+      // despeje ya calculado) en cada frame de zoom: es una operación
+      // barata (solo lectura de atributos + set de transform).
+      applyMarkerTransforms();
+      // El despeje visual depende del nivel de zoom (a más zoom, los
+      // marcadores reales se separan más en pantalla y pueden dejar de
+      // colisionar). Recalcularlo en cada frame sería innecesario: solo
+      // se recalcula cuando el zoom cambia de forma significativa
+      // (>15%), evitando cálculos pesados durante el gesto de zoom/pan.
+      if (Math.abs(event.transform.k - lastDeclutterK) / lastDeclutterK > 0.15) {
+        declutterMarkers();
+      }
       // Always keep strategic points on top
       g.selectAll('.strategic-locations').raise();
       g.selectAll('.territorios-markers').raise();
+      g.selectAll('.military-bases-layer').raise();
     });
 
   svg.call(zoom);
@@ -7123,6 +7136,102 @@ function renderCountries(data) {
     .attr('stroke', 'rgba(148, 163, 184, 0.25)')
     .attr('stroke-width', 0.6).style('pointer-events', 'none')
     .attr('d', path).attr('class', 'mesh-borders');
+}
+
+// ============================================================
+// DECLUTTER — separación visual de marcadores (bases militares +
+// puntos estratégicos) para evitar superposiciones en zonas densas
+// (Europa, Medio Oriente, Indo-Pacífico). NUNCA modifica coordenadas
+// geográficas reales: data-x/data-y siguen siendo la proyección real
+// de base.coords / strategicLocation.coords / territorio.coords. Solo
+// añade un pequeño desplazamiento visual adicional (data-offset-x/
+// data-offset-y) que applyMarkerTransforms() combina con la posición
+// real y el contra-escalado habitual del zoom.
+// ============================================================
+
+// Aplica en cada marcador su transform final: posición real (data-x/
+// data-y) + offset de despeje ya calculado + contra-escalado para
+// mantener el tamaño visual constante durante el zoom. Es la única
+// función que corre en CADA frame de zoom (operación barata).
+function applyMarkerTransforms() {
+  if (!g) return;
+  const k = d3.zoomTransform(svg.node()).k;
+  g.selectAll('.strategic-point, .military-base-point').attr('transform', function() {
+    const sel = d3.select(this);
+    const cx = parseFloat(sel.attr('data-x'));
+    const cy = parseFloat(sel.attr('data-y'));
+    if (Number.isNaN(cx) || Number.isNaN(cy)) return '';
+    const ox = parseFloat(sel.attr('data-offset-x')) || 0;
+    const oy = parseFloat(sel.attr('data-offset-y')) || 0;
+    return `translate(${cx + ox},${cy + oy}) scale(${1 / k})`;
+  });
+}
+
+// Recalcula los offsets de despeje. Se llama solo tras un render (nuevo
+// conjunto de marcadores) o cuando el zoom cambia de forma significativa
+// (ver el handler de 'zoom' en initApp) — nunca en cada frame — para no
+// generar coste de rendimiento durante el gesto de zoom/pan.
+function declutterMarkers() {
+  if (!g) return;
+  const k = d3.zoomTransform(svg.node()).k;
+  lastDeclutterK = k;
+
+  const nodes = g.selectAll('.strategic-point, .military-base-point').nodes();
+  const items = nodes.map(function(el) {
+    const sel = d3.select(el);
+    return {
+      el: el,
+      x: parseFloat(sel.attr('data-x')),
+      y: parseFloat(sel.attr('data-y')),
+      offX: 0,
+      offY: 0,
+      // Prioridad visual (punto 6 del pedido): las bases militares se
+      // desplazan MENOS que los puntos estratégicos cuando colisionan
+      // entre sí (resistencia más alta = se mueve menos).
+      resistance: el.classList.contains('military-base-point') ? 0.65 : 0.35
+    };
+  }).filter(it => !Number.isNaN(it.x) && !Number.isNaN(it.y));
+
+  // Distancia mínima deseada EN PANTALLA (px); se convierte al espacio
+  // de coordenadas "crudo" (previo al transform del grupo <g>) dividiendo
+  // por k, para que el resultado sea coherente en cualquier nivel de zoom.
+  const MIN_DIST_SCREEN = 30;
+  const MAX_OFFSET_SCREEN = 22;
+  const minDist = MIN_DIST_SCREEN / k;
+  const maxOffset = MAX_OFFSET_SCREEN / k;
+
+  for (let iter = 0; iter < 6; iter++) {
+    for (let i = 0; i < items.length; i++) {
+      for (let j = i + 1; j < items.length; j++) {
+        const a = items[i], b = items[j];
+        const ax = a.x + a.offX, ay = a.y + a.offY;
+        const bx = b.x + b.offX, by = b.y + b.offY;
+        let dx = bx - ax, dy = by - ay;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < minDist) {
+          if (dist < 0.001) { dx = (i % 2 === 0) ? 1 : -1; dy = 1; dist = Math.sqrt(dx * dx + dy * dy); }
+          const overlap = (minDist - dist) / 2;
+          const ux = dx / dist, uy = dy / dist;
+          const totalResistance = a.resistance + b.resistance;
+          const aShare = b.resistance / totalResistance;
+          const bShare = a.resistance / totalResistance;
+          a.offX -= ux * overlap * aShare;
+          a.offY -= uy * overlap * aShare;
+          b.offX += ux * overlap * bShare;
+          b.offY += uy * overlap * bShare;
+        }
+      }
+    }
+  }
+
+  items.forEach(function(it) {
+    let ox = it.offX, oy = it.offY;
+    const mag = Math.sqrt(ox * ox + oy * oy);
+    if (mag > maxOffset) { const s = maxOffset / mag; ox *= s; oy *= s; }
+    d3.select(it.el).attr('data-offset-x', ox).attr('data-offset-y', oy);
+  });
+
+  applyMarkerTransforms();
 }
 
 function renderStrategicLocations() {
@@ -7272,6 +7381,7 @@ function renderStrategicLocations() {
 
   // Ensure strategic points render ABOVE country layers
   locations.raise();
+  declutterMarkers();
 }
 
 // Marcadores de Territorios Estratégicos (territorios de EE. UU., posiciones
@@ -7405,6 +7515,7 @@ function renderTerritoriosMarkers() {
   });
 
   group.raise();
+  declutterMarkers();
 }
 
 function hideTerritoriosMarkers() {
@@ -10102,6 +10213,7 @@ function renderMilitaryBases() {
   });
 
   basesLayer.raise();
+  declutterMarkers();
 }
 
 function hideMilitaryBases() {
@@ -10190,9 +10302,14 @@ function zoomToContinent(continent) {
   const [cx, cy] = projection(view.center);
   const scale = view.scale;
 
+  // Cancela cualquier transición de zoom en curso antes de iniciar una
+  // nueva: evita que al pulsar varios continentes rápido se acumulen
+  // transiciones en cola y la respuesta se sienta pesada/retrasada.
+  svg.interrupt();
+
   svg.transition()
-    .duration(1000)
-    .ease(d3.easeCubicInOut)
+    .duration(600)
+    .ease(d3.easeCubicOut)
     .call(zoom.transform,
       d3.zoomIdentity
         .translate(width / 2, height / 2)
