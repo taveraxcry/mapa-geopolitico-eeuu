@@ -54,6 +54,10 @@
   --transition-fast: 220ms cubic-bezier(0.22, 1, 0.36, 1);
   --transition-normal: 320ms cubic-bezier(0.22, 1, 0.36, 1);
   --transition-slow: 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Ancho de los 4 menús laterales (Organizaciones/Bloques/Zonas/
+     Territorios); usado para desplazar #map-legend cuando alguno está
+     abierto, ver "body.side-menu-open #map-legend" más abajo. */
+  --side-menu-width: 280px;
 }
 
 /* Offline fonts and flags removed */
@@ -1610,6 +1614,17 @@ body {
 #territorios-menu::-webkit-scrollbar-thumb:hover {
   background: rgba(255,255,255,0.22);
 }
+
+/* ================================================================
+   #map-legend: al abrir uno de los 4 menús laterales (Organizaciones/
+   Bloques/Zonas/Territorios), la leyenda inferior se desplaza a la
+   derecha del menú en vez de quedar oculta debajo de él. La clase
+   "side-menu-open" la controla syncSideMenuLayout() (solo en
+   desktop/tablet; en móvil no se agrega y la leyenda conserva su
+   left:10px/bottom:10px habitual).
+   ================================================================ */
+#map-legend { transition: left 300ms ease; }
+body.side-menu-open #map-legend { left: calc(var(--side-menu-width) + 20px); }
 </style>
 </head>
 <body>
@@ -8829,21 +8844,31 @@ const LAYOUT_MAP_GAP = 120;       // aire mínimo reservado para el mapa
 
 function syncSideMenuLayout() {
   const panel = document.getElementById('info-panel');
-  if (!panel) return;
-
-  if (window.innerWidth <= 768) {
-    // El layout mobile (bottom sheet) se gestiona íntegramente por el
-    // CSS existente; se limpia cualquier ancho inline que pudiera haber
-    // quedado de una sesión desktop antes de redimensionar la ventana.
-    panel.style.width = '';
-    panel.style.maxWidth = '';
-    return;
-  }
 
   const anyMenuOpen = SIDE_MENU_IDS.some(function(id) {
     const el = document.getElementById(id);
     return el && el.classList.contains('open');
   });
+
+  if (window.innerWidth <= 768) {
+    // El layout mobile (bottom sheet + leyenda en su posición fija) se
+    // gestiona íntegramente por el CSS existente; se limpia cualquier
+    // ancho/clase que pudiera haber quedado de una sesión desktop antes
+    // de redimensionar la ventana.
+    if (panel) { panel.style.width = ''; panel.style.maxWidth = ''; }
+    document.body.classList.remove('side-menu-open');
+    return;
+  }
+
+  // #map-legend (barra/leyenda inferior) se desplaza a la derecha del
+  // menú lateral mediante esta clase en <body> + la regla CSS
+  // "body.side-menu-open #map-legend", solo cuando uno de los 4 menús
+  // (Organizaciones/Bloques/Zonas/Territorios) está realmente abierto;
+  // en el resto de categorías (Aliados, Rivales, etc.) nunca se agrega
+  // esta clase, porque esos no abren ninguno de estos 4 menús.
+  document.body.classList.toggle('side-menu-open', anyMenuOpen);
+
+  if (!panel) return;
 
   if (!anyMenuOpen) {
     panel.style.width = '';
