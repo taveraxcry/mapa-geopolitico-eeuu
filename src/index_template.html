@@ -1000,9 +1000,9 @@ body {
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   }
   #info-panel.open { bottom: 0; right: auto; }
-  #map-legend { bottom: 10px; left: 10px; font-size: 11px; padding: 10px 14px; }
+  #map-legend { bottom: 10px; left: 10px; font-size: 12.5px; padding: 10px 14px; }
   #continent-nav { top: 58px; gap: 2px; padding: 3px; }
-  .cont-btn { padding: 4px 10px; font-size: 10px; }
+  .cont-btn { padding: 4px 10px; font-size: 12.5px; }
   .comparator-body { grid-template-columns: 1fr; }
   .comparator-col:first-child { border-right: none; border-bottom: 1px solid var(--border-glass); }
 }
@@ -1049,7 +1049,7 @@ body {
     width: 100%;
   }
   #categories::-webkit-scrollbar { display: none; }
-  .cat-pill { white-space: nowrap; flex-shrink: 0; font-size: 11px; padding: 6px 12px; }
+  .cat-pill { white-space: nowrap; flex-shrink: 0; font-size: 12.5px; padding: 6px 12px; }
 
   /* Horizontal Continents */
   #continent-nav {
@@ -1065,7 +1065,7 @@ body {
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   #continent-nav::-webkit-scrollbar { display: none; }
-  .cont-btn { white-space: nowrap; flex-shrink: 0; padding: 6px 12px !important; font-size: 11px !important; }
+  .cont-btn { white-space: nowrap; flex-shrink: 0; padding: 6px 12px !important; font-size: 12.5px !important; }
 
   /* Bottom Sheet Info Panel */
   #info-panel {
@@ -1104,7 +1104,7 @@ body {
     padding-bottom: env(safe-area-inset-bottom, 20px);
   }
 
-  #map-legend { bottom: 10px !important; left: 10px !important; font-size: 11px !important; padding: 10px !important; z-index: 900; }
+  #map-legend { bottom: 10px !important; left: 10px !important; font-size: 12.5px !important; padding: 10px !important; z-index: 900; }
   
   #controls {
     top: auto !important;
@@ -1412,6 +1412,63 @@ body {
 .strategic-point circle[stroke="#dc2626"],
 .strategic-point circle[stroke="#be123c"] {
   animation: strategicPulse 2.8s ease-in-out infinite;
+}
+
+/* ================================================================
+   TERCERA PASADA — SISTEMA TIPOGRÁFICO GLOBAL (solo CSS)
+   Escala coherente para toda la interfaz (buscador, categorías,
+   navegación continental, menús laterales, paneles, leyenda, tooltip,
+   comparador). No cambia contenido, IDs, data-*, onclick ni lógica;
+   solo redefine font-size (y algún letter-spacing/line-height) sobre
+   selectores ya existentes, más los overrides móviles necesarios para
+   que la escala más grande siga sin producir overflow.
+   ================================================================ */
+
+/* Buscador: 14px input/resultados, 11.5px etiqueta de relación */
+#search-input { font-size: 14px; }
+.search-result-item { font-size: 14px; }
+.search-result-item .relation-tag { font-size: 11.5px; }
+
+/* Categorías superiores y navegación continental: 13px */
+.cat-pill { font-size: 13px; }
+.cont-btn { font-size: 13px; }
+
+/* Menús laterales: título 17px, grupos 11.5px, elementos 14.5px,
+   descripciones 12.5px — mismo lenguaje en los 4 menús */
+.org-menu-header { font-size: 17px; }
+.org-group-title { font-size: 11.5px; }
+.org-item, .bloque-item, .zona-item, .territorio-item { font-size: 14.5px; }
+.territorio-item-desc { font-size: 12.5px; }
+
+/* Paneles de información: nombre 24px, subtítulo 14px, título de
+   sección 12.5px, contenido 14.5px, tags 12.5px, estadísticas 14px */
+.panel-country-name { font-size: 24px; }
+.panel-capital { font-size: 14px; }
+.panel-section-title { font-size: 12.5px; }
+.panel-section-content { font-size: 14.5px; line-height: 1.65; }
+.panel-tag { font-size: 12.5px; }
+.panel-stat-row { font-size: 14px; }
+.compare-btn { font-size: 14px; }
+
+/* Leyenda: título 11.5px, elementos 13.5px (heredado desde el
+   contenedor, cubre .legend-item y .legend-label) */
+#map-legend { font-size: 13.5px; }
+.legend-title { font-size: 11.5px; }
+
+/* Tooltip: nombre 15px, badge de relación 12px */
+#tooltip .tt-name { font-size: 15px; }
+#tooltip .tt-relation { font-size: 12px; }
+
+/* Comparador: título 18px, nombres 17.5px, relación 12.5px, stats ya en 14px */
+.comparator-title { font-size: 18px; }
+.comparator-col .comp-name { font-size: 17.5px; }
+.comparator-col .comp-relation { font-size: 12.5px; }
+
+/* País seleccionado: destaque elegante (stroke + iluminación sutil) ya
+   que las líneas de conexión se retiraron; la relación con otros países
+   sigue estando en el panel, no en el mapa. */
+.country-path.selected {
+  filter: drop-shadow(0 0 6px rgba(6,182,212,0.5));
 }
 </style>
 </head>
@@ -7180,10 +7237,13 @@ function renderStrategicLocations() {
     group.append('text')
       .attr('text-anchor', 'middle')
       .attr('y', 22)
-      .attr('font-size', '8px')
+      .attr('font-size', '11px')
       .attr('fill', loc.risk_color || '#a78bfa')
       .attr('font-weight', '700')
-      .attr('font-family', 'Inter, sans-serif')
+      .attr('font-family', 'inherit')
+      .attr('stroke', 'rgba(2,6,16,0.85)')
+      .attr('stroke-width', '2.5px')
+      .attr('paint-order', 'stroke fill')
       .style('pointer-events', 'none')
       .style('text-shadow', '0 1px 3px rgba(0,0,0,0.9)')
       .text(loc.name_short || loc.name);
@@ -7312,10 +7372,13 @@ function renderTerritoriosMarkers() {
     pointGroup.append('text')
       .attr('text-anchor', 'middle')
       .attr('y', 22)
-      .attr('font-size', '8px')
+      .attr('font-size', '11px')
       .attr('fill', categoryColor)
       .attr('font-weight', '700')
-      .attr('font-family', 'Inter, sans-serif')
+      .attr('font-family', 'inherit')
+      .attr('stroke', 'rgba(2,6,16,0.85)')
+      .attr('stroke-width', '2.5px')
+      .attr('paint-order', 'stroke fill')
       .style('pointer-events', 'none')
       .style('text-shadow', '0 1px 3px rgba(0,0,0,0.9)')
       .text(t.name);
@@ -7435,7 +7498,7 @@ function showStrategicPanel(loc) {
 
   // Fuentes y actualización
   html += `<div class="panel-section animate-in" style="animation-delay:0.11s;">
-    <div class="panel-section-content" style="font-size:0.78rem; color:#64748b; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+    <div class="panel-section-content" style="font-size:13px; color:#64748b; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
       🗓️ <strong>Actualizado:</strong> ${loc.updated || '9 Sep 2026'} &nbsp;|&nbsp; 
       📰 <strong>Fuentes:</strong> ${loc.sources || 'Fuentes oficiales y académicas'}
     </div>
@@ -7543,7 +7606,7 @@ function showTerritorioPanel(entry) {
 
   if (entry.sources && entry.sources.length > 0) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.18s">
-      <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>🔗 Fuentes:</strong> ${entry.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+      <div class="panel-section-content" style="font-size:13px; color:#94a3b8;"><strong>🔗 Fuentes:</strong> ${entry.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
     </div>`;
   }
   if (entry.updated) {
@@ -7848,7 +7911,7 @@ function showInfoPanel(name, info) {
         <div class="panel-section-content">${ap.hechos_recientes}</div>
       </div>
       <div class="panel-section animate-in" style="animation-delay:0.22s">
-        <div class="panel-section-content" style="font-size:0.78rem;color:#64748b;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
+        <div class="panel-section-content" style="font-size:13px;color:#64748b;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
           🗓️ <strong>Actualizado:</strong> ${ap.updated} &nbsp;|&nbsp;
           📰 <strong>Fuentes:</strong> ${ap.fuentes}
         </div>
@@ -7929,7 +7992,7 @@ function showInfoPanel(name, info) {
         <div class="panel-section-content">${as.hechos_recientes}</div>
       </div>
       <div class="panel-section animate-in" style="animation-delay:0.22s">
-        <div class="panel-section-content" style="font-size:0.78rem;color:#64748b;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
+        <div class="panel-section-content" style="font-size:13px;color:#64748b;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
           🗓️ <strong>Actualizado:</strong> ${as.updated} &nbsp;|&nbsp;
           📰 <strong>Fuentes:</strong> ${as.fuentes}
         </div>
@@ -8022,7 +8085,7 @@ function showInfoPanel(name, info) {
     const borderColor = classColors[info.rival_class] || '#dc2626';
     html += `<div class="panel-section animate-in" style="border-left:3px solid ${borderColor};padding-left:10px;">
       <div class="panel-section-title" style="color:${borderColor};text-transform:uppercase;">⚔️ ¿Por qué es rival de EE. UU.?</div>
-      <div style="font-size:0.78rem;font-weight:600;color:#94a3b8;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase;">${classLabel}</div>
+      <div style="font-size:12.5px;font-weight:600;color:#94a3b8;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase;">${classLabel}</div>
       <div class="panel-section-content">${info.rival_why}</div>
     </div>`;
 
@@ -8074,7 +8137,7 @@ function showInfoPanel(name, info) {
         html += `</div>`;
       }
       if (info.actualidad.sources && info.actualidad.sources.length > 0) {
-        html += `<div style="margin-top:12px; font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
+        html += `<div style="margin-top:12px; font-size:13px; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
       }
       html += `</div></div>`;
     }
@@ -8112,7 +8175,7 @@ function showInfoPanel(name, info) {
       html += `</div>`;
     }
     if (info.actualidad.sources && info.actualidad.sources.length > 0) {
-      html += `<div style="margin-top:12px; font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
+      html += `<div style="margin-top:12px; font-size:13px; color:#94a3b8;"><strong>Fuentes:</strong> ${info.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>`;
     }
     html += `</div></div>`;
   }
@@ -8211,18 +8274,18 @@ function showInfoPanel(name, info) {
           const cd = (typeof CONFLICT_DB !== 'undefined' && CONFLICT_DB[c]) ? CONFLICT_DB[c] : null;
           if (cd) {
             return `<div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
-              <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${cd.name}</div>
-              <div style="font-size:11px; color:var(--text-secondary);">${cd.status} · ${cd.type}</div>
+              <div style="font-weight:600; font-size:13px; color:var(--text-primary); margin-bottom:4px;">${cd.name}</div>
+              <div style="font-size:12px; color:var(--text-secondary);">${cd.status} · ${cd.type}</div>
             </div>`;
           } else {
             return `<div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
-              <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${c.replace(/_/g,' ')}</div>
+              <div style="font-weight:600; font-size:13px; color:var(--text-primary); margin-bottom:4px;">${c.replace(/_/g,' ')}</div>
             </div>`;
           }
         } else if (c && typeof c === 'object') {
           return `<div style="margin-bottom:8px; padding:8px; background:rgba(255,255,255,0.05); border-radius:6px; border-left: 2px solid var(--accent-rose)">
-            <div style="font-weight:600; font-size:12px; color:var(--text-primary); margin-bottom:4px;">${c.name || ''} ${c.since ? '(' + c.since + ')' : ''}</div>
-            <div style="font-size:11px; color:var(--text-secondary);">${c.current || ''}</div>
+            <div style="font-weight:600; font-size:13px; color:var(--text-primary); margin-bottom:4px;">${c.name || ''} ${c.since ? '(' + c.since + ')' : ''}</div>
+            <div style="font-size:12px; color:var(--text-secondary);">${c.current || ''}</div>
           </div>`;
         }
         return '';
@@ -8240,7 +8303,7 @@ function showInfoPanel(name, info) {
   if ((info.technology && !rivalPriorityRendered) || info.minerals || info.energy) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.19s">
       <div class="panel-section-title">⚡ Recursos y Tecnología</div>
-      <div class="panel-section-content" style="font-size:12px; opacity:0.9;">
+      <div class="panel-section-content" style="font-size:13px; opacity:0.9;">
         ${(info.technology && !rivalPriorityRendered) ? `<b>Tecnología:</b> ${info.technology}<br><br>` : ''}
         ${info.energy ? `<b>Energía:</b> ${info.energy}<br><br>` : ''}
         ${info.minerals ? `<b>Minerales Críticos:</b> ${info.minerals}` : ''}
@@ -8301,42 +8364,13 @@ function selectCountryByName(name) {
 // ============================================================
 
 function showConnections(name, info) {
+  // Las líneas curvas de conexión entre países se desactivaron a pedido:
+  // el país seleccionado ya se destaca en el mapa y la información
+  // relacional (aliados, etc.) vive en el panel lateral. Se conserva la
+  // función tal cual la llama handleClick/closePanel para no tocar el
+  // resto de la lógica de selección; solo se limpia cualquier capa de
+  // conexiones antigua que pudiera quedar, sin dibujar nada nuevo.
   removeConnections();
-
-  if (!info.allies || info.allies.length === 0) return;
-
-  const connGroup = g.append('g').attr('class', 'connections-layer');
-
-  const sourceEl = countryPaths[name];
-  if (!sourceEl) return;
-  const sourceBounds = path.bounds(d3.select(sourceEl).datum());
-  const sx = (sourceBounds[0][0] + sourceBounds[1][0]) / 2;
-  const sy = (sourceBounds[0][1] + sourceBounds[1][1]) / 2;
-
-  info.allies.forEach(ally => {
-    const allyName = typeof ally === 'string' ? ally : ally.country;
-    const allyEl = countryPaths[allyName];
-    if (!allyEl) return;
-    const allyBounds = path.bounds(d3.select(allyEl).datum());
-    const tx = (allyBounds[0][0] + allyBounds[1][0]) / 2;
-    const ty = (allyBounds[0][1] + allyBounds[1][1]) / 2;
-
-    const allyInfo = GEO_DB.countries[allyName];
-    const color = allyInfo ? getRelationColorHex(allyInfo.relation_es || allyInfo.relation) : '#64748b';
-
-    // Curved line
-    const midX = (sx + tx) / 2;
-    const midY = (sy + ty) / 2 - Math.abs(tx - sx) * 0.15;
-
-    connGroup.append('path')
-      .attr('class', 'connection-line')
-      .attr('d', `M${sx},${sy} Q${midX},${midY} ${tx},${ty}`)
-      .attr('stroke', color)
-      .attr('opacity', 0)
-      .transition()
-      .duration(500)
-      .attr('opacity', 0.5);
-  });
 }
 
 function removeConnections() {
@@ -8689,7 +8723,7 @@ function showOrgPanel(orgId) {
     <div class="panel-section animate-in" style="animation-delay:0.1s">
       <div class="panel-section-title" style="text-transform:uppercase;">Estados miembros / participantes</div>
       <div class="panel-section-content">${hasCartographicGap
-        ? `${officialCount} Estados miembros oficiales<br><span style="font-size:12px;color:#94a3b8;">${mappedCount} representados cartográficamente en este mapa</span>`
+        ? `${officialCount} Estados miembros oficiales<br><span style="font-size:13px;color:#94a3b8;">${mappedCount} representados cartográficamente en este mapa</span>`
         : (officialCount !== null ? officialCount : '—')}</div>
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.12s;border-left:3px solid ${color};padding-left:10px;">
@@ -8714,11 +8748,11 @@ function showOrgPanel(orgId) {
     </div>${org.partners_note ? `
     <div class="panel-section animate-in" style="animation-delay:0.17s">
       <div class="panel-section-title" style="text-transform:uppercase;">Miembros vs. socios</div>
-      <div class="panel-section-content" style="font-size:12px;">${org.partners_note}</div>
+      <div class="panel-section-content" style="font-size:13px;">${org.partners_note}</div>
     </div>` : ''}${org.institutional_participants && org.institutional_participants.length > 0 ? `
     <div class="panel-section animate-in" style="animation-delay:0.17s">
       <div class="panel-section-title" style="text-transform:uppercase;">Participantes institucionales (no son Estados)</div>
-      <div class="panel-section-content" style="font-size:12px;">
+      <div class="panel-section-content" style="font-size:13px;">
         ${org.institutional_participants.map(p => `<p style="margin-bottom:6px;"><strong>${p.name}:</strong> ${p.note}</p>`).join('')}
       </div>
     </div>` : ''}${org.institutions && org.institutions.length > 0 ? `
@@ -8728,7 +8762,7 @@ function showOrgPanel(orgId) {
     </div>` : ''}${org.leadership_note ? `
     <div class="panel-section animate-in" style="animation-delay:0.17s">
       <div class="panel-section-title" style="text-transform:uppercase;">Liderazgo actual</div>
-      <div class="panel-section-content" style="font-size:12px;">${org.leadership_note}</div>
+      <div class="panel-section-content" style="font-size:13px;">${org.leadership_note}</div>
     </div>` : ''}`;
 
   if (org.actualidad) {
@@ -8747,7 +8781,7 @@ function showOrgPanel(orgId) {
     </div>`;
     if (org.actualidad.sources && org.actualidad.sources.length > 0) {
       html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
-        <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${org.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+        <div class="panel-section-content" style="font-size:13px; color:#94a3b8;"><strong>Fuentes:</strong> ${org.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
       </div>`;
     }
   }
@@ -9000,7 +9034,7 @@ function showBloquePanel(bloqueId) {
     <div class="panel-section animate-in" style="animation-delay:0.08s">
       <div class="panel-section-title" style="text-transform:uppercase;">${bloque.legend_label ? bloque.legend_label + 's' : 'Estados miembros'}</div>
       <div class="panel-section-content">${hasCartographicGap
-        ? `${officialCount} ${bloque.legend_label || 'Estados miembro'}s<br><span style="font-size:12px;color:#94a3b8;">${mappedCount} representados cartográficamente en este mapa</span>`
+        ? `${officialCount} ${bloque.legend_label || 'Estados miembro'}s<br><span style="font-size:13px;color:#94a3b8;">${mappedCount} representados cartográficamente en este mapa</span>`
         : (officialCount !== null ? officialCount : '—')}</div>
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.1s;border-left:3px solid ${color};padding-left:10px;">
@@ -9052,7 +9086,7 @@ function showBloquePanel(bloqueId) {
     </div>`;
     if (bloque.actualidad.sources && bloque.actualidad.sources.length > 0) {
       html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
-        <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${bloque.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+        <div class="panel-section-content" style="font-size:13px; color:#94a3b8;"><strong>Fuentes:</strong> ${bloque.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
       </div>`;
     }
   }
@@ -9296,7 +9330,7 @@ function showZonaPanel(zonaId) {
 
   if (zona.sources && zona.sources.length > 0) {
     html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
-      <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${zona.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+      <div class="panel-section-content" style="font-size:13px; color:#94a3b8;"><strong>Fuentes:</strong> ${zona.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
     </div>`;
   }
   if (zona.updated) {
@@ -9596,7 +9630,7 @@ function updateLegend(cat) {
         <div class="legend-title">Potencias regionales</div>
         <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Potencia global con predominio regional</div>
         <div class="legend-item"><div class="legend-dot" style="background:#eab308"></div>Potencia regional principal</div>
-        <div style="font-size:10px; color:var(--text-secondary); margin-top:8px; line-height:1.3; opacity:0.8;">
+        <div style="font-size:11px; color:var(--text-secondary); margin-top:8px; line-height:1.3; opacity:0.8;">
           *Nota metodológica: Se identifica a una potencia regional por su capacidad sostenida de ejercer influencia sobre su entorno mediante una combinación de economía, defensa, diplomacia, geografía, tecnología y recursos estratégicos. No todos los Estados ostentan el mismo tipo de poder (diferenciando influencia regional y alcance global).
         </div>
       `;
@@ -9608,7 +9642,7 @@ function updateLegend(cat) {
         html = `
           <div class="legend-title">${org.icon || ''} ${org.acronym || org.name}</div>
           <div class="legend-item"><div class="legend-dot" style="background:${org.color}"></div>${org.legend_label || 'País participante'} (${count})</div>
-          ${org.legend_note ? `<div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${org.legend_note}</div>` : ''}
+          ${org.legend_note ? `<div style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${org.legend_note}</div>` : ''}
         `;
       } else {
         html = `
@@ -9630,7 +9664,7 @@ function updateLegend(cat) {
           <div class="legend-title">${bloque.icon || '💰'} ${bloque.acronym || bloque.name}</div>
           <div class="legend-item"><div class="legend-dot" style="background:${bloque.color}"></div>${bloque.legend_label || 'Miembro'} (${count})</div>
           ${extra}
-          ${bloque.legend_note ? `<div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${bloque.legend_note}</div>` : ''}
+          ${bloque.legend_note ? `<div style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${bloque.legend_note}</div>` : ''}
         `;
       } else {
         html = `
@@ -9654,7 +9688,7 @@ function updateLegend(cat) {
               <div class="legend-item"><div class="legend-dot" style="background:#A3E635"></div>Socio regional</div>
               <div class="legend-item"><div class="legend-dot" style="background:#D9F99D"></div>Cooperación puntual</div>
               <div class="legend-item"><div class="legend-dot" style="background:#166534;font-size:9px;line-height:16px;text-align:center">🛡️</div>Instalación militar</div>
-              <div style="font-size:9px;color:#64748b;margin-top:4px;line-height:1.3">*Clic en países o marcadores para detalles</div>`;
+              <div style="font-size:10px;color:#64748b;margin-top:4px;line-height:1.3">*Clic en países o marcadores para detalles</div>`;
       break;
     case 'rivales':
       html = `<div class="legend-title">Rivales & Adversarios</div>
@@ -9672,7 +9706,7 @@ function updateLegend(cat) {
           <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.significativa}"></div>${ZONA_LEVEL_LABELS.significativa}</div>
           <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.compartida}"></div>${ZONA_LEVEL_LABELS.compartida}</div>
           <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.limitada}"></div>${ZONA_LEVEL_LABELS.limitada}</div>
-          <div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${zona.level}</div>
+          <div style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${zona.level}</div>
         `;
       } else {
         html = `
@@ -9720,7 +9754,7 @@ function updateLegend(cat) {
           <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.espacios_polares}"></div>🧭 Espacio polar / ártico</div>
           <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.nodos_maritimos}"></div>⚓ Nodo marítimo estratégico</div>
           <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.espacios_maritimos}"></div>🌐 Espacio marítimo estratégico</div>
-          <div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">Selecciona una categoría en el menú lateral para explorarla en detalle.</div>
+          <div style="font-size:11px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">Selecciona una categoría en el menú lateral para explorarla en detalle.</div>
         `;
       }
       break;
@@ -10035,10 +10069,13 @@ function renderMilitaryBases() {
     group.append('text')
       .attr('text-anchor', 'middle')
       .attr('y', 26)
-      .attr('font-size', '8.5px')
+      .attr('font-size', '10.5px')
       .attr('fill', '#4ade80')
       .attr('font-weight', '700')
-      .attr('font-family', 'Inter, system-ui, sans-serif')
+      .attr('font-family', 'inherit')
+      .attr('stroke', 'rgba(2,6,16,0.85)')
+      .attr('stroke-width', '2px')
+      .attr('paint-order', 'stroke fill')
       .style('pointer-events', 'none')
       .style('text-shadow', '0 1px 3px rgba(0,0,0,0.95)')
       .text(base.name_short || base.name.substring(0, 12));
@@ -10112,7 +10149,7 @@ function showMilitaryBasePanel(base) {
       <div class="panel-section-content">${base.current_status}</div>
     </div>
     <div class="panel-section animate-in" style="animation-delay:0.10s;">
-      <div class="panel-section-content" style="font-size:0.78rem;color:#64748b;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
+      <div class="panel-section-content" style="font-size:13px;color:#64748b;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
         🗓️ <strong>Establecida:</strong> ${base.established} &nbsp;|&nbsp;
         📰 <strong>Fuente:</strong> ${base.source}
       </div>
