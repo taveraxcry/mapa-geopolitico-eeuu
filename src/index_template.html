@@ -436,6 +436,52 @@ body {
   font-weight: 600;
 }
 
+/* ===== TERRITORIOS ESTRATÉGICOS — MENÚ LATERAL (reutiliza el diseño de #org-menu) ===== */
+#territorios-menu {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 56px);
+  background: rgba(10, 14, 26, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border-glass);
+  z-index: 850;
+  transform: translateX(-300px);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+#territorios-menu.open { transform: translateX(0); }
+
+#territorios-menu::-webkit-scrollbar { width: 5px; }
+#territorios-menu::-webkit-scrollbar-track { background: transparent; }
+#territorios-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+.territorio-item {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+
+.territorio-item:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+.territorio-item.active {
+  background: rgba(8, 145, 178, 0.18);
+  color: #22d3ee;
+  border-color: rgba(8, 145, 178, 0.4);
+  font-weight: 600;
+}
+
 /* ===== MAP CONTAINER ===== */
 #map-container {
   position: fixed;
@@ -1101,6 +1147,24 @@ body {
     z-index: 2000;
   }
   #zonas-menu.open { transform: translateY(0); left: 0 !important; }
+
+  #territorios-menu {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 60dvh !important;
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.3, 1, 0.3, 1);
+    border-right: none !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 2000;
+  }
+  #territorios-menu.open { transform: translateY(0); left: 0 !important; }
 }
 </style>
 </head>
@@ -1222,6 +1286,24 @@ body {
       <div class="zona-item" data-zona="medio_oriente">🕌 Medio Oriente</div>
       <div class="zona-item" data-zona="africa">🌍 África</div>
       <div class="zona-item" data-zona="artico">🧊 Ártico</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Territorios Estratégicos Side Menu -->
+<aside id="territorios-menu">
+  <div class="org-menu-header">
+    <span>⚓ TERRITORIOS ESTRATÉGICOS</span>
+    <button class="org-menu-close" onclick="closeTerritoriosMenu()" title="Cerrar" aria-label="Cerrar menú de territorios estratégicos">✕</button>
+  </div>
+  <div class="org-menu-body">
+    <div class="org-group">
+      <div class="org-group-title">Categorías de espacios estratégicos</div>
+      <div class="territorio-item" data-territorio="us_territories">🇺🇸 Territorios estadounidenses</div>
+      <div class="territorio-item" data-territorio="chokepoints">🚢 Chokepoints marítimos</div>
+      <div class="territorio-item" data-territorio="canales_corredores">🌊 Canales y corredores</div>
+      <div class="territorio-item" data-territorio="posiciones_insulares">🏝️ Posiciones insulares estratégicas</div>
+      <div class="territorio-item" data-territorio="espacios_polares">🧭 Espacios polares / árticos</div>
     </div>
   </div>
 </aside>
@@ -6177,6 +6259,160 @@ const ZONAS_INFLUENCIA_DB = {
   }
 };
 
+// Territorios Estratégicos NO duplica GEO_DB.strategicLocations (estrechos y
+// canales existentes, tipo "strait"/"canal"): esta base solo cubre los
+// espacios que strategicLocations no representa (territorios de EE. UU.,
+// posiciones insulares y espacios polares). Cada entrada indica en qué
+// categorías del menú lateral debe aparecer.
+const TERRITORIOS_ESTRATEGICOS_DB = {
+  "alaska": {
+    id: "alaska",
+    name: "Alaska",
+    icon: "🇺🇸",
+    category: "Estado de EE. UU.",
+    type: "us_territory",
+    categories: ["us_territories", "espacios_polares"],
+    coords: [-152, 64],
+    importance: "Posición geoestratégica única de EE. UU. en el Ártico y el Pacífico Norte, con la frontera más cercana a Rusia (Estrecho de Bering) y un papel central en la defensa aeroespacial norteamericana.",
+    strategic_reason: "Alberga instalaciones clave de alerta temprana de misiles (Clear Space Force Station) y bases aéreas de combate (Eielson y Elmendorf-Richardson), y es el punto de defensa más cercano de EE. UU. frente a Rusia a través del Estrecho de Bering.",
+    relation_to_us: "Es un Estado de EE. UU. desde 1959; su defensa está integrada en el mando conjunto NORTHCOM/NORAD junto con Canadá.",
+    current_status: "Continúa siendo prioritario en la Estrategia Ártica del Departamento de Defensa como pilar de la defensa del territorio continental y la vigilancia frente a la actividad naval y aérea rusa y china en el Ártico.",
+    sources: [
+      { name: "U.S. Northern Command (NORTHCOM)", url: "https://www.northcom.mil/" },
+      { name: "U.S. Arctic Research Commission", url: "https://www.arctic.gov/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "hawaii": {
+    id: "hawaii",
+    name: "Hawái",
+    icon: "🌺",
+    category: "Estado de EE. UU.",
+    type: "us_territory",
+    categories: ["us_territories", "posiciones_insulares"],
+    coords: [-157.5, 20.5],
+    importance: "Posición central en el Pacífico que sirve de plataforma de proyección de poder naval y aérea de EE. UU. hacia el Indo-Pacífico.",
+    strategic_reason: "Sede de Pearl Harbor-Hickam y del Mando Indo-Pacífico de EE. UU. (USINDOPACOM), el mando combatiente responsable de toda la región del Indo-Pacífico.",
+    relation_to_us: "Es un Estado de EE. UU. desde 1959; su posición geográfica lo convierte en el centro logístico y de mando de la estrategia estadounidense en el Indo-Pacífico.",
+    current_status: "Continúa siendo la sede permanente de USINDOPACOM, el mando combatiente de mayor área de responsabilidad de EE. UU.",
+    sources: [
+      { name: "U.S. Indo-Pacific Command (USINDOPACOM)", url: "https://www.pacom.mil/" },
+      { name: "U.S. Department of Defense", url: "https://www.defense.gov/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "puerto_rico": {
+    id: "puerto_rico",
+    name: "Puerto Rico",
+    icon: "🇵🇷",
+    category: "Territorio no incorporado de EE. UU.",
+    type: "us_territory",
+    categories: ["us_territories", "posiciones_insulares"],
+    coords: [-66.5, 18.2],
+    polygon_name: "Puerto Rico",
+    importance: "Posición estratégica en el Caribe que vigila las rutas de acceso al Canal de Panamá y al Atlántico occidental.",
+    strategic_reason: "Aloja instalaciones de la Guardia Costera de EE. UU. y ha sido históricamente relevante para el control de las rutas marítimas del Caribe hacia el Canal de Panamá.",
+    relation_to_us: "Territorio no incorporado de EE. UU. desde 1898; sus residentes son ciudadanos estadounidenses pero no votan en elecciones presidenciales.",
+    current_status: "El estatus político de Puerto Rico (estadidad, independencia o continuidad del status quo) sigue siendo objeto de debate en el Congreso de EE. UU.",
+    sources: [
+      { name: "U.S. Coast Guard", url: "https://www.uscg.mil/" },
+      { name: "U.S. Department of the Interior — Office of Insular Affairs", url: "https://www.doi.gov/oia" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "guam": {
+    id: "guam",
+    name: "Guam",
+    icon: "🏝️",
+    category: "Territorio no incorporado de EE. UU.",
+    type: "us_territory",
+    categories: ["us_territories", "posiciones_insulares"],
+    coords: [144.8, 13.4],
+    importance: "Territorio estadounidense más avanzado en el Pacífico occidental, a pocas horas de vuelo de Taiwán, China y Corea del Norte.",
+    strategic_reason: "Alberga la Base Aérea de Andersen y la Base Naval de Guam, pilares de la proyección de poder estadounidense en el Indo-Pacífico occidental y elemento clave de disuasión frente a China.",
+    relation_to_us: "Territorio no incorporado de EE. UU. desde 1898; sus residentes son ciudadanos estadounidenses.",
+    current_status: "El Departamento de Defensa continúa reforzando su presencia militar en Guam, incluido el desarrollo de un sistema integrado de defensa antimisiles para la isla.",
+    sources: [
+      { name: "U.S. Air Force", url: "https://www.af.mil/" },
+      { name: "U.S. Department of Defense", url: "https://www.defense.gov/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "marianas": {
+    id: "marianas",
+    name: "Islas Marianas del Norte",
+    icon: "🏝️",
+    category: "Mancomunidad de EE. UU.",
+    type: "us_territory",
+    categories: ["us_territories", "posiciones_insulares"],
+    coords: [145.75, 15.2],
+    importance: "Posición complementaria a Guam en el Pacífico occidental, utilizada para entrenamiento militar y dispersión de fuerzas.",
+    strategic_reason: "La isla de Tinián se ha convertido en un punto de interés del Pentágono para el desarrollo de infraestructura aérea adicional que reduzca la dependencia de una única base concentrada en Guam.",
+    relation_to_us: "Mancomunidad de EE. UU. en unión política desde 1986; sus residentes son ciudadanos estadounidenses.",
+    current_status: "El Cuerpo de Marines de EE. UU. desarrolla infraestructura de entrenamiento y aviación en Tinián como parte de la dispersión estratégica de fuerzas en el Pacífico.",
+    sources: [
+      { name: "U.S. Navy", url: "https://www.navy.mil/" },
+      { name: "U.S. Air Force", url: "https://www.af.mil/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "samoa_americana": {
+    id: "samoa_americana",
+    name: "Samoa Americana",
+    icon: "🏝️",
+    category: "Territorio no incorporado de EE. UU.",
+    type: "us_territory",
+    categories: ["us_territories", "posiciones_insulares"],
+    coords: [-170.7, -14.3],
+    importance: "Único territorio estadounidense en el Pacífico Sur, con relevancia para la vigilancia marítima y las relaciones con las naciones insulares del Pacífico.",
+    strategic_reason: "Su puerto en Pago Pago apoya operaciones de la Guardia Costera de EE. UU. en el Pacífico Sur, una región de creciente interés diplomático por la competencia con China por la influencia entre las naciones insulares del Pacífico.",
+    relation_to_us: "Territorio no incorporado de EE. UU. desde 1900; a diferencia de otros territorios, sus residentes son 'nacionales' estadounidenses, no ciudadanos por nacimiento automático.",
+    current_status: "EE. UU. ha intensificado su compromiso diplomático con las naciones insulares del Pacífico Sur en respuesta a la creciente actividad diplomática y económica de China en la región.",
+    sources: [
+      { name: "U.S. Coast Guard", url: "https://www.uscg.mil/" },
+      { name: "U.S. Department of the Interior — Office of Insular Affairs", url: "https://www.doi.gov/oia" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "groenlandia": {
+    id: "groenlandia",
+    name: "Groenlandia",
+    icon: "🇬🇱",
+    category: "Territorio autónomo del Reino de Dinamarca",
+    type: "polar",
+    categories: ["espacios_polares"],
+    coords: [-42, 72],
+    polygon_name: "Greenland",
+    importance: "Territorio ártico de mayor tamaño del mundo, con posición geoestratégica crítica para la vigilancia de misiles y el control de las rutas marítimas árticas emergentes. NO es territorio de EE. UU.",
+    strategic_reason: "Aloja la Base Espacial de Pituffik (antigua Base Aérea de Thule), instalación estadounidense clave para la alerta temprana de misiles balísticos y la vigilancia espacial, operada mediante acuerdo de defensa con Dinamarca.",
+    relation_to_us: "Groenlandia es un territorio autónomo dentro del Reino de Dinamarca, NO territorio de EE. UU. Washington mantiene la Base Espacial de Pituffik mediante un acuerdo de defensa bilateral con Dinamarca de 1951, actualizado en 2004.",
+    current_status: "Groenlandia sigue en el centro del interés estratégico estadounidense por su posición ártica, en un contexto de debate político sobre su futuro estatus dentro del Reino de Dinamarca y creciente atención internacional a sus recursos minerales.",
+    sources: [
+      { name: "Ministry of Foreign Affairs of Denmark", url: "https://um.dk/en" },
+      { name: "Government of Greenland — Naalakkersuisut", url: "https://naalakkersuisut.gl/en/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "artico_estrategico": {
+    id: "artico_estrategico",
+    name: "Ártico",
+    icon: "🧊",
+    category: "Espacio estratégico polar (el océano Ártico central es aguas internacionales)",
+    type: "polar",
+    categories: ["espacios_polares"],
+    coords: [10, 80],
+    importance: "El deshielo ártico abre nuevas rutas marítimas (Paso del Noroeste, Ruta Marítima del Norte) y facilita el acceso a recursos energéticos y minerales, intensificando la competencia estratégica entre EE. UU., Rusia y, de forma creciente, China.",
+    strategic_reason: "La Estrategia Ártica del Departamento de Defensa identifica la región como crítica para la defensa del territorio continental, la soberanía, la vigilancia y la cooperación con aliados árticos, frente a la mayor costa ártica y militarización de Rusia y el interés declarado de China como 'Estado cercano al Ártico'.",
+    relation_to_us: "EE. UU. es un Estado ártico a través de Alaska y participa en el Consejo Ártico junto con Canadá, Rusia, Noruega, Suecia, Finlandia, Islandia y Dinamarca (Groenlandia). NO ejerce control sobre el Ártico como espacio, que es objeto de competencia estratégica compartida.",
+    current_status: "El Departamento de Defensa mantiene su Estrategia Ártica como marco vigente para la defensa del territorio continental, la cooperación con aliados y la respuesta a la militarización rusa y la creciente presencia china en la región.",
+    sources: [
+      { name: "U.S. Arctic Research Commission", url: "https://www.arctic.gov/" },
+      { name: "U.S. Northern Command (NORTHCOM)", url: "https://www.northcom.mil/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  }
+};
+
 function getFlagEmoji(countryCode) {
   if (!countryCode || countryCode.length !== 2) return countryCode;
   const codePoints = countryCode
@@ -6240,6 +6476,7 @@ let activeCategory = 'all';
 let selectedOrg = null;
 let selectedBloque = null;
 let selectedZona = null;
+let selectedTerritorio = null;
 let countryPaths = {};
 let worldData = null;
 
@@ -6278,6 +6515,7 @@ function initApp() {
       });
       // Always keep strategic points on top
       g.selectAll('.strategic-locations').raise();
+      g.selectAll('.territorios-markers').raise();
     });
 
   svg.call(zoom);
@@ -6310,6 +6548,7 @@ function initApp() {
   setupOrgMenu();
   setupBloquesMenu();
   setupZonasMenu();
+  setupTerritoriosMenu();
 
   // Tooltip
   tooltip = document.getElementById('tooltip');
@@ -6463,6 +6702,93 @@ function renderStrategicLocations() {
   locations.raise();
 }
 
+// Marcadores de Territorios Estratégicos (territorios de EE. UU., posiciones
+// insulares y espacios polares) que NO están cubiertos por
+// GEO_DB.strategicLocations. Se muestran únicamente cuando la categoría
+// 'territorios' está activa y hay una opción del menú lateral seleccionada,
+// filtrando por la categoría elegida (sin duplicar los chokepoints/canales
+// ya existentes, que siguen renderizados por renderStrategicLocations()).
+function renderTerritoriosMarkers() {
+  g.selectAll('.territorios-markers').remove();
+  if (activeCategory !== 'territorios' || !selectedTerritorio) return;
+
+  const entries = Object.values(TERRITORIOS_ESTRATEGICOS_DB).filter(t => t.categories.includes(selectedTerritorio));
+  if (entries.length === 0) return;
+
+  const group = g.append('g').attr('class', 'territorios-markers');
+
+  entries.forEach(t => {
+    const projected = projection(t.coords);
+    if (!projected) return;
+    const [x, y] = projected;
+
+    const pointGroup = group.append('g')
+      .attr('class', 'strategic-point')
+      .attr('data-x', x)
+      .attr('data-y', y)
+      .attr('transform', `translate(${x},${y})`)
+      .style('cursor', 'pointer')
+      .style('pointer-events', 'all');
+
+    pointGroup.append('circle')
+      .attr('r', 18)
+      .attr('fill', 'transparent')
+      .attr('stroke', 'none');
+
+    pointGroup.append('circle')
+      .attr('r', 13)
+      .attr('fill', 'rgba(15,23,42,0.85)')
+      .attr('stroke', '#0891b2')
+      .attr('stroke-width', 2);
+
+    pointGroup.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
+      .attr('font-size', '12px')
+      .attr('y', 0.5)
+      .style('pointer-events', 'none')
+      .style('user-select', 'none')
+      .text(t.icon || '⚓');
+
+    pointGroup.append('text')
+      .attr('text-anchor', 'middle')
+      .attr('y', 22)
+      .attr('font-size', '8px')
+      .attr('fill', '#22d3ee')
+      .attr('font-weight', '700')
+      .attr('font-family', 'Inter, sans-serif')
+      .style('pointer-events', 'none')
+      .style('text-shadow', '0 1px 3px rgba(0,0,0,0.9)')
+      .text(t.name);
+
+    pointGroup
+      .on('mouseover', function(event) {
+        showTooltipAt(event.clientX, event.clientY, {
+          name: t.name,
+          flag: t.icon,
+          relation_es: t.category
+        });
+      })
+      .on('mouseout', hideTooltip)
+      .on('click', function(event) {
+        event.stopPropagation();
+        hideTooltip();
+        showTerritorioPanel(t);
+      })
+      .on('touchstart', function(event) {
+        event.stopPropagation();
+        hideTooltip();
+        showTerritorioPanel(t);
+      }, { passive: true });
+  });
+
+  group.raise();
+}
+
+function hideTerritoriosMarkers() {
+  g.selectAll('.territorios-markers').remove();
+}
+
 function showStrategicPanel(loc) {
   const panel = document.getElementById('info-panel');
   if (!panel) return;
@@ -6570,6 +6896,75 @@ function showStrategicPanel(loc) {
   }
 }
 
+// Panel de un territorio/espacio estratégico que NO es un strategicLocation
+// (territorios de EE. UU., posiciones insulares, espacios polares).
+// Reutiliza el mismo #info-panel que showStrategicPanel() y el resto de la
+// aplicación; NO crea un panel independiente.
+function showTerritorioPanel(entry) {
+  const panel = document.getElementById('info-panel');
+  if (!panel) return;
+  const color = '#0891b2';
+
+  const panelFlag = document.getElementById('panel-flag');
+  if (panelFlag) { panelFlag.textContent = entry.icon || '⚓'; panelFlag.className = 'panel-flag'; }
+  const nameEl = document.getElementById('panel-name');
+  if (nameEl) nameEl.textContent = entry.name;
+  const capitalEl = document.getElementById('panel-capital');
+  if (capitalEl) capitalEl.textContent = entry.category || '';
+
+  const badge = document.getElementById('panel-relation');
+  if (badge) {
+    badge.textContent = `⚓ ${entry.category || 'Territorio estratégico'}`;
+    badge.style.background = color + '26';
+    badge.style.color = color;
+    badge.style.border = `1px solid ${color}55`;
+  }
+
+  let html = `
+    <div class="panel-section animate-in">
+      <div class="panel-section-title" style="text-transform:uppercase;">¿Qué es?</div>
+      <div class="panel-section-content">${entry.category || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.04s;border-left:3px solid ${color};padding-left:10px;">
+      <div class="panel-section-title" style="color:${color};text-transform:uppercase;">¿Por qué es estratégico?</div>
+      <div class="panel-section-content" style="font-weight:600;">${entry.strategic_reason || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.08s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Importancia para EE. UU.</div>
+      <div class="panel-section-content">${entry.relation_to_us || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.1s">
+      <div class="panel-section-title" style="text-transform:uppercase;">🌐 Importancia Geopolítica</div>
+      <div class="panel-section-content">${entry.importance || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.14s">
+      <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">SITUACIÓN ACTUAL</div>
+      <div class="panel-section-content">${entry.current_status || '—'}</div>
+    </div>`;
+
+  if (entry.sources && entry.sources.length > 0) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.18s">
+      <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${entry.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+    </div>`;
+  }
+  if (entry.updated) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
+      <div class="panel-section-content" style="font-size:0.75rem; color:#64748b;">🗓️ Actualizado: ${entry.updated}</div>
+    </div>`;
+  }
+
+  document.getElementById('panel-body').innerHTML = html;
+  panel.classList.add('open');
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
 
 
 // ============================================================
@@ -6729,6 +7124,14 @@ function showInfoPanel(name, info) {
   if (activeCategory === 'zonas' && selectedZona) {
     showZonaCountryPanel(name, selectedZona);
     return;
+  }
+
+  if (activeCategory === 'territorios' && selectedTerritorio) {
+    const territorioMatch = Object.values(TERRITORIOS_ESTRATEGICOS_DB).find(t => t.polygon_name === name && t.categories.includes(selectedTerritorio));
+    if (territorioMatch) {
+      showTerritorioPanel(territorioMatch);
+      return;
+    }
   }
 
   if (activeCategory === 'rivales' && name === 'United States of America') {
@@ -7559,6 +7962,58 @@ function selectZona(zonaId) {
   if (selectedZona) {
     showZonaPanel(selectedZona);
   } else {
+    closePanel();
+  }
+}
+
+// ============================================================
+// TERRITORIOS ESTRATÉGICOS — MENÚ LATERAL (selección de una categoría a la vez)
+// ============================================================
+
+function setupTerritoriosMenu() {
+  document.querySelectorAll('.territorio-item').forEach(item => {
+    item.addEventListener('click', () => selectTerritorio(item.dataset.territorio));
+  });
+}
+
+function toggleTerritoriosMenu(show) {
+  const menu = document.getElementById('territorios-menu');
+  if (!menu) return;
+  if (show) {
+    menu.classList.add('open');
+  } else {
+    menu.classList.remove('open');
+  }
+}
+
+function closeTerritoriosMenu() {
+  selectedTerritorio = null;
+  document.querySelectorAll('.territorio-item').forEach(item => item.classList.remove('active'));
+  activeCategory = 'all';
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  const worldPill = document.querySelector('.cat-pill[data-cat="all"]');
+  if (worldPill) worldPill.classList.add('active');
+  applyCategory('all');
+}
+
+function selectTerritorio(territorioId) {
+  if (selectedTerritorio === territorioId) {
+    // Volver a seleccionar la categoría activa la desactiva
+    selectedTerritorio = null;
+  } else {
+    selectedTerritorio = territorioId;
+  }
+  document.querySelectorAll('.territorio-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.territorio === selectedTerritorio);
+  });
+
+  // Recolorear/filtrar el mapa de inmediato con la nueva selección
+  if (activeCategory === 'territorios') {
+    applyCategory('territorios');
+    renderTerritoriosMarkers();
+  }
+
+  if (!selectedTerritorio) {
     closePanel();
   }
 }
@@ -8457,8 +8912,18 @@ function applyCategory(cat) {
       }
     }
     else if (cat === 'territorios') {
-      if (info && info.strategic_territories) el.style('fill', '#0891b2').style('opacity', 1);
-      else el.style('opacity', 0.15);
+      // Solo Groenlandia y Puerto Rico tienen polígono propio entre las
+      // entradas de TERRITORIOS_ESTRATEGICOS_DB (el resto se muestran como
+      // marcadores). Se resaltan únicamente si pertenecen a la categoría del
+      // menú lateral seleccionada (selectedTerritorio).
+      const territorioMatch = selectedTerritorio
+        ? Object.values(TERRITORIOS_ESTRATEGICOS_DB).find(t => t.polygon_name === name && t.categories.includes(selectedTerritorio))
+        : null;
+      if (territorioMatch) {
+        el.style('fill', '#0891b2').style('opacity', 1);
+      } else {
+        el.style('opacity', 0.15);
+      }
     }
   });
 
@@ -8487,8 +8952,24 @@ function applyCategory(cat) {
   }
   toggleZonasMenu(cat === 'zonas');
 
+  // Territorios Estratégicos side menu: only show when territorios is active.
+  // Igual que Zonas, la selección se limpia por completo al cambiar de
+  // categoría, y sus marcadores propios (territorios de EE. UU., posiciones
+  // insulares, espacios polares) se ocultan; los strategicLocations
+  // (chokepoints/canales) NO se ven afectados, siguen siempre visibles.
+  if (cat !== 'territorios') {
+    selectedTerritorio = null;
+    document.querySelectorAll('.territorio-item').forEach(item => item.classList.remove('active'));
+    hideTerritoriosMarkers();
+  } else {
+    renderTerritoriosMarkers();
+  }
+  toggleTerritoriosMenu(cat === 'territorios');
+
   // Ensure markers stay on top after category updates
   g.selectAll('.mesh-borders').raise();
+  g.selectAll('.strategic-locations').raise();
+  g.selectAll('.territorios-markers').raise();
 }
 
 function updateLegend(cat) {
@@ -8597,10 +9078,41 @@ function updateLegend(cat) {
       }
       break;
     }
-    case 'territorios':
-      html = `<div class="legend-title">Territorios Estratégicos</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Punto de Control</div>`;
+    case 'territorios': {
+      const territorioMeta = {
+        us_territories: { icon: '🇺🇸', label: 'Territorio estadounidense' },
+        chokepoints: { icon: '🚢', label: 'Chokepoint marítimo' },
+        canales_corredores: { icon: '🌊', label: 'Canal / corredor' },
+        posiciones_insulares: { icon: '🏝️', label: 'Posición insular' },
+        espacios_polares: { icon: '🧭', label: 'Espacio polar / ártico' }
+      };
+      if (selectedTerritorio && territorioMeta[selectedTerritorio]) {
+        const meta = territorioMeta[selectedTerritorio];
+        let count;
+        if (selectedTerritorio === 'chokepoints') {
+          count = GEO_DB.strategicLocations.filter(l => l.type === 'strait').length;
+        } else if (selectedTerritorio === 'canales_corredores') {
+          count = GEO_DB.strategicLocations.filter(l => l.type === 'canal').length;
+        } else {
+          count = Object.values(TERRITORIOS_ESTRATEGICOS_DB).filter(t => t.categories.includes(selectedTerritorio)).length;
+        }
+        html = `
+          <div class="legend-title">⚓ ${meta.label}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>${meta.icon} ${meta.label} (${count})</div>
+        `;
+      } else {
+        html = `
+          <div class="legend-title">⚓ Territorios Estratégicos</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>🇺🇸 Territorio estadounidense</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>🚢 Chokepoint marítimo</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>🌊 Canal / corredor</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>🏝️ Posición insular</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>🧭 Espacio polar / ártico</div>
+          <div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">Selecciona una categoría en el menú lateral para explorarla en detalle.</div>
+        `;
+      }
       break;
+    }
   }
 
   legend.innerHTML = html;
