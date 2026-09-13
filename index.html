@@ -344,6 +344,52 @@ body {
   font-weight: 600;
 }
 
+/* ===== BLOQUES ECONÓMICOS — MENÚ LATERAL (reutiliza el diseño de #org-menu) ===== */
+#bloques-menu {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 56px);
+  background: rgba(10, 14, 26, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border-glass);
+  z-index: 850;
+  transform: translateX(-300px);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+#bloques-menu.open { transform: translateX(0); }
+
+#bloques-menu::-webkit-scrollbar { width: 5px; }
+#bloques-menu::-webkit-scrollbar-track { background: transparent; }
+#bloques-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+.bloque-item {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+
+.bloque-item:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+.bloque-item.active {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
+  font-weight: 600;
+}
+
 /* ===== MAP CONTAINER ===== */
 #map-container {
   position: fixed;
@@ -973,6 +1019,24 @@ body {
   }
   #org-menu.open { transform: translateY(0); left: 0 !important; }
   .org-menu-body { padding-bottom: env(safe-area-inset-bottom, 20px); }
+
+  #bloques-menu {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 60dvh !important;
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.3, 1, 0.3, 1);
+    border-right: none !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 2000;
+  }
+  #bloques-menu.open { transform: translateY(0); left: 0 !important; }
 }
 </style>
 </head>
@@ -1055,6 +1119,26 @@ body {
       <div class="org-item" data-org="omc">OMC</div>
       <div class="org-item" data-org="fmi">FMI</div>
       <div class="org-item" data-org="banco_mundial">Banco Mundial</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Bloques Económicos Side Menu -->
+<aside id="bloques-menu">
+  <div class="org-menu-header">
+    <span>💰 BLOQUES ECONÓMICOS</span>
+    <button class="org-menu-close" onclick="closeBloquesMenu()" title="Cerrar" aria-label="Cerrar menú de bloques económicos">✕</button>
+  </div>
+  <div class="org-menu-body">
+    <div class="org-group">
+      <div class="org-group-title">Bloques comerciales y económicos</div>
+      <div class="bloque-item" data-bloque="usmca">🇺🇸 USMCA / T-MEC</div>
+      <div class="bloque-item" data-bloque="ue_bloque">🇪🇺 Unión Europea</div>
+      <div class="bloque-item" data-bloque="rcep">🌏 RCEP</div>
+      <div class="bloque-item" data-bloque="cptpp">🌏 CPTPP</div>
+      <div class="bloque-item" data-bloque="mercosur">🇧🇷 MERCOSUR</div>
+      <div class="bloque-item" data-bloque="afcfta">🌍 AfCFTA</div>
+      <div class="bloque-item" data-bloque="brics">🌐 BRICS</div>
     </div>
   </div>
 </aside>
@@ -5373,6 +5457,395 @@ let currentSearchHighlight = null;
     }
   };
 
+const BLOQUES_DB = {
+  "usmca": {
+    name: "Tratado entre México, Estados Unidos y Canadá",
+    acronym: "T-MEC / USMCA / CUSMA",
+    type: "Acuerdo comercial regional",
+    icon: "🚚",
+    color: "#1d4ed8",
+    legend_label: "Estado Parte",
+    legend_note: "3 Estados Parte: Estados Unidos, Canadá y México.",
+    signed: "30 de noviembre de 2018 (sustituye al TLCAN/NAFTA de 1994)",
+    entry_into_force: "1 de julio de 2020",
+    headquarters: "Sin sede única; secretariados nacionales en Washington D.C., Ciudad de México y Ottawa",
+    member_count: 3,
+    us_importance: "EE. UU. depende del T-MEC para sostener la cadena de suministro manufacturera más integrada del mundo: las industrias automotriz, agrícola y energética estadounidenses operan de forma transfronteriza con México y Canadá bajo estas reglas, y el bloque en conjunto es el principal mercado de exportación de EE. UU.",
+    us_role: "Es uno de los tres Estados Parte del T-MEC y el principal impulsor de sus disciplinas en reglas de origen automotrices, trabajo, medio ambiente y comercio digital.",
+    us_relation: "El T-MEC es el marco jurídico central del comercio norteamericano: cerca de un tercio del comercio exterior de bienes de EE. UU. se realiza con México y Canadá combinados, sustentando cadenas de suministro integradas en manufactura, automóviles, energía y agricultura.",
+    function: "Establece las reglas del comercio, la inversión y la propiedad intelectual en América del Norte, con disciplinas reforzadas en reglas de origen automotrices, trabajo, medio ambiente y comercio digital, como sucesor del TLCAN/NAFTA.",
+    geo_importance: "Ancla la región económica más integrada en torno a EE. UU., con México como su principal socio comercial en bienes y Canadá como proveedor clave de energía y materias primas; la revisión conjunta de 2026 definirá su continuidad hasta 2036.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "Las tres partes del T-MEC llevan adelante en 2026 la revisión conjunta prevista por el tratado a los seis años de su entrada en vigor, en la que deben confirmar si extienden su vigencia por 16 años adicionales.",
+      verified_facts: [
+        "El T-MEC entró en vigor el 1 de julio de 2020, en sustitución del TLCAN/NAFTA de 1994.",
+        "El tratado incluye una cláusula de revisión conjunta a los seis años de su entrada en vigor (2026), en la que las tres partes deben acordar si lo extienden por 16 años más.",
+        "Estados Unidos, México y Canadá mantienen negociaciones activas en 2026 sobre aranceles, reglas de origen automotrices y medidas comerciales bilaterales en el marco de esta revisión conjunta."
+      ],
+      interpretation: "La revisión conjunta de 2026 es el mecanismo central que determinará la continuidad del principal marco comercial de EE. UU. en el continente; su resultado condiciona directamente la inversión y planificación de las cadenas de suministro norteamericanas para la próxima década.",
+      sources: [
+        { name: "Office of the United States Trade Representative — USMCA", url: "https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement" },
+        { name: "Secretaría de Economía de México — T-MEC", url: "https://www.gob.mx/t-mec" },
+        { name: "Global Affairs Canada — CUSMA", url: "https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cusma-aceum/index.aspx" }
+      ]
+    },
+    members: {
+      "United States of America": { role: "Estado Parte fundador; economía ancla del bloque" },
+      "Canada": { role: "Estado Parte fundador" },
+      "Mexico": { role: "Estado Parte fundador; principal socio comercial de EE. UU. en bienes" }
+    }
+  },
+  "ue_bloque": {
+    name: "Unión Europea",
+    acronym: "UE / EU",
+    type: "Unión económica y mercado único (bloque comercial)",
+    icon: "🇪🇺",
+    color: "#eab308",
+    legend_label: "Estado miembro",
+    legend_note: "27 Estados miembros del mercado único europeo. Malta es miembro oficial pero no tiene representación cartográfica individual en esta versión del mapa.",
+    signed: "1 de noviembre de 1993 (entrada en vigor del Tratado de Maastricht)",
+    entry_into_force: "1 de noviembre de 1993",
+    headquarters: "Bruselas, Bélgica",
+    member_count: 27,
+    us_importance: "La UE es el mayor mercado único del mundo y, junto con EE. UU., forman la relación comercial y de inversión bilateral más grande del planeta: ese vínculo transatlántico es el eje central de la política comercial estadounidense, con fricciones recurrentes por aranceles y regulación digital.",
+    us_role: "EE. UU. no es miembro (la UE es una unión exclusivamente europea), pero es su principal socio comercial y de inversión combinado, y coordina con ella sanciones, aranceles y controles a la exportación de tecnología.",
+    us_relation: "EE. UU. y la UE mantienen la relación comercial y de inversión bilateral más grande del mundo, con tensiones recurrentes por aranceles al acero, al aluminio y a productos digitales, y coordinación estrecha en sanciones a Rusia y controles de exportación tecnológica hacia China.",
+    function: "Mercado único con libre circulación de bienes, servicios, capitales y personas, unión aduanera con arancel externo común, y una política comercial común que la convierte en una de las mayores potencias comerciales y reguladoras del mundo.",
+    geo_importance: "Con 27 Estados miembros y un PIB conjunto comparable al de EE. UU., la UE fija estándares regulatorios (el 'efecto Bruselas') que moldean el comercio global, y su política comercial común le da un peso negociador que ningún Estado miembro tendría por separado.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "La relación comercial UE-EE. UU. en 2026 combina una intensa interdependencia económica con fricciones arancelarias puntuales y una coordinación estrecha en sanciones a Rusia y controles tecnológicos frente a China.",
+      verified_facts: [
+        "La UE y EE. UU. son mutuamente su principal socio comercial y de inversión combinado, con un volumen de comercio e inversión bilateral que supera al de cualquier otra relación económica de ambos bloques.",
+        "Chipre ejerce la presidencia rotatoria del Consejo de la UE en el primer semestre de 2026 e Irlanda en el segundo semestre.",
+        "La UE mantiene y coordina con EE. UU. regímenes de sanciones económicas contra Rusia desde 2022."
+      ],
+      interpretation: "La relación económica transatlántica sigue siendo el eje central del comercio internacional de EE. UU., incluso en medio de fricciones arancelarias puntuales, dada la profundidad de la inversión y el comercio mutuos.",
+      sources: [
+        { name: "European Commission — Trade Policy", url: "https://policy.trade.ec.europa.eu/" },
+        { name: "Office of the United States Trade Representative — European Union", url: "https://ustr.gov/countries-regions/europe/european-union" }
+      ]
+    },
+    members: {
+      "Germany": { role: "Estado miembro" },
+      "Austria": { role: "Estado miembro" },
+      "Belgium": { role: "Estado miembro" },
+      "Bulgaria": { role: "Estado miembro" },
+      "Croatia": { role: "Estado miembro" },
+      "Cyprus": { role: "Estado miembro" },
+      "Czechia": { role: "Estado miembro" },
+      "Denmark": { role: "Estado miembro" },
+      "Slovakia": { role: "Estado miembro" },
+      "Slovenia": { role: "Estado miembro" },
+      "Spain": { role: "Estado miembro" },
+      "Estonia": { role: "Estado miembro" },
+      "Finland": { role: "Estado miembro" },
+      "France": { role: "Estado miembro" },
+      "Greece": { role: "Estado miembro" },
+      "Hungary": { role: "Estado miembro" },
+      "Ireland": { role: "Estado miembro" },
+      "Italy": { role: "Estado miembro" },
+      "Latvia": { role: "Estado miembro" },
+      "Lithuania": { role: "Estado miembro" },
+      "Luxembourg": { role: "Estado miembro" },
+      "Malta": { role: "Estado miembro", noPolygon: true },
+      "Netherlands": { role: "Estado miembro" },
+      "Poland": { role: "Estado miembro" },
+      "Portugal": { role: "Estado miembro" },
+      "Romania": { role: "Estado miembro" },
+      "Sweden": { role: "Estado miembro" }
+    }
+  },
+  "rcep": {
+    name: "Asociación Económica Integral Regional",
+    acronym: "RCEP",
+    type: "Acuerdo de libre comercio regional (megaacuerdo comercial)",
+    icon: "🌏",
+    color: "#0d9488",
+    legend_label: "Estado miembro",
+    legend_note: "15 Estados miembros. Singapur es miembro oficial pero no tiene representación cartográfica individual en esta versión del mapa.",
+    signed: "15 de noviembre de 2020, en la cumbre de la ASEAN en Hanói",
+    entry_into_force: "1 de enero de 2022 (para los primeros diez ratificantes; extendido progresivamente al resto de los miembros)",
+    headquarters: "Sin secretaría permanente propia; administrado a través de la Secretaría de la ASEAN en Yakarta",
+    member_count: 15,
+    us_importance: "Aunque EE. UU. no es miembro, el RCEP consolida a China como centro gravitacional de las cadenas de suministro asiáticas, con reglas de origen que facilitan que insumos chinos circulen con arancel preferencial hacia Japón, Corea del Sur y el Sudeste Asiático, lo que preocupa a Washington por la relocalización de manufactura y la competencia con sus propias iniciativas en el Indo-Pacífico.",
+    us_role: "EE. UU. no es miembro del RCEP; Washington ha impulsado en su lugar el Marco Económico Indo-Pacífico (IPEF), un mecanismo no vinculante en materia comercial, como respuesta a la ausencia de un acuerdo comercial propio en la región.",
+    us_relation: "La falta de participación de EE. UU. en el RCEP es vista en Washington como un vacío estratégico que China ha aprovechado para consolidar su liderazgo comercial en Asia-Pacífico, mientras EE. UU. mantiene acuerdos comerciales bilaterales separados con varios miembros del bloque, como Australia, Singapur y Corea del Sur.",
+    function: "El mayor acuerdo de libre comercio del mundo por población y PIB conjunto: reduce aranceles y unifica reglas de origen entre sus 15 miembros, profundizando la integración de las cadenas de suministro de Asia-Pacífico en torno a ASEAN, China, Japón, Corea del Sur, Australia y Nueva Zelanda.",
+    geo_importance: "El RCEP cubre cerca del 30% del PIB y la población mundial, consolidando a ASEAN como plataforma de integración y a China como su mayor economía miembro, en un bloque con disciplinas laborales y ambientales menos estrictas que el CPTPP.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "El RCEP continúa en 2026 su fase de implementación plena, con Filipinas —el último de los firmantes originales en ratificarlo— operando bajo el acuerdo desde junio de 2023, mientras el bloque consolida su papel como principal marco comercial de Asia-Pacífico.",
+      verified_facts: [
+        "El RCEP entró en vigor el 1 de enero de 2022 para los primeros diez países en ratificarlo.",
+        "Filipinas completó su proceso de ratificación y el acuerdo entró en vigor para ese país el 2 de junio de 2023, siendo el último de los 15 firmantes originales en hacerlo.",
+        "El RCEP no incluye a India, que se retiró de las negociaciones en 2019 por preocupaciones sobre el impacto de una mayor apertura comercial con China."
+      ],
+      interpretation: "El RCEP consolida una arquitectura comercial asiática centrada en China y ASEAN de la que EE. UU. queda al margen, reforzando la percepción en Washington de un vacío estratégico en la política comercial estadounidense hacia el Indo-Pacífico.",
+      sources: [
+        { name: "ASEAN — RCEP", url: "https://asean.org/our-communities/economic-community/rcep/" },
+        { name: "Australian Government — DFAT, RCEP", url: "https://www.dfat.gov.au/trade/agreements/in-force/rcep" }
+      ]
+    },
+    members: {
+      "Australia": { role: "Estado miembro" },
+      "Brunei": { role: "Estado miembro" },
+      "Cambodia": { role: "Estado miembro" },
+      "China": { role: "Estado miembro; mayor economía del bloque" },
+      "Indonesia": { role: "Estado miembro" },
+      "Japan": { role: "Estado miembro" },
+      "Laos": { role: "Estado miembro" },
+      "Malaysia": { role: "Estado miembro" },
+      "Myanmar": { role: "Estado miembro" },
+      "New Zealand": { role: "Estado miembro" },
+      "Philippines": { role: "Estado miembro; último firmante original en ratificar el acuerdo (2023)" },
+      "Singapore": { role: "Estado miembro", noPolygon: true },
+      "Thailand": { role: "Estado miembro" },
+      "Vietnam": { role: "Estado miembro" },
+      "South Korea": { role: "Estado miembro" }
+    }
+  },
+  "cptpp": {
+    name: "Tratado Integral y Progresista de Asociación Transpacífico",
+    acronym: "CPTPP",
+    type: "Acuerdo comercial plurilateral de alto estándar",
+    icon: "🌏",
+    color: "#7c3aed",
+    legend_label: "Estado miembro",
+    legend_note: "12 Estados miembros, incluido el Reino Unido desde su adhesión en 2024. Singapur y Brunéi son miembros oficiales sin representación cartográfica individual en esta versión del mapa (Brunéi además debe completar su proceso de ratificación interna).",
+    signed: "8 de marzo de 2018 (sucesor del TPP original tras el retiro de EE. UU. en 2017)",
+    entry_into_force: "30 de diciembre de 2018 (primeros seis ratificantes); el Reino Unido se incorporó el 15 de diciembre de 2024 como duodécimo miembro",
+    headquarters: "Depositario en Nueva Zelanda (Ministerio de Relaciones Exteriores y Comercio)",
+    member_count: 12,
+    us_importance: "El CPTPP nació del TPP original que EE. UU. negoció y luego abandonó en 2017; su ausencia deja a empresas estadounidenses en desventaja arancelaria frente a competidores de países miembros en mercados clave del Indo-Pacífico, mientras el bloque fija estándares comerciales de alto nivel sin la participación de Washington.",
+    us_role: "EE. UU. NO es miembro: negoció el acuerdo original (TPP) pero se retiró en enero de 2017; los 11 socios restantes reformularon el acuerdo como CPTPP sin EE. UU.",
+    us_relation: "La ausencia de EE. UU. del CPTPP es un vacío estratégico recurrente en el debate comercial estadounidense; se han planteado propuestas de una eventual reincorporación, pero no existe hacia 2026 un proceso formal de adhesión de EE. UU. en curso.",
+    function: "Elimina aranceles entre sus miembros y establece estándares elevados en comercio digital, propiedad intelectual, empresas estatales, trabajo y medio ambiente, conectando economías de América, Asia-Pacífico y, desde 2024, Europa (Reino Unido) en un solo bloque comercial.",
+    geo_importance: "Con la incorporación del Reino Unido en 2024, el CPTPP se convirtió en el primer gran acuerdo comercial que conecta directamente Europa con el Indo-Pacífico, reforzándose como alternativa de integración de alto estándar frente al RCEP, liderado por China.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "El CPTPP consolida en 2026 su ampliación tras la incorporación del Reino Unido en 2024, mientras evalúa las solicitudes de adhesión de otras economías interesadas en unirse al bloque.",
+      verified_facts: [
+        "El Reino Unido completó su proceso de adhesión y se convirtió en el duodécimo miembro del CPTPP el 15 de diciembre de 2024.",
+        "Costa Rica y Ecuador mantienen grupos de trabajo de adhesión activos para incorporarse al CPTPP.",
+        "EE. UU. no ha reabierto un proceso formal de adhesión al CPTPP desde su retiro del TPP original en 2017."
+      ],
+      interpretation: "La incorporación del Reino Unido confirma la vocación del CPTPP de expandirse más allá del Indo-Pacífico como bloque de alto estándar, mientras la ausencia persistente de EE. UU. mantiene un vacío estratégico en la política comercial estadounidense hacia la región.",
+      sources: [
+        { name: "New Zealand Foreign Affairs and Trade — CPTPP", url: "https://www.mfat.govt.nz/en/trade/free-trade-agreements/free-trade-agreements-in-force/cptpp" },
+        { name: "UK Government — CPTPP accession", url: "https://www.gov.uk/government/collections/cptpp-uk-accession" }
+      ]
+    },
+    members: {
+      "Australia": { role: "Estado miembro fundador" },
+      "Brunei": { role: "Estado miembro fundador", noPolygon: true },
+      "Canada": { role: "Estado miembro fundador" },
+      "Chile": { role: "Estado miembro fundador" },
+      "Japan": { role: "Estado miembro fundador" },
+      "Malaysia": { role: "Estado miembro fundador" },
+      "Mexico": { role: "Estado miembro fundador" },
+      "New Zealand": { role: "Estado miembro fundador" },
+      "Peru": { role: "Estado miembro fundador" },
+      "Singapore": { role: "Estado miembro fundador", noPolygon: true },
+      "Vietnam": { role: "Estado miembro fundador" },
+      "United Kingdom": { role: "Estado miembro; se incorporó el 15 de diciembre de 2024 como duodécimo miembro y primer Estado europeo del bloque" }
+    }
+  },
+  "mercosur": {
+    name: "Mercado Común del Sur",
+    acronym: "MERCOSUR",
+    type: "Proceso de integración económica y unión aduanera",
+    icon: "🇧🇷",
+    color: "#16a34a",
+    legend_label: "Estado Parte",
+    legend_note: "5 Estados Parte plenos, 6 Estados Asociados y 1 Estado suspendido (Venezuela). Los Estados Asociados y el Estado suspendido se muestran con un resaltado diferenciado.",
+    signed: "26 de marzo de 1991 (Tratado de Asunción)",
+    entry_into_force: "29 de noviembre de 1991",
+    headquarters: "Montevideo, Uruguay (Secretaría del MERCOSUR)",
+    member_count: 5,
+    us_importance: "MERCOSUR concentra buena parte del comercio agrícola e industrial de Sudamérica, con Brasil como socio comercial relevante de EE. UU. en la región; Washington no mantiene un acuerdo de libre comercio con el bloque como tal, mientras la Unión Europea sí avanzó en 2024 hacia un acuerdo de asociación con MERCOSUR, lo que podría reconfigurar la competencia comercial en la región en detrimento de EE. UU.",
+    us_role: "EE. UU. no es miembro ni Estado asociado de MERCOSUR; no existe un acuerdo de libre comercio EE. UU.-MERCOSUR, a diferencia de sus tratados bilaterales vigentes con Chile, Colombia y Perú, que son Estados Asociados del bloque.",
+    us_relation: "La ausencia de un acuerdo EE. UU.-MERCOSUR deja a Washington fuera de la principal unión aduanera sudamericana, mientras la Unión Europea avanza en la ratificación de su acuerdo de asociación con el bloque, alcanzado en diciembre de 2024 tras más de dos décadas de negociación.",
+    function: "Unión aduanera con arancel externo común (con excepciones nacionales) entre sus Estados Parte, orientada a la libre circulación de bienes, servicios y factores productivos en el Cono Sur, que negocia como bloque unificado acuerdos comerciales con terceros.",
+    geo_importance: "Liderado por el peso económico y demográfico de Brasil, MERCOSUR es el principal mecanismo de integración económica de América del Sur, con Argentina como su segunda economía y una red de Estados Asociados que se extiende por casi todo el resto del subcontinente.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "MERCOSUR opera en 2026 con cinco Estados Parte plenos tras la incorporación de Bolivia, mientras Venezuela continúa suspendida desde 2016 y el bloque avanza en la ratificación de su acuerdo de asociación con la Unión Europea, cerrado en diciembre de 2024.",
+      verified_facts: [
+        "Bolivia se convirtió en el quinto Estado Parte pleno de MERCOSUR tras depositar su protocolo de adhesión.",
+        "Venezuela permanece suspendida de MERCOSUR desde diciembre de 2016 por incumplimiento del Protocolo de Ushuaia sobre compromiso democrático.",
+        "La Unión Europea y MERCOSUR alcanzaron un acuerdo de asociación birregional en diciembre de 2024, pendiente de ratificación por los parlamentos y órganos legislativos de ambos bloques."
+      ],
+      interpretation: "La ampliación con Bolivia y el avance del acuerdo con la UE consolidan a MERCOSUR como el eje de la integración sudamericana, en un contexto donde EE. UU. permanece sin un marco comercial propio con el bloque, a diferencia de sus acuerdos bilaterales con varios de sus Estados Asociados.",
+      sources: [
+        { name: "MERCOSUR — Sitio oficial", url: "https://www.mercosur.int/" },
+        { name: "MERCOSUR — Estados Parte y Asociados", url: "https://www.mercosur.int/quienes-somos/estados-del-mercosur/" }
+      ]
+    },
+    members: {
+      "Argentina": { role: "Estado Parte fundador" },
+      "Brazil": { role: "Estado Parte fundador; principal economía del bloque" },
+      "Paraguay": { role: "Estado Parte fundador" },
+      "Uruguay": { role: "Estado Parte fundador; sede de la Secretaría del MERCOSUR" },
+      "Bolivia": { role: "Estado Parte; formalizó su adhesión plena tras depositar el protocolo de incorporación" }
+    },
+    associates: {
+      "Chile": { note: "Estado Asociado desde 1996: participa en el área de libre comercio pero no en la unión aduanera ni en los órganos decisorios plenos de MERCOSUR." },
+      "Colombia": { note: "Estado Asociado desde 2004: participa en el área de libre comercio pero no en la unión aduanera ni en los órganos decisorios plenos de MERCOSUR." },
+      "Ecuador": { note: "Estado Asociado desde 2004: participa en el área de libre comercio pero no en la unión aduanera ni en los órganos decisorios plenos de MERCOSUR." },
+      "Guyana": { note: "Estado Asociado desde 2013: participa en el área de libre comercio pero no en la unión aduanera ni en los órganos decisorios plenos de MERCOSUR." },
+      "Peru": { note: "Estado Asociado desde 2003: participa en el área de libre comercio pero no en la unión aduanera ni en los órganos decisorios plenos de MERCOSUR." },
+      "Suriname": { note: "Estado Asociado desde 2013: participa en el área de libre comercio pero no en la unión aduanera ni en los órganos decisorios plenos de MERCOSUR." }
+    },
+    suspended: {
+      "Venezuela": { note: "Suspendida de MERCOSUR desde diciembre de 2016 por incumplimiento del Protocolo de Ushuaia sobre compromiso democrático; no participa en las decisiones del bloque." }
+    }
+  },
+  "afcfta": {
+    name: "Zona de Libre Comercio Continental Africana",
+    acronym: "AfCFTA / ZLECAf",
+    type: "Zona de libre comercio continental",
+    icon: "🌍",
+    color: "#dc2626",
+    legend_label: "Estado firmante",
+    legend_note: "54 de los 55 Estados de la Unión Africana han firmado el acuerdo (todos salvo Eritrea) y la gran mayoría lo ha ratificado. Esta cifra de firmantes NO debe confundirse con los 55 miembros de la Unión Africana como organización política.",
+    signed: "21 de marzo de 2018, en Kigali, Ruanda",
+    entry_into_force: "30 de mayo de 2019 (tras alcanzar el umbral de 22 ratificaciones); fase comercial operativa desde el 1 de enero de 2021",
+    headquarters: "Secretaría en Accra, Ghana",
+    member_count: 54,
+    us_importance: "El AfCFTA crea el mercado unificado más grande del mundo por número de países (54 signatarios) y busca impulsar la industrialización y el valor agregado en África; para EE. UU., un mercado africano más integrado facilita la inversión y el comercio bajo marcos como la Ley de Crecimiento y Oportunidad para África (AGOA), y reduce la fragmentación regulatoria que hoy encarece operar en el continente.",
+    us_role: "EE. UU. no es miembro (el AfCFTA es un acuerdo exclusivamente africano), pero apoya su desarrollo institucional mediante asistencia técnica de USAID y USTR, y lo considera complementario a marcos comerciales bilaterales como la AGOA.",
+    us_relation: "Washington ve en el AfCFTA una oportunidad para que la inversión y el comercio estadounidenses en África operen bajo reglas más uniformes, en un contexto de creciente competencia con China por infraestructura e influencia económica en el continente.",
+    function: "Crea un mercado único continental para bienes y servicios entre los Estados africanos que han ratificado el acuerdo, con el objetivo de eliminar progresivamente los aranceles al comercio intraafricano, impulsar cadenas de valor regionales y la industrialización, y consolidar el mercado de consumidores más grande del mundo por número de países participantes.",
+    geo_importance: "El AfCFTA integra a 1.400 millones de personas en un solo mercado, con el potencial de convertirse en la mayor zona de libre comercio del mundo por número de Estados participantes, aunque su implementación efectiva sigue siendo gradual debido a brechas de infraestructura y capacidad institucional.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "El AfCFTA avanza en 2026 en su fase de implementación comercial, con la Secretaría de Accra coordinando la ampliación del sistema panafricano de pagos y liquidación (PAPSS) y la notificación de listas de concesiones arancelarias por parte de los Estados que han ratificado el acuerdo.",
+      verified_facts: [
+        "Eritrea sigue siendo el único Estado de la Unión Africana que no ha firmado el acuerdo del AfCFTA.",
+        "La Secretaría de la AfCFTA, con sede en Accra, Ghana, coordina la fase de implementación comercial, incluido el sistema panafricano de pagos y liquidación (PAPSS).",
+        "El comercio bajo el régimen preferencial del AfCFTA opera de forma efectiva solo entre los Estados que han notificado sus listas de concesiones arancelarias, un proceso que continúa ampliándose de forma gradual."
+      ],
+      interpretation: "El AfCFTA representa el proyecto de integración comercial más ambicioso de África, pero su brecha entre firma/ratificación formal e implementación arancelaria efectiva sigue siendo el principal desafío para que el mercado continental funcione plenamente.",
+      sources: [
+        { name: "African Continental Free Trade Area — Sitio oficial", url: "https://au-afcfta.org/" },
+        { name: "African Union — AfCFTA", url: "https://au.int/en/cfta" }
+      ]
+    },
+    members: {
+      "Algeria": { role: "Estado firmante" },
+      "Angola": { role: "Estado firmante" },
+      "Benin": { role: "Estado firmante" },
+      "Botswana": { role: "Estado firmante" },
+      "Burkina Faso": { role: "Estado firmante" },
+      "Burundi": { role: "Estado firmante" },
+      "Cameroon": { role: "Estado firmante" },
+      "Cape Verde": { role: "Estado firmante", noPolygon: true },
+      "Central African Rep.": { role: "Estado firmante" },
+      "Chad": { role: "Estado firmante" },
+      "Comoros": { role: "Estado firmante", noPolygon: true },
+      "Congo": { role: "Estado firmante" },
+      "Côte d'Ivoire": { role: "Estado firmante" },
+      "Djibouti": { role: "Estado firmante" },
+      "Dem. Rep. Congo": { role: "Estado firmante" },
+      "Egypt": { role: "Estado firmante" },
+      "Eq. Guinea": { role: "Estado firmante" },
+      "eSwatini": { role: "Estado firmante" },
+      "Ethiopia": { role: "Estado firmante; sede de la Unión Africana" },
+      "Gabon": { role: "Estado firmante" },
+      "Gambia": { role: "Estado firmante" },
+      "Ghana": { role: "Estado firmante; sede de la Secretaría de la AfCFTA (Accra)" },
+      "Guinea": { role: "Estado firmante" },
+      "Guinea-Bissau": { role: "Estado firmante" },
+      "Kenya": { role: "Estado firmante" },
+      "Lesotho": { role: "Estado firmante" },
+      "Liberia": { role: "Estado firmante" },
+      "Libya": { role: "Estado firmante" },
+      "Madagascar": { role: "Estado firmante" },
+      "Malawi": { role: "Estado firmante" },
+      "Mali": { role: "Estado firmante" },
+      "Mauritania": { role: "Estado firmante" },
+      "Mauritius": { role: "Estado firmante", noPolygon: true },
+      "Morocco": { role: "Estado firmante" },
+      "Mozambique": { role: "Estado firmante" },
+      "Namibia": { role: "Estado firmante" },
+      "Niger": { role: "Estado firmante" },
+      "Nigeria": { role: "Estado firmante" },
+      "Rwanda": { role: "Estado firmante" },
+      "W. Sahara": { role: "Estado firmante (República Árabe Saharaui Democrática)" },
+      "São Tomé and Príncipe": { role: "Estado firmante", noPolygon: true },
+      "Senegal": { role: "Estado firmante" },
+      "Seychelles": { role: "Estado firmante", noPolygon: true },
+      "Sierra Leone": { role: "Estado firmante" },
+      "Somalia": { role: "Estado firmante" },
+      "South Africa": { role: "Estado firmante" },
+      "S. Sudan": { role: "Estado firmante" },
+      "Sudan": { role: "Estado firmante" },
+      "Tanzania": { role: "Estado firmante" },
+      "Togo": { role: "Estado firmante" },
+      "Tunisia": { role: "Estado firmante" },
+      "Uganda": { role: "Estado firmante" },
+      "Zambia": { role: "Estado firmante" },
+      "Zimbabwe": { role: "Estado firmante" }
+    }
+  },
+  "brics": {
+    name: "BRICS",
+    acronym: "BRICS",
+    type: "Agrupación de cooperación económica y política (no es un tratado de libre comercio)",
+    icon: "🌐",
+    color: "#ea580c",
+    legend_label: "Miembro pleno",
+    legend_note: "11 miembros plenos y un grupo ampliado de países socios (categoría creada en la cumbre de Kazan de octubre de 2024) que no tienen membresía plena.",
+    signed: "Origen conceptual del acrónimo BRIC en 2001; primera cumbre formal el 16 de junio de 2009 en Ekaterimburgo, Rusia; incorporó a Sudáfrica en 2011 (BRICS)",
+    entry_into_force: "16 de junio de 2009 (primera cumbre); ampliaciones en 2024 y 2025",
+    headquarters: "Sin sede fija; presidencia rotatoria anual entre sus miembros",
+    member_count: 11,
+    us_importance: "BRICS agrupa a varias de las economías de mayor crecimiento y a grandes productores de energía y materias primas (Rusia, Irán, Arabia Saudita, EAU, Brasil), y su ampliación en 2024-2025 ha intensificado el debate en Washington sobre una posible 'desdolarización' del comercio internacional y la creación de mecanismos financieros alternativos a los dominados por EE. UU. y el FMI, aunque el bloque no ha adoptado una moneda común.",
+    us_role: "EE. UU. no es miembro ni socio de BRICS; observa con atención su expansión y las discusiones sobre comercio en monedas locales, aunque el dólar estadounidense continúa siendo la moneda dominante del comercio y las reservas internacionales.",
+    us_relation: "Washington considera a BRICS un foro de coordinación entre potencias con intereses divergentes de EE. UU. —particularmente Rusia, Irán y China— y ha advertido sobre posibles consecuencias comerciales ante cualquier intento del bloque de crear una moneda común, aunque hacia 2026 no existe tal moneda.",
+    function: "Mecanismo de cooperación económica y política entre economías emergentes que coordina posiciones en comercio, energía, materias primas y financiamiento para el desarrollo (a través del Nuevo Banco de Desarrollo), buscando mayor representación de las economías emergentes en la gobernanza económica global; no elimina aranceles entre sus miembros ni constituye una zona de libre comercio.",
+    geo_importance: "Con la incorporación de Egipto, Etiopía, Irán, Arabia Saudita, EAU e Indonesia, BRICS representa a más del 45% de la población mundial y una parte creciente del PIB global en paridad de poder adquisitivo, consolidándose como el principal foro de coordinación política y económica fuera de las estructuras occidentales, pese a las profundas diferencias internas entre sus miembros.",
+    updated: "11 de septiembre de 2026",
+    actualidad: {
+      current_situation: "BRICS opera en 2026 con 11 miembros plenos tras su segunda ronda de ampliación (Indonesia, 2025) y una categoría de 'países socios' creada en la cumbre de Kazan de octubre de 2024, que vincula a Estados adicionales sin otorgarles membresía plena.",
+      verified_facts: [
+        "Egipto, Etiopía, Irán, Arabia Saudita y los Emiratos Árabes Unidos se incorporaron como miembros plenos de BRICS el 1 de enero de 2024.",
+        "Indonesia se convirtió en miembro pleno de BRICS en enero de 2025, tras la aprobación de los demás miembros.",
+        "En la cumbre de Kazan de octubre de 2024, BRICS creó la categoría de 'países socios', que vincula a Estados como Bielorrusia, Bolivia, Cuba, Kazajistán, Malasia, Tailandia y Uganda sin otorgarles membresía plena."
+      ],
+      interpretation: "La ampliación de BRICS refleja el interés de un número creciente de economías emergentes y productoras de energía en participar en un foro alternativo a las estructuras económicas occidentales, aunque la heterogeneidad de intereses entre sus miembros (incluidas rivalidades como la de India y China) limita su capacidad de acción coordinada frente a EE. UU.",
+      sources: [
+        { name: "Ministério das Relações Exteriores de Brasil — BRICS", url: "https://www.gov.br/mre/pt-br/assuntos/brics" },
+        { name: "Ministerio de Asuntos Exteriores de Rusia — BRICS", url: "https://www.mid.ru/es/" }
+      ]
+    },
+    members: {
+      "Brazil": { role: "Miembro fundador (2009)" },
+      "Russia": { role: "Miembro fundador (2009)" },
+      "India": { role: "Miembro fundador (2009)" },
+      "China": { role: "Miembro fundador (2009)" },
+      "South Africa": { role: "Miembro pleno desde 2011 (transformó BRIC en BRICS)" },
+      "Egypt": { role: "Miembro pleno desde el 1 de enero de 2024" },
+      "Ethiopia": { role: "Miembro pleno desde el 1 de enero de 2024; sede de la Unión Africana" },
+      "Iran": { role: "Miembro pleno desde el 1 de enero de 2024" },
+      "Saudi Arabia": { role: "Miembro pleno desde el 1 de enero de 2024" },
+      "United Arab Emirates": { role: "Miembro pleno desde el 1 de enero de 2024" },
+      "Indonesia": { role: "Miembro pleno desde enero de 2025" }
+    },
+    partners: {
+      "Belarus": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." },
+      "Bolivia": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." },
+      "Cuba": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." },
+      "Kazakhstan": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." },
+      "Malaysia": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." },
+      "Thailand": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." },
+      "Uganda": { note: "País socio de BRICS (categoría creada en la cumbre de Kazan, octubre de 2024); no es miembro pleno." }
+    }
+  }
+};
+
 function getFlagEmoji(countryCode) {
   if (!countryCode || countryCode.length !== 2) return countryCode;
   const codePoints = countryCode
@@ -5434,6 +5907,7 @@ let selectedCountry = null;
 let compareCountry = null;
 let activeCategory = 'all';
 let selectedOrg = null;
+let selectedBloque = null;
 let countryPaths = {};
 let worldData = null;
 
@@ -5502,6 +5976,7 @@ function initApp() {
   setupCategories();
   setupContinentNav();
   setupOrgMenu();
+  setupBloquesMenu();
 
   // Tooltip
   tooltip = document.getElementById('tooltip');
@@ -5910,6 +6385,11 @@ function showInfoPanel(name, info) {
 
   if (activeCategory === 'organizaciones' && selectedOrg) {
     showOrgCountryPanel(name, selectedOrg);
+    return;
+  }
+
+  if (activeCategory === 'bloques' && selectedBloque) {
+    showBloqueCountryPanel(name, selectedBloque);
     return;
   }
 
@@ -6639,6 +7119,60 @@ function closeOrgMenu() {
   applyCategory('all');
 }
 
+// ============================================================
+// BLOQUES ECONÓMICOS — MENÚ LATERAL (selección de un bloque a la vez)
+// ============================================================
+
+function setupBloquesMenu() {
+  document.querySelectorAll('.bloque-item').forEach(item => {
+    item.addEventListener('click', () => selectBloque(item.dataset.bloque));
+  });
+}
+
+function toggleBloquesMenu(show) {
+  const menu = document.getElementById('bloques-menu');
+  if (!menu) return;
+  if (show) {
+    menu.classList.add('open');
+  } else {
+    menu.classList.remove('open');
+  }
+}
+
+function closeBloquesMenu() {
+  selectedBloque = null;
+  document.querySelectorAll('.bloque-item').forEach(item => item.classList.remove('active'));
+  activeCategory = 'all';
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  const worldPill = document.querySelector('.cat-pill[data-cat="all"]');
+  if (worldPill) worldPill.classList.add('active');
+  applyCategory('all');
+}
+
+function selectBloque(bloqueId) {
+  if (selectedBloque === bloqueId) {
+    // Volver a seleccionar el bloque activo lo desactiva
+    selectedBloque = null;
+  } else {
+    selectedBloque = bloqueId;
+  }
+  document.querySelectorAll('.bloque-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.bloque === selectedBloque);
+  });
+
+  // Recolorear el mapa de inmediato con la nueva selección
+  if (activeCategory === 'bloques') {
+    applyCategory('bloques');
+  }
+
+  // Mostrar la ficha del bloque recién activado, o cerrar el panel al desactivar
+  if (selectedBloque) {
+    showBloquePanel(selectedBloque);
+  } else {
+    closePanel();
+  }
+}
+
 function selectOrganization(orgId) {
   if (selectedOrg === orgId) {
     // Volver a seleccionar la organización activa la desactiva
@@ -6974,6 +7508,289 @@ function showOrgCountryPanel(name, orgId) {
   }
 }
 
+function showBloquePanel(bloqueId) {
+  const bloque = BLOQUES_DB[bloqueId];
+  if (!bloque) return;
+  const panel = document.getElementById('info-panel');
+  const color = bloque.color || '#ea580c';
+  // Distingue el total OFICIAL de miembros (member_count, o el tamaño de
+  // members si no se declara) de cuántos de ellos tienen representación
+  // cartográfica en este mapa (los marcados con noPolygon quedan fuera).
+  const officialCount = bloque.member_count || (bloque.members ? Object.keys(bloque.members).length : null);
+  const mappedCount = bloque.members ? Object.values(bloque.members).filter(m => !m.noPolygon).length : null;
+  const hasCartographicGap = officialCount !== null && mappedCount !== null && mappedCount !== officialCount;
+
+  const panelFlag = document.getElementById('panel-flag');
+  panelFlag.textContent = bloque.icon || '💰';
+  panelFlag.className = 'panel-flag';
+  document.getElementById('panel-name').textContent = bloque.name;
+  document.getElementById('panel-capital').textContent = `${bloque.acronym || ''} • ${bloque.headquarters || ''}`;
+
+  const badge = document.getElementById('panel-relation');
+  badge.textContent = bloque.type || 'Bloque económico';
+  badge.style.background = color + '26';
+  badge.style.color = color;
+  badge.style.border = `1px solid ${color}55`;
+
+  let html = `
+    <div class="panel-section animate-in">
+      <div class="panel-section-title" style="text-transform:uppercase;">Sigla</div>
+      <div class="panel-section-content" style="font-weight:600;">${bloque.acronym || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.02s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Tipo</div>
+      <div class="panel-section-content">${bloque.type || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.04s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Creación / Firma</div>
+      <div class="panel-section-content">${bloque.signed || bloque.founded || '—'}</div>
+    </div>${bloque.entry_into_force ? `
+    <div class="panel-section animate-in" style="animation-delay:0.05s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Entrada en vigor</div>
+      <div class="panel-section-content">${bloque.entry_into_force}</div>
+    </div>` : ''}
+    <div class="panel-section animate-in" style="animation-delay:0.06s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Sede</div>
+      <div class="panel-section-content">${bloque.headquarters || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.08s">
+      <div class="panel-section-title" style="text-transform:uppercase;">${bloque.legend_label ? bloque.legend_label + 's' : 'Estados miembros'}</div>
+      <div class="panel-section-content">${hasCartographicGap
+        ? `${officialCount} ${bloque.legend_label || 'Estados miembro'}s<br><span style="font-size:12px;color:#94a3b8;">${mappedCount} representados cartográficamente en este mapa</span>`
+        : (officialCount !== null ? officialCount : '—')}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.1s;border-left:3px solid ${color};padding-left:10px;">
+      <div class="panel-section-title" style="color:${color};text-transform:uppercase;">🇺🇸 ¿Por qué importa para EE. UU.?</div>
+      <div class="panel-section-content" style="font-weight:600;">${bloque.us_importance || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.12s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Participación de EE. UU.</div>
+      <div class="panel-section-content">${bloque.us_role || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.13s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Función económica</div>
+      <div class="panel-section-content">${bloque.function || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.14s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Relación con EE. UU.</div>
+      <div class="panel-section-content">${bloque.us_relation || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.16s">
+      <div class="panel-section-title" style="text-transform:uppercase;">🌐 Importancia Geoeconómica</div>
+      <div class="panel-section-content">${bloque.geo_importance || '—'}</div>
+    </div>${bloque.associates ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Estados Asociados (${Object.keys(bloque.associates).length}, no son Estados Parte)</div>
+      <div class="panel-tags">${Object.keys(bloque.associates).map(n => `<span class="panel-tag">${n}</span>`).join('')}</div>
+    </div>` : ''}${bloque.suspended ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Estados Suspendidos (${Object.keys(bloque.suspended).length})</div>
+      <div class="panel-tags">${Object.keys(bloque.suspended).map(n => `<span class="panel-tag">${n}</span>`).join('')}</div>
+    </div>` : ''}${bloque.partners ? `
+    <div class="panel-section animate-in" style="animation-delay:0.17s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Países Socios (${Object.keys(bloque.partners).length}, no son miembros plenos)</div>
+      <div class="panel-tags">${Object.keys(bloque.partners).map(n => `<span class="panel-tag">${n}</span>`).join('')}</div>
+    </div>` : ''}`;
+
+  if (bloque.actualidad) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.18s">
+      <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">SITUACIÓN ACTUAL Y HECHOS RECIENTES</div>
+      <div class="panel-section-content">
+        <p style="margin-bottom:8px;">${bloque.actualidad.current_situation}</p>
+        <div style="margin-bottom:8px; border-left: 2px solid var(--accent-cyan); padding-left: 8px; background: rgba(34,211,238,0.05);">
+          <strong>Hechos:</strong>
+          <ul style="margin:4px 0 0 16px; padding:0;">
+            ${bloque.actualidad.verified_facts.map(f => `<li>${f}</li>`).join('')}
+          </ul>
+        </div>
+        <p>${bloque.actualidad.interpretation}</p>
+      </div>
+    </div>`;
+    if (bloque.actualidad.sources && bloque.actualidad.sources.length > 0) {
+      html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
+        <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${bloque.actualidad.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+      </div>`;
+    }
+  }
+  if (bloque.updated) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.22s">
+      <div class="panel-section-content" style="font-size:0.75rem; color:#64748b;">🗓️ Actualizado: ${bloque.updated}</div>
+    </div>`;
+  }
+
+  document.getElementById('panel-body').innerHTML = html;
+  panel.classList.add('open');
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
+function buildBloqueMemberBullets(bloqueId, member) {
+  switch (bloqueId) {
+    case 'usmca':
+      return [
+        member.role || 'Estado Parte',
+        'Acuerdo comercial regional (no es una organización política ni una alianza militar)'
+      ];
+    case 'ue_bloque':
+      return [
+        member.role || 'Estado miembro',
+        'Integración política y económica supranacional con mercado único (no es un simple tratado comercial)'
+      ];
+    case 'rcep':
+      return [
+        member.role || 'Estado miembro',
+        'Acuerdo de libre comercio regional de Asia-Pacífico (no es una organización política)'
+      ];
+    case 'cptpp':
+      return [
+        member.role || 'Estado miembro',
+        'Acuerdo comercial plurilateral de alto estándar (no es una organización política)'
+      ];
+    case 'mercosur':
+      return [
+        member.role || 'Estado Parte',
+        'Proceso de integración económica y unión aduanera (no es una organización de seguridad)'
+      ];
+    case 'afcfta':
+      return [
+        member.role || 'Estado firmante',
+        'Zona de libre comercio continental (distinta de la membresía política en la Unión Africana)'
+      ];
+    case 'brics':
+      return [
+        member.role || 'Miembro pleno',
+        'Agrupación de cooperación económica y política (no es un tratado de libre comercio)'
+      ];
+    default:
+      return ['Participante'];
+  }
+}
+
+function showBloqueCountryPanel(name, bloqueId) {
+  const bloque = BLOQUES_DB[bloqueId];
+  if (!bloque) return;
+  const info = GEO_DB.countries[name] || {};
+  const color = bloque.color || '#ea580c';
+  const flag = info.identity ? info.identity.flag : info.flag;
+  const name_es = info.identity ? info.identity.name_es : (info.name_es || name);
+  const capital = info.identity ? info.identity.capital : info.capital;
+  const region = info.identity ? info.identity.region : info.region;
+
+  const panelFlag = document.getElementById('panel-flag');
+  panelFlag.textContent = getFlagEmoji(flag) || (bloque.icon || '💰');
+  panelFlag.className = 'panel-flag';
+  document.getElementById('panel-name').textContent = name_es;
+  document.getElementById('panel-capital').textContent = capital ? `Capital: ${capital} • ${region || ''}` : (region || '');
+
+  const badge = document.getElementById('panel-relation');
+  const member = bloque.members && bloque.members[name];
+  const associate = bloque.associates && bloque.associates[name];
+  const suspended = bloque.suspended && bloque.suspended[name];
+  const partner = bloque.partners && bloque.partners[name];
+
+  let html;
+  if (member) {
+    badge.textContent = `${bloque.icon || '💰'} ${bloque.legend_label || 'Miembro'} — ${bloque.acronym || bloque.name}`;
+    badge.style.background = color + '26';
+    badge.style.color = color;
+    badge.style.border = `1px solid ${color}55`;
+
+    const bullets = buildBloqueMemberBullets(bloqueId, member);
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid ${color};padding-left:10px;">
+        <div class="panel-section-title" style="color:${color};text-transform:uppercase;">${bloque.icon || '💰'} Participación en ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">
+          <ul style="margin:0 0 0 16px; padding:0;">
+            ${bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">${bloque.function}</div>
+      </div>`;
+  } else if (associate) {
+    badge.textContent = `Estado Asociado — ${bloque.acronym || bloque.name}`;
+    badge.style.background = 'rgba(234, 179, 8, 0.15)';
+    badge.style.color = '#fbbf24';
+    badge.style.border = '1px solid rgba(234, 179, 8, 0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #eab308;padding-left:10px;">
+        <div class="panel-section-title" style="color:#fbbf24;text-transform:uppercase;">Estado Asociado, no Estado Parte</div>
+        <div class="panel-section-content">${associate.note}</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">${bloque.function}</div>
+      </div>`;
+  } else if (partner) {
+    badge.textContent = `País Socio, no miembro — ${bloque.acronym || bloque.name}`;
+    badge.style.background = 'rgba(234, 179, 8, 0.15)';
+    badge.style.color = '#fbbf24';
+    badge.style.border = '1px solid rgba(234, 179, 8, 0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #eab308;padding-left:10px;">
+        <div class="panel-section-title" style="color:#fbbf24;text-transform:uppercase;">País Socio, no miembro pleno</div>
+        <div class="panel-section-content">${partner.note}</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">${bloque.function}</div>
+      </div>`;
+  } else if (suspended) {
+    badge.textContent = `Suspendido — ${bloque.acronym || bloque.name}`;
+    badge.style.background = 'rgba(100,116,139,0.15)';
+    badge.style.color = '#94a3b8';
+    badge.style.border = '1px solid rgba(100,116,139,0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #64748b;padding-left:10px;">
+        <div class="panel-section-title" style="color:#94a3b8;text-transform:uppercase;">Estado Suspendido</div>
+        <div class="panel-section-content">${suspended.note}</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">${bloque.function}</div>
+      </div>`;
+  } else {
+    badge.textContent = `No participa en ${bloque.acronym || bloque.name}`;
+    badge.style.background = 'rgba(100,116,139,0.15)';
+    badge.style.color = '#94a3b8';
+    badge.style.border = '1px solid rgba(100,116,139,0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #64748b;padding-left:10px;">
+        <div class="panel-section-title" style="color:#94a3b8;text-transform:uppercase;">Relación con ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">${name_es} no participa en ${bloque.acronym || bloque.name}.</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre ${bloque.acronym || bloque.name}</div>
+        <div class="panel-section-content">${bloque.function}</div>
+      </div>`;
+  }
+
+  document.getElementById('panel-body').innerHTML = html;
+  document.getElementById('info-panel').classList.add('open');
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
 function applyCategory(cat) {
   g.selectAll('.country-path').each(function(d) {
     const name = d.properties.name;
@@ -7046,8 +7863,20 @@ function applyCategory(cat) {
       }
     }
     else if (cat === 'bloques') {
-      if (info && (info.brics?.is_member || (info.orgs_simple && info.orgs_simple.includes('BRICS')))) el.style('fill', '#ea580c').style('opacity', 1);
-      else el.style('opacity', 0.15);
+      // El resaltado depende exclusivamente del bloque elegido en el
+      // menú lateral (selectedBloque). Sin selección, ningún país se resalta.
+      const bloque = selectedBloque ? BLOQUES_DB[selectedBloque] : null;
+      if (bloque && bloque.members && bloque.members[name]) {
+        el.style('fill', bloque.color || '#ea580c').style('opacity', 1);
+      } else if (bloque && bloque.associates && bloque.associates[name]) {
+        el.style('fill', bloque.color || '#ea580c').style('opacity', 0.55);
+      } else if (bloque && bloque.partners && bloque.partners[name]) {
+        el.style('fill', bloque.color || '#ea580c').style('opacity', 0.55);
+      } else if (bloque && bloque.suspended && bloque.suspended[name]) {
+        el.style('fill', '#64748b').style('opacity', 0.45);
+      } else {
+        el.style('opacity', 0.15);
+      }
     }
     else if (cat === 'zonas') {
       // General zones based on relation
@@ -7073,6 +7902,9 @@ function applyCategory(cat) {
 
   // Organizaciones side menu: only show when organizaciones is active
   toggleOrgMenu(cat === 'organizaciones');
+
+  // Bloques Económicos side menu: only show when bloques is active
+  toggleBloquesMenu(cat === 'bloques');
 
   // Ensure markers stay on top after category updates
   g.selectAll('.mesh-borders').raise();
@@ -7120,12 +7952,28 @@ function updateLegend(cat) {
       }
       break;
     }
-    case 'bloques':
-      html = `
-        <div class="legend-title">Bloques Económicos</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#ea580c"></div>BRICS</div>
-      `;
+    case 'bloques': {
+      const bloque = selectedBloque ? BLOQUES_DB[selectedBloque] : null;
+      if (bloque) {
+        const count = bloque.member_count || (bloque.members ? Object.keys(bloque.members).length : '');
+        let extra = '';
+        if (bloque.associates) extra += `<div class="legend-item"><div class="legend-dot" style="background:${bloque.color};opacity:0.55"></div>Estado Asociado (${Object.keys(bloque.associates).length})</div>`;
+        if (bloque.partners) extra += `<div class="legend-item"><div class="legend-dot" style="background:${bloque.color};opacity:0.55"></div>País Socio (${Object.keys(bloque.partners).length})</div>`;
+        if (bloque.suspended) extra += `<div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>Suspendido (${Object.keys(bloque.suspended).length})</div>`;
+        html = `
+          <div class="legend-title">${bloque.icon || '💰'} ${bloque.acronym || bloque.name}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${bloque.color}"></div>${bloque.legend_label || 'Miembro'} (${count})</div>
+          ${extra}
+          ${bloque.legend_note ? `<div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${bloque.legend_note}</div>` : ''}
+        `;
+      } else {
+        html = `
+          <div class="legend-title">Bloques Económicos</div>
+          <div class="legend-item" style="opacity:0.7; cursor:default;">Selecciona un bloque en el menú lateral</div>
+        `;
+      }
       break;
+    }
     case 'conflictos':
       html = `
         <div class="legend-title">Conflictos</div>
