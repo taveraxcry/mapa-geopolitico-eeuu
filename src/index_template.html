@@ -5936,6 +5936,11 @@ const ZONA_LEVEL_LABELS = {
   compartida: "Influencia compartida / competida",
   limitada: "Influencia limitada"
 };
+// Relleno tenue para el ÁMBITO GEOGRÁFICO de una zona (region_scope).
+// Indica ÚNICAMENTE extensión geográfica; NO representa influencia
+// estadounidense ni ningún nivel de la escala anterior.
+const ZONA_SCOPE_FILL = "#334155";
+const ZONA_SCOPE_OPACITY = 0.35;
 
 const ZONAS_INFLUENCIA_DB = {
   "hemisferio_occidental": {
@@ -5947,6 +5952,10 @@ const ZONAS_INFLUENCIA_DB = {
     mechanisms: ["USMCA/T-MEC", "OEA", "cooperación en seguridad y antinarcóticos", "acuerdos migratorios bilaterales", "inversión y remesas", "asistencia y cooperación energética"],
     key_actors: ["Estados Unidos", "México", "Canadá", "Colombia", "Brasil"],
     competitors: ["China (inversión, comercio e infraestructura portuaria)", "Rusia (vínculos con Venezuela, Cuba y Nicaragua)"],
+    panel_color_level: "alta",
+    // Ámbito geográfico de la zona (relleno tenue en el mapa). NO implica
+    // influencia estadounidense: solo indica qué países integran la región.
+    region_scope: ["Canada", "Mexico", "Guatemala", "Belize", "Honduras", "El Salvador", "Nicaragua", "Costa Rica", "Panama", "Cuba", "Jamaica", "Haiti", "Dominican Rep.", "Bahamas", "Trinidad and Tobago", "Colombia", "Venezuela", "Ecuador", "Peru", "Brazil", "Bolivia", "Paraguay", "Chile", "Argentina", "Uruguay", "Guyana", "Suriname"],
     strategic_countries: {
       "Canada": { level: "alta", mechanisms: ["USMCA/T-MEC", "NORAD", "OTAN"], note: "Socio comercial y de seguridad de integración profunda con EE. UU." },
       "Mexico": { level: "alta", mechanisms: ["USMCA/T-MEC", "cooperación migratoria y antinarcóticos"], note: "Principal socio comercial de EE. UU. en bienes y eje de las cadenas de suministro norteamericanas." },
@@ -5986,6 +5995,10 @@ const ZONAS_INFLUENCIA_DB = {
     mechanisms: ["OTAN (Artículo 5)", "relación comercial y de inversión EE. UU.-UE", "coordinación de sanciones a Rusia", "asistencia militar a Ucrania", "cooperación tecnológica y de exportación"],
     key_actors: ["Estados Unidos", "Reino Unido", "Alemania", "Francia", "Polonia"],
     competitors: ["Rusia (guerra en Ucrania, presión sobre el flanco oriental de la OTAN)"],
+    panel_color_level: "alta",
+    // Ámbito geográfico de la zona (relleno tenue en el mapa). NO implica
+    // influencia estadounidense: solo indica qué países integran la región.
+    region_scope: ["United Kingdom", "Ireland", "France", "Germany", "Netherlands", "Belgium", "Luxembourg", "Spain", "Portugal", "Italy", "Switzerland", "Austria", "Denmark", "Norway", "Sweden", "Finland", "Iceland", "Poland", "Czechia", "Slovakia", "Hungary", "Romania", "Bulgaria", "Greece", "Croatia", "Slovenia", "Serbia", "Bosnia and Herz.", "Montenegro", "Albania", "Macedonia", "Estonia", "Latvia", "Lithuania", "Ukraine", "Belarus", "Moldova", "Russia", "Cyprus", "Malta"],
     strategic_countries: {
       "United Kingdom": { level: "alta", mechanisms: ["OTAN", "relación especial bilateral", "Five Eyes"], note: "Socio de seguridad e inteligencia más cercano de EE. UU. en la región." },
       "Germany": { level: "alta", mechanisms: ["OTAN", "comercio e inversión UE-EE. UU."], note: "Mayor economía europea y ancla industrial de la relación transatlántica." },
@@ -6022,6 +6035,10 @@ const ZONAS_INFLUENCIA_DB = {
     mechanisms: ["tratados de defensa mutua (Japón, Corea del Sur, Filipinas, Australia)", "AUKUS", "QUAD", "cooperación tecnológica y de semiconductores", "presencia naval estadounidense"],
     key_actors: ["Estados Unidos", "Japón", "Corea del Sur", "Australia", "Filipinas", "India"],
     competitors: ["China (Mar de China Meridional, Taiwán, iniciativas comerciales regionales como el RCEP)"],
+    panel_color_level: "compartida",
+    // Ámbito geográfico de la zona (relleno tenue en el mapa). NO implica
+    // influencia estadounidense: solo indica qué países integran la región.
+    region_scope: ["Japan", "South Korea", "North Korea", "China", "Taiwan", "Mongolia", "Vietnam", "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Indonesia", "Philippines", "Brunei", "Timor-Leste", "India", "Sri Lanka", "Bangladesh", "Nepal", "Bhutan", "Australia", "New Zealand", "Papua New Guinea", "Fiji", "Solomon Is.", "Vanuatu"],
     strategic_countries: {
       "Japan": { level: "alta", mechanisms: ["tratado de defensa mutua", "QUAD"], note: "Aliado de tratado más profundo de EE. UU. en la región, con presencia militar estadounidense permanente." },
       "South Korea": { level: "alta", mechanisms: ["tratado de defensa mutua", "presencia militar estadounidense"], note: "Aliado de tratado con fuerte presencia militar estadounidense frente a Corea del Norte." },
@@ -6038,12 +6055,12 @@ const ZONAS_INFLUENCIA_DB = {
     },
     current_situation: "Hacia 2026, EE. UU. profundiza su red de alianzas en el Indo-Pacífico —incluida la cooperación de submarinos nucleares de AUKUS y la coordinación del QUAD— mientras China expande su presencia naval y su influencia comercial regional a través del RCEP, en un contexto de tensión sostenida en el Mar de China Meridional y el estrecho de Taiwán.",
     recent_events: [
-      "AUKUS avanza en la fase de transferencia de capacidades de submarinos de propulsión nuclear entre EE. UU., Reino Unido y Australia.",
+      "AUKUS continúa avanzando en su hoja de ruta de capacidades submarinas y cooperación tecnológica entre Australia, Reino Unido y EE. UU.",
       "Filipinas ha ampliado el acceso militar estadounidense a bases adicionales en el marco del Acuerdo de Cooperación de Defensa Reforzada (EDCA).",
       "Las tensiones en el Mar de China Meridional y el estrecho de Taiwán continúan como los principales puntos de fricción entre EE. UU. y China en la región."
     ],
     sources: [
-      { name: "U.S. Department of Defense — Indo-Pacific Strategy", url: "https://www.defense.gov/" },
+      { name: "U.S.-China Economic and Security Review Commission", url: "https://www.uscc.gov/" },
       { name: "U.S. Department of State — East Asian and Pacific Affairs", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-east-asian-and-pacific-affairs/" },
       { name: "ASEAN — Official site", url: "https://asean.org/" }
     ],
@@ -6058,6 +6075,10 @@ const ZONAS_INFLUENCIA_DB = {
     mechanisms: ["alianzas de seguridad bilaterales", "bases militares (Qatar, Baréin)", "venta de armamento", "diplomacia (Acuerdos de Abraham)", "sanciones a Irán"],
     key_actors: ["Estados Unidos", "Israel", "Arabia Saudita", "Emiratos Árabes Unidos", "Qatar"],
     competitors: ["Irán (proxies regionales, programa nuclear)", "Rusia (vínculos con Siria e Irán)"],
+    panel_color_level: "significativa",
+    // Ámbito geográfico de la zona (relleno tenue en el mapa). NO implica
+    // influencia estadounidense: solo indica qué países integran la región.
+    region_scope: ["Israel", "Jordan", "Lebanon", "Syria", "Iraq", "Iran", "Saudi Arabia", "Yemen", "Oman", "United Arab Emirates", "Qatar", "Bahrain", "Kuwait", "Egypt"],
     strategic_countries: {
       "Israel": { level: "alta", mechanisms: ["asistencia militar y de inteligencia", "Acuerdos de Abraham"], note: "Socio de seguridad más cercano de EE. UU. en la región." },
       "Saudi Arabia": { level: "alta", mechanisms: ["venta de armamento", "cooperación energética y de seguridad"], note: "Socio estratégico clave en seguridad energética y equilibrio regional frente a Irán." },
@@ -6080,7 +6101,7 @@ const ZONAS_INFLUENCIA_DB = {
     sources: [
       { name: "U.S. Department of State — Near Eastern Affairs", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-near-eastern-affairs/" },
       { name: "U.S. Department of Defense — CENTCOM", url: "https://www.centcom.mil/" },
-      { name: "The White House", url: "https://www.whitehouse.gov/" }
+      { name: "U.S. Energy Information Administration — World Oil Transit Chokepoints", url: "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints" }
     ],
     updated: "11 de septiembre de 2026"
   },
@@ -6093,6 +6114,10 @@ const ZONAS_INFLUENCIA_DB = {
     mechanisms: ["AGOA (Ley de Crecimiento y Oportunidad para África)", "AFRICOM (cooperación antiterrorista)", "asistencia para el desarrollo (USAID)", "diplomacia de minerales críticos"],
     key_actors: ["Estados Unidos", "Marruecos", "Kenia", "Nigeria", "Sudáfrica"],
     competitors: ["China (comercio, infraestructura, minería)", "Rusia (seguridad y presencia militar en el Sahel)"],
+    panel_color_level: "limitada",
+    // Ámbito geográfico de la zona (relleno tenue en el mapa). NO implica
+    // influencia estadounidense: solo indica qué países integran la región.
+    region_scope: ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Rep.", "Chad", "Comoros", "Congo", "Côte d'Ivoire", "Djibouti", "Dem. Rep. Congo", "Egypt", "Eq. Guinea", "Eritrea", "eSwatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "W. Sahara", "São Tomé and Príncipe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "S. Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
     strategic_countries: {
       "Morocco": { level: "significativa", mechanisms: ["Acuerdos de Abraham", "cooperación militar histórica"], note: "Socio de seguridad de larga data en el norte de África." },
       "Kenya": { level: "significativa", mechanisms: ["designación de aliado principal no perteneciente a la OTAN", "cooperación antiterrorista (AFRICOM)"], note: "Socio de seguridad clave en el Cuerno de África frente al terrorismo yihadista." },
@@ -6126,6 +6151,10 @@ const ZONAS_INFLUENCIA_DB = {
     mechanisms: ["Consejo Ártico", "OTAN (a través de sus miembros árticos)", "presencia militar en Alaska", "cooperación con Canadá (NORAD)", "diplomacia sobre Groenlandia"],
     key_actors: ["Estados Unidos (Alaska)", "Canadá", "Noruega", "Dinamarca / Groenlandia", "Islandia"],
     competitors: ["Rusia (mayor costa ártica, militarización)", "China ('Estado cercano al Ártico', interés económico y científico)"],
+    panel_color_level: "compartida",
+    // Ámbito geográfico de la zona (relleno tenue en el mapa). NO implica
+    // influencia estadounidense: solo indica qué países integran la región.
+    region_scope: ["Canada", "Greenland", "Norway", "Iceland", "Russia", "Sweden", "Finland"],
     strategic_countries: {
       "Canada": { level: "alta", mechanisms: ["NORAD", "OTAN", "Consejo Ártico"], note: "Socio ártico más cercano de EE. UU., con defensa aeroespacial integrada a través de NORAD." },
       "Greenland": { level: "alta", mechanisms: ["base espacial de Pituffik (ex Thule)", "diplomacia con Dinamarca"], note: "Territorio autónomo danés que aloja una instalación militar y espacial estadounidense de importancia estratégica creciente para la vigilancia ártica." },
@@ -6140,7 +6169,7 @@ const ZONAS_INFLUENCIA_DB = {
       "China mantiene su autodefinición como 'Estado cercano al Ártico' y su interés en la Ruta Marítima del Norte, pese a no tener territorio ártico propio."
     ],
     sources: [
-      { name: "U.S. Department of Defense — Arctic Strategy", url: "https://www.defense.gov/" },
+      { name: "U.S. Arctic Research Commission", url: "https://www.arctic.gov/" },
       { name: "U.S. Department of State — Arctic Affairs", url: "https://www.state.gov/" },
       { name: "Government of Canada — Arctic and Northern Policy", url: "https://www.rcaanc-cirnac.gc.ca/" }
     ],
@@ -8156,7 +8185,10 @@ function showZonaPanel(zonaId) {
   const zona = ZONAS_INFLUENCIA_DB[zonaId];
   if (!zona) return;
   const panel = document.getElementById('info-panel');
-  const color = ZONA_LEVEL_COLORS.alta;
+  // El color del encabezado refleja el carácter general de la zona
+  // (panel_color_level); las zonas de competencia mixta usan el
+  // tratamiento "compartida", no un "alta" artificial por defecto.
+  const color = ZONA_LEVEL_COLORS[zona.panel_color_level] || ZONA_LEVEL_COLORS.significativa;
 
   const panelFlag = document.getElementById('panel-flag');
   panelFlag.textContent = zona.icon || '🌐';
@@ -8411,10 +8443,15 @@ function applyCategory(cat) {
       // El resaltado depende exclusivamente de la zona elegida en el
       // menú lateral (selectedZona) y del nivel de influencia asignado a
       // cada país dentro de esa zona (NO de GEO_DB.relation / ally-adversary).
+      // Los países del region_scope que no tienen clasificación de
+      // influencia se muestran con un relleno tenue que indica ÚNICAMENTE
+      // extensión geográfica de la zona, nunca influencia estadounidense.
       const zona = selectedZona ? ZONAS_INFLUENCIA_DB[selectedZona] : null;
       const entry = zona && zona.strategic_countries ? zona.strategic_countries[name] : null;
       if (entry) {
         el.style('fill', ZONA_LEVEL_COLORS[entry.level] || ZONA_LEVEL_COLORS.limitada).style('opacity', 1);
+      } else if (zona && zona.region_scope && zona.region_scope.includes(name)) {
+        el.style('fill', ZONA_SCOPE_FILL).style('opacity', ZONA_SCOPE_OPACITY);
       } else {
         el.style('opacity', 0.15);
       }
