@@ -482,6 +482,20 @@ body {
   font-weight: 600;
 }
 
+.territorio-item-label { font-weight: 500; }
+.territorio-item.active .territorio-item-label { font-weight: 600; }
+
+.territorio-item-desc {
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.territorio-item.active .territorio-item-desc { color: #67e8f9; opacity: 0.85; }
+
 /* ===== MAP CONTAINER ===== */
 #map-container {
   position: fixed;
@@ -1299,11 +1313,26 @@ body {
   <div class="org-menu-body">
     <div class="org-group">
       <div class="org-group-title">Categorías de espacios estratégicos</div>
-      <div class="territorio-item" data-territorio="us_territories">🇺🇸 Territorios estadounidenses</div>
-      <div class="territorio-item" data-territorio="chokepoints">🚢 Chokepoints marítimos</div>
-      <div class="territorio-item" data-territorio="canales_corredores">🌊 Canales y corredores</div>
-      <div class="territorio-item" data-territorio="posiciones_insulares">🏝️ Posiciones insulares estratégicas</div>
-      <div class="territorio-item" data-territorio="espacios_polares">🧭 Espacios polares / árticos</div>
+      <div class="territorio-item" data-territorio="us_territories">
+        <div class="territorio-item-label">🇺🇸 Territorios estadounidenses</div>
+        <div class="territorio-item-desc">Espacios bajo soberanía o administración estadounidense con valor estratégico.</div>
+      </div>
+      <div class="territorio-item" data-territorio="chokepoints">
+        <div class="territorio-item-label">🚢 Chokepoints marítimos</div>
+        <div class="territorio-item-desc">Pasos marítimos cuya interrupción puede afectar rutas internacionales.</div>
+      </div>
+      <div class="territorio-item" data-territorio="canales_corredores">
+        <div class="territorio-item-label">🌊 Canales y corredores</div>
+        <div class="territorio-item-desc">Infraestructuras y rutas de conexión estratégica.</div>
+      </div>
+      <div class="territorio-item" data-territorio="posiciones_insulares">
+        <div class="territorio-item-label">🏝️ Posiciones insulares estratégicas</div>
+        <div class="territorio-item-desc">Islas cuya ubicación aporta valor estratégico.</div>
+      </div>
+      <div class="territorio-item" data-territorio="espacios_polares">
+        <div class="territorio-item-label">🧭 Espacios polares / árticos</div>
+        <div class="territorio-item-desc">Espacios polares de importancia para defensa, rutas y competencia.</div>
+      </div>
     </div>
   </div>
 </aside>
@@ -3956,15 +3985,15 @@ const GEO_DB = {
       commercial: "Paso obligado para gran parte del petróleo exportado desde el Golfo Pérsico; una interrupción sostenida tiene capacidad de afectar los precios globales de la energía.",
       energy: "Paso obligado para exportaciones de Arabia Saudita, EAU, Iraq, Kuwait, Qatar e Irán. Sin alternativa viable equivalente en capacidad.",
       military: "EE. UU. mantiene la 5ª Flota con base en Bahréin para garantizar la libertad de navegación; Irán ha desarrollado doctrinas de 'guerra asimétrica' orientadas a amenazar el cierre del estrecho en caso de conflicto.",
-      situation_current: "⚠️ ZONA DE TENSIÓN ACTIVA: la región atraviesa un episodio de confrontación naval entre EE. UU./aliados e Irán, con bloqueos navales declarados, ataques contra buques comerciales y una fuerte caída del tráfico marítimo respecto a condiciones normales. La OMI ha calificado la situación como de gravedad excepcional.",
+      situation_current: "⚠️ ZONA DE TENSIÓN ACTIVA: la región atraviesa un episodio de confrontación naval entre EE. UU./aliados e Irán, con bloqueos navales declarados, ataques contra buques comerciales y una fuerte caída del tráfico marítimo respecto a condiciones normales. La OMI registraba 75 incidentes confirmados al 10 de septiembre de 2026, la fuente verificable más reciente disponible.",
       verified_facts: [
-        "La Organización Marítima Internacional (OMI) ha calificado la situación en el estrecho como de gravedad excepcional.",
+        "La Organización Marítima Internacional (OMI) registraba 75 incidentes confirmados en la zona al 10 de septiembre de 2026.",
         "CENTCOM mantiene presencia naval reforzada en la zona para proteger la libertad de navegación.",
         "Múltiples navieras han reportado incidentes de ataque o interferencia contra buques comerciales y suspendido temporalmente tránsitos."
       ],
       interpretation: "El Estrecho no está completamente bloqueado, pero está efectivamente militarizado y el tráfico comercial se ha visto muy reducido. El riesgo de escalada hacia un cierre más prolongado se mantiene alto mientras persista la confrontación naval.",
       risk_scenarios: "Una escalada que derive en un cierre prolongado afectaría a una porción muy significativa del suministro energético mundial, con fuerte impacto alcista en los precios del petróleo y riesgo de shock económico global.",
-      updated: "12 de septiembre de 2026",
+      updated: "13 de septiembre de 2026",
       sources: "Organización Marítima Internacional (IMO), CENTCOM"
     },
     {
@@ -4029,14 +4058,15 @@ const GEO_DB = {
       commercial: "Miles de buques transitan anualmente; el volumen de tránsitos depende en gran medida de la disponibilidad de agua dulce en el lago Gatún, del que dependen las esclusas.",
       energy: "Ruta clave para las exportaciones de GNL de EE. UU. hacia Asia, además de petróleo y derivados en ambas direcciones.",
       military: "El Canal está bajo soberanía panameña exclusiva desde 1999; EE. UU. no opera ni administra el Canal. Existe debate político sobre la presencia de operadores portuarios vinculados a empresas chinas en puertos adyacentes al Canal, un asunto distinto de la administración del Canal en sí, que corresponde íntegramente a la ACP.",
-      situation_current: "⚡ CUPOS DE TRÁNSITO AJUSTADOS: la ACP fijó, a partir del 3 de septiembre de 2026, un cupo de 9 tránsitos diarios para buques Neopanamax y 25 para buques Panamax; desde el 15 de septiembre de 2026, el cupo de buques Panamax se ajustó a 23 tránsitos diarios. Estas medidas responden a la gestión del nivel de agua del lago Gatún.",
+      situation_current: "⚡ CUPOS DE TRÁNSITO AJUSTADOS, CALADO SIN CAMBIOS: la ACP fijó, a partir del 3 de septiembre de 2026, un cupo de 9 tránsitos diarios para buques Neopanamax y 25 para buques Panamax, con un nuevo ajuste programado para el 15 de septiembre de 2026 que llevaría el cupo de buques Panamax a 23 tránsitos diarios. La ACP mantiene el calado máximo autorizado para buques Neopanamax en 48,0 pies (14,63 m); la reducción a 47,5 pies que se había previsto fue pospuesta. Estas medidas responden a la gestión del nivel de agua del lago Gatún.",
       verified_facts: [
         "Desde el 3 de septiembre de 2026: cupo de 9 tránsitos diarios para buques Neopanamax y 25 para buques Panamax (ACP).",
-        "Desde el 15 de septiembre de 2026: cupo ajustado a 23 tránsitos diarios para buques Panamax (ACP)."
+        "Ajuste programado para el 15 de septiembre de 2026: cupo de buques Panamax a 23 tránsitos diarios (ACP).",
+        "Calado máximo Neopanamax vigente: 48,0 pies / 14,63 m. La reducción prevista a 47,5 pies fue pospuesta (ACP)."
       ],
-      interpretation: "Los ajustes de cupos son una herramienta operativa recurrente de la ACP para gestionar la disponibilidad de agua dulce del lago Gatún, no una crisis excepcional; reflejan la dependencia estructural del Canal de las lluvias y el manejo hídrico de la cuenca.",
-      risk_scenarios: "Una sequía prolongada podría forzar nuevos ajustes a los cupos de tránsito, con impacto en los tiempos de espera y costos logísticos de las rutas entre Asia y la costa este de EE. UU.",
-      updated: "12 de septiembre de 2026",
+      interpretation: "Los ajustes de cupos y calado son una herramienta operativa recurrente de la ACP para gestionar la disponibilidad de agua dulce del lago Gatún, no una crisis excepcional; reflejan la dependencia estructural del Canal de las lluvias y el manejo hídrico de la cuenca.",
+      risk_scenarios: "Una sequía prolongada podría forzar nuevos ajustes a los cupos de tránsito o al calado autorizado, con impacto en los tiempos de espera y costos logísticos de las rutas entre Asia y la costa este de EE. UU.",
+      updated: "13 de septiembre de 2026",
       sources: "Autoridad del Canal de Panamá (ACP)"
     },
     {
@@ -6803,12 +6833,24 @@ function renderStrategicLocations() {
       .attr('fill', 'transparent')
       .attr('stroke', 'none');
 
-    // Risk ring (colored border)
-    group.append('circle')
-      .attr('r', 13)
-      .attr('fill', 'rgba(15,23,42,0.85)')
-      .attr('stroke', loc.risk_color || '#7c3aed')
-      .attr('stroke-width', 2);
+    // Forma diferenciada: los estrechos/chokepoints (type "strait") usan un
+    // círculo; los canales (type "canal") usan un rombo. Así la distinción
+    // 🚢 chokepoint vs 🌊 canal no depende únicamente del emoji.
+    if (loc.type === 'canal') {
+      group.append('rect')
+        .attr('x', -10).attr('y', -10)
+        .attr('width', 20).attr('height', 20)
+        .attr('transform', 'rotate(45)')
+        .attr('fill', 'rgba(15,23,42,0.85)')
+        .attr('stroke', loc.risk_color || '#7c3aed')
+        .attr('stroke-width', 2);
+    } else {
+      group.append('circle')
+        .attr('r', 13)
+        .attr('fill', 'rgba(15,23,42,0.85)')
+        .attr('stroke', loc.risk_color || '#7c3aed')
+        .attr('stroke-width', 2);
+    }
 
     // Emoji icon as foreignObject for better rendering
     group.append('text')
@@ -6868,7 +6910,11 @@ function renderTerritoriosMarkers() {
   g.selectAll('.territorios-markers').remove();
   if (activeCategory !== 'territorios' || !selectedTerritorio) return;
 
-  const entries = Object.values(TERRITORIOS_ESTRATEGICOS_DB).filter(t => t.categories.includes(selectedTerritorio));
+  // Las entradas con polygon_name (Puerto Rico, Groenlandia) ya se resaltan
+  // territorialmente rellenando su polígono real en applyCategory(); no se
+  // duplican aquí como marcador para evitar una doble representación del
+  // mismo territorio.
+  const entries = Object.values(TERRITORIOS_ESTRATEGICOS_DB).filter(t => t.categories.includes(selectedTerritorio) && !t.polygon_name);
   if (entries.length === 0) return;
 
   const group = g.append('g').attr('class', 'territorios-markers');
@@ -6879,8 +6925,15 @@ function renderTerritoriosMarkers() {
     if (!projected) return;
     const [x, y] = projected;
 
+    // El Ártico como conjunto ("artico_estrategico") no es un territorio de
+    // un solo país ni un punto puntual: se representa con un halo regional
+    // amplio y difuso (espacio estratégico polar compartido), sin fronteras
+    // políticas inventadas y sin recolorear todo el Ártico como si fuera
+    // territorio estadounidense.
+    const isArcticRegion = t.id === 'artico_estrategico';
+
     const pointGroup = group.append('g')
-      .attr('class', 'strategic-point')
+      .attr('class', isArcticRegion ? 'strategic-point territorio-regional' : 'strategic-point')
       .attr('data-x', x)
       .attr('data-y', y)
       .attr('transform', `translate(${x},${y})`)
@@ -6888,9 +6941,44 @@ function renderTerritoriosMarkers() {
       .style('pointer-events', 'all');
 
     pointGroup.append('circle')
-      .attr('r', 18)
+      .attr('r', isArcticRegion ? 50 : 18)
       .attr('fill', 'transparent')
       .attr('stroke', 'none');
+
+    // Halo diferenciado según la categoría del menú activa, para que la
+    // capa no dependa únicamente del emoji: territorios estadounidenses usan
+    // un halo cuadrado punteado (evoca un "recuadro territorial"),
+    // posiciones insulares un halo circular suave, y el Ártico un halo
+    // regional amplio.
+    if (isArcticRegion) {
+      pointGroup.append('circle')
+        .attr('r', 42)
+        .attr('fill', categoryColor)
+        .attr('fill-opacity', 0.10)
+        .attr('stroke', categoryColor)
+        .attr('stroke-width', 1.2)
+        .attr('stroke-dasharray', '4,3')
+        .attr('stroke-opacity', 0.55);
+    } else if (selectedTerritorio === 'us_territories') {
+      pointGroup.append('rect')
+        .attr('x', -16).attr('y', -16)
+        .attr('width', 32).attr('height', 32)
+        .attr('rx', 6)
+        .attr('fill', 'none')
+        .attr('stroke', categoryColor)
+        .attr('stroke-width', 1.2)
+        .attr('stroke-dasharray', '3,2')
+        .attr('stroke-opacity', 0.85);
+    } else if (selectedTerritorio === 'posiciones_insulares') {
+      pointGroup.append('circle')
+        .attr('r', 20)
+        .attr('fill', categoryColor)
+        .attr('fill-opacity', 0.12)
+        .attr('stroke', categoryColor)
+        .attr('stroke-width', 1)
+        .attr('stroke-dasharray', '2,2')
+        .attr('stroke-opacity', 0.55);
+    }
 
     pointGroup.append('circle')
       .attr('r', 13)
