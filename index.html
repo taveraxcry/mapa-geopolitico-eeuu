@@ -1617,14 +1617,22 @@ body {
 
 /* ================================================================
    #map-legend: al abrir uno de los 4 menús laterales (Organizaciones/
-   Bloques/Zonas/Territorios), la leyenda inferior se desplaza a la
-   derecha del menú en vez de quedar oculta debajo de él. La clase
-   "side-menu-open" la controla syncSideMenuLayout() (solo en
-   desktop/tablet; en móvil no se agrega y la leyenda conserva su
-   left:10px/bottom:10px habitual).
+   Bloques/Zonas/Territorios), la leyenda inferior deja de estar pegada
+   a la izquierda y se centra horizontalmente en el espacio real del
+   mapa (entre el borde derecho del menú y el borde derecho del
+   viewport, o el borde izquierdo del #info-panel si también está
+   abierto). --map-legend-center-x lo calcula syncSideMenuLayout() de
+   forma responsive; left+translateX(-50%) centra la leyenda sobre ese
+   punto sin depender de medir su ancho real. La clase "side-menu-open"
+   solo se agrega en desktop/tablet; en móvil la leyenda conserva su
+   left:10px/bottom:10px habitual, sin cambios.
    ================================================================ */
 #map-legend { transition: left 300ms ease; }
-body.side-menu-open #map-legend { left: calc(var(--side-menu-width) + 20px); }
+body.side-menu-open #map-legend {
+  left: var(--map-legend-center-x, calc(50% + 140px));
+  transform: translateX(-50%);
+  max-width: var(--map-legend-max-width, 320px);
+}
 </style>
 </head>
 <body>
@@ -8860,26 +8868,47 @@ function syncSideMenuLayout() {
     return;
   }
 
-  // #map-legend (barra/leyenda inferior) se desplaza a la derecha del
-  // menú lateral mediante esta clase en <body> + la regla CSS
-  // "body.side-menu-open #map-legend", solo cuando uno de los 4 menús
-  // (Organizaciones/Bloques/Zonas/Territorios) está realmente abierto;
-  // en el resto de categorías (Aliados, Rivales, etc.) nunca se agrega
-  // esta clase, porque esos no abren ninguno de estos 4 menús.
+  // #map-legend (barra/leyenda inferior) se centra en el espacio del mapa
+  // (entre el borde derecho del menú y el borde izquierdo del panel, si
+  // está abierto) mediante esta clase en <body> + la variable CSS
+  // --map-legend-center-x, solo cuando uno de los 4 menús (Organizaciones/
+  // Bloques/Zonas/Territorios) está realmente abierto; en el resto de
+  // categorías (Aliados, Rivales, etc.) nunca se agrega esta clase, porque
+  // esos no abren ninguno de estos 4 menús.
   document.body.classList.toggle('side-menu-open', anyMenuOpen);
 
-  if (!panel) return;
-
   if (!anyMenuOpen) {
-    panel.style.width = '';
-    panel.style.maxWidth = '';
+    if (panel) { panel.style.width = ''; panel.style.maxWidth = ''; }
     return;
   }
 
-  const available = window.innerWidth - SIDE_MENU_WIDTH - LAYOUT_MAP_GAP;
-  const width = Math.max(INFO_PANEL_MIN_WIDTH, Math.min(INFO_PANEL_DEFAULT_WIDTH, available));
-  panel.style.width = width + 'px';
-  panel.style.maxWidth = width + 'px';
+  let panelWidth = 0;
+  if (panel) {
+    if (panel.classList.contains('open')) {
+      const available = window.innerWidth - SIDE_MENU_WIDTH - LAYOUT_MAP_GAP;
+      panelWidth = Math.max(INFO_PANEL_MIN_WIDTH, Math.min(INFO_PANEL_DEFAULT_WIDTH, available));
+      panel.style.width = panelWidth + 'px';
+      panel.style.maxWidth = panelWidth + 'px';
+    } else {
+      panel.style.width = '';
+      panel.style.maxWidth = '';
+    }
+  }
+
+  // Centro horizontal del espacio del mapa: desde el borde derecho del
+  // menú hasta el borde derecho del viewport (o el borde izquierdo del
+  // panel, si está abierto y por lo tanto ocupa parte de ese espacio).
+  const mapAreaLeft = SIDE_MENU_WIDTH;
+  const mapAreaRight = window.innerWidth - panelWidth;
+  const mapAreaWidth = mapAreaRight - mapAreaLeft;
+  const centerX = mapAreaLeft + mapAreaWidth / 2;
+  document.documentElement.style.setProperty('--map-legend-center-x', centerX + 'px');
+  // Tope de seguridad: si el espacio del mapa es angosto y el contenido de
+  // la leyenda es más ancho que ese espacio, el centrado por sí solo podría
+  // hacer que su borde izquierdo invada el menú. max-width evita eso sin
+  // ocultar nada (el contenido simplemente ajusta el salto de línea).
+  const maxWidth = Math.max(160, mapAreaWidth - 24);
+  document.documentElement.style.setProperty('--map-legend-max-width', maxWidth + 'px');
 }
 
 // ============================================================
@@ -8976,6 +9005,9 @@ function selectBloque(bloqueId) {
   } else {
     closePanel();
   }
+  // El panel puede haberse abierto/cerrado: recalcula el centrado de
+  // #map-legend (y el ancho del panel) con el espacio real disponible.
+  syncSideMenuLayout();
 }
 
 // ============================================================
@@ -9036,6 +9068,9 @@ function selectZona(zonaId) {
   } else {
     closePanel();
   }
+  // El panel puede haberse abierto/cerrado: recalcula el centrado de
+  // #map-legend (y el ancho del panel) con el espacio real disponible.
+  syncSideMenuLayout();
 }
 
 // ============================================================
@@ -9094,6 +9129,9 @@ function selectTerritorio(territorioId) {
   if (!selectedTerritorio) {
     closePanel();
   }
+  // El panel puede haberse abierto/cerrado: recalcula el centrado de
+  // #map-legend (y el ancho del panel) con el espacio real disponible.
+  syncSideMenuLayout();
 }
 
 function selectOrganization(orgId) {
@@ -9118,6 +9156,9 @@ function selectOrganization(orgId) {
   } else {
     closePanel();
   }
+  // El panel puede haberse abierto/cerrado: recalcula el centrado de
+  // #map-legend (y el ancho del panel) con el espacio real disponible.
+  syncSideMenuLayout();
 }
 
 function showOrgPanel(orgId) {
