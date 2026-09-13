@@ -390,6 +390,52 @@ body {
   font-weight: 600;
 }
 
+/* ===== ZONAS DE INFLUENCIA — MENÚ LATERAL (reutiliza el diseño de #org-menu) ===== */
+#zonas-menu {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 280px;
+  height: calc(100vh - 56px);
+  background: rgba(10, 14, 26, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid var(--border-glass);
+  z-index: 850;
+  transform: translateX(-300px);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+
+#zonas-menu.open { transform: translateX(0); }
+
+#zonas-menu::-webkit-scrollbar { width: 5px; }
+#zonas-menu::-webkit-scrollbar-track { background: transparent; }
+#zonas-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+
+.zona-item {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-bottom: 2px;
+  border: 1px solid transparent;
+}
+
+.zona-item:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
+
+.zona-item.active {
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.4);
+  font-weight: 600;
+}
+
 /* ===== MAP CONTAINER ===== */
 #map-container {
   position: fixed;
@@ -1037,6 +1083,24 @@ body {
     z-index: 2000;
   }
   #bloques-menu.open { transform: translateY(0); left: 0 !important; }
+
+  #zonas-menu {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 60dvh !important;
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.3, 1, 0.3, 1);
+    border-right: none !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 20px 20px 0 0 !important;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 2000;
+  }
+  #zonas-menu.open { transform: translateY(0); left: 0 !important; }
 }
 </style>
 </head>
@@ -1139,6 +1203,25 @@ body {
       <div class="bloque-item" data-bloque="mercosur">🇧🇷 MERCOSUR</div>
       <div class="bloque-item" data-bloque="afcfta">🌍 AfCFTA</div>
       <div class="bloque-item" data-bloque="brics">🌐 BRICS</div>
+    </div>
+  </div>
+</aside>
+
+<!-- Zonas de Influencia Side Menu -->
+<aside id="zonas-menu">
+  <div class="org-menu-header">
+    <span>🌐 ZONAS DE INFLUENCIA</span>
+    <button class="org-menu-close" onclick="closeZonasMenu()" title="Cerrar" aria-label="Cerrar menú de zonas de influencia">✕</button>
+  </div>
+  <div class="org-menu-body">
+    <div class="org-group">
+      <div class="org-group-title">Regiones geopolíticas analíticas</div>
+      <div class="zona-item" data-zona="hemisferio_occidental">🌎 Hemisferio Occidental</div>
+      <div class="zona-item" data-zona="europa_atlantico">🌍 Europa y Atlántico Norte</div>
+      <div class="zona-item" data-zona="indo_pacifico">🌏 Indo-Pacífico</div>
+      <div class="zona-item" data-zona="medio_oriente">🕌 Medio Oriente</div>
+      <div class="zona-item" data-zona="africa">🌍 África</div>
+      <div class="zona-item" data-zona="artico">🧊 Ártico</div>
     </div>
   </div>
 </aside>
@@ -5849,6 +5932,233 @@ const BLOQUES_DB = {
   }
 };
 
+// Paleta propia de Zonas de Influencia — NO reutiliza los colores de
+// Aliados/Rivales/Organizaciones/Bloques. Cuatro niveles de influencia
+// estadounidense (no de soberanía ni de alianza formal).
+const ZONA_LEVEL_COLORS = {
+  alta: "#38bdf8",
+  significativa: "#a78bfa",
+  compartida: "#fb923c",
+  limitada: "#94a3b8"
+};
+const ZONA_LEVEL_LABELS = {
+  alta: "Influencia estadounidense alta",
+  significativa: "Influencia significativa",
+  compartida: "Influencia compartida / competida",
+  limitada: "Influencia limitada"
+};
+
+const ZONAS_INFLUENCIA_DB = {
+  "hemisferio_occidental": {
+    name: "Hemisferio Occidental",
+    icon: "🌎",
+    level: "Influencia histórica alta, con competencia económica china en ascenso",
+    description: "El continente americano y el Caribe, el entorno geográfico inmediato de EE. UU., donde Washington mantiene su mayor densidad de vínculos de seguridad, comercio y migración, pero ya no ejerce una influencia incuestionada frente a la creciente presencia económica y diplomática de China.",
+    importance_for_us: "Es la región de mayor proximidad geográfica y de mayor interdependencia económica y de seguridad de EE. UU.: rutas comerciales y cadenas de suministro (México y Centroamérica en manufactura, energía y 'nearshoring'), flujos migratorios, cooperación antinarcóticos, y el Canal de Panamá como corredor marítimo crítico para el comercio estadounidense.",
+    mechanisms: ["USMCA/T-MEC", "OEA", "cooperación en seguridad y antinarcóticos", "acuerdos migratorios bilaterales", "inversión y remesas", "asistencia y cooperación energética"],
+    key_actors: ["Estados Unidos", "México", "Canadá", "Colombia", "Brasil"],
+    competitors: ["China (inversión, comercio e infraestructura portuaria)", "Rusia (vínculos con Venezuela, Cuba y Nicaragua)"],
+    strategic_countries: {
+      "Canada": { level: "alta", mechanisms: ["USMCA/T-MEC", "NORAD", "OTAN"], note: "Socio comercial y de seguridad de integración profunda con EE. UU." },
+      "Mexico": { level: "alta", mechanisms: ["USMCA/T-MEC", "cooperación migratoria y antinarcóticos"], note: "Principal socio comercial de EE. UU. en bienes y eje de las cadenas de suministro norteamericanas." },
+      "Colombia": { level: "alta", mechanisms: ["cooperación en seguridad y antinarcóticos", "TLC bilateral"], note: "Aliado histórico de seguridad de EE. UU. en la región andina." },
+      "Panama": { level: "alta", mechanisms: ["Canal de Panamá", "cooperación en seguridad marítima"], note: "El Canal de Panamá es un corredor marítimo de importancia estratégica directa para el comercio de EE. UU." },
+      "Dominican Rep.": { level: "significativa", mechanisms: ["CAFTA-DR", "cooperación migratoria"], note: "Socio comercial y de seguridad en el Caribe." },
+      "Costa Rica": { level: "significativa", mechanisms: ["CAFTA-DR", "cooperación en semiconductores"], note: "Socio comercial estable y participante en la diversificación de cadenas de suministro tecnológicas." },
+      "Guatemala": { level: "significativa", mechanisms: ["CAFTA-DR", "cooperación migratoria"], note: "Socio centroamericano clave en cooperación migratoria y de seguridad." },
+      "Ecuador": { level: "significativa", mechanisms: ["cooperación en seguridad", "acuerdo comercial en negociación"], note: "Socio de seguridad creciente frente al narcotráfico regional." },
+      "Peru": { level: "significativa", mechanisms: ["TLC bilateral", "cooperación en seguridad"], note: "Socio comercial de larga data en la región andina." },
+      "Chile": { level: "significativa", mechanisms: ["TLC bilateral"], note: "Socio comercial estable con instituciones democráticas consolidadas." },
+      "Brazil": { level: "compartida", mechanisms: ["comercio bilateral", "cooperación climática puntual"], note: "Mayor economía de la región, con política exterior propia y vínculos comerciales crecientes con China (su principal socio comercial)." },
+      "Argentina": { level: "compartida", mechanisms: ["comercio bilateral", "cooperación financiera con el FMI"], note: "Relación bilateral variable según el gobierno de turno, con fuerte presencia comercial china en soja y minerales." },
+      "Venezuela": { level: "compartida", mechanisms: ["sanciones económicas", "diplomacia energética"], note: "Espacio de fuerte competencia con Rusia, China y Cuba; EE. UU. mantiene sanciones y presión diplomática, no cooperación." },
+      "Nicaragua": { level: "compartida", mechanisms: ["sanciones puntuales"], note: "Gobierno alineado con China, Rusia y Cuba; influencia estadounidense limitada por vía diplomática y de sanciones." },
+      "Cuba": { level: "compartida", mechanisms: ["embargo económico", "diplomacia limitada"], note: "Fuera del ámbito de influencia económica de EE. UU. desde hace décadas; Rusia y China mantienen vínculos políticos y económicos activos." }
+    },
+    current_situation: "Hacia 2026, EE. UU. sostiene su influencia predominante en seguridad y migración en Centroamérica y el Caribe, mientras China ha consolidado su posición como principal socio comercial de Sudamérica (especialmente Brasil y Argentina) y sigue invirtiendo en infraestructura portuaria regional, incluido su interés declarado en la conectividad cercana al Canal de Panamá.",
+    recent_events: [
+      "México y Canadá continúan la revisión conjunta del T-MEC prevista para 2026, en paralelo a fricciones arancelarias puntuales con Washington.",
+      "China mantiene su posición como principal socio comercial de Brasil y Argentina, impulsada por la demanda de soja, minerales y litio.",
+      "EE. UU. sostiene sanciones económicas sobre Venezuela y presión diplomática sobre Nicaragua y Cuba, sin relación de cooperación económica con esos gobiernos."
+    ],
+    sources: [
+      { name: "U.S. Department of State — Western Hemisphere Affairs", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-western-hemisphere-affairs/" },
+      { name: "Office of the United States Trade Representative — USMCA", url: "https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement" },
+      { name: "Organización de los Estados Americanos", url: "https://www.oas.org/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "europa_atlantico": {
+    name: "Europa y Atlántico Norte",
+    icon: "🌍",
+    level: "Influencia alta mediante alianza formal (OTAN), con Rusia como competidor directo",
+    description: "El espacio transatlántico donde EE. UU. ejerce su alianza de seguridad más profunda e institucionalizada a través de la OTAN, junto con una relación económica y tecnológica de primer orden con la Unión Europea, en un contexto marcado por la guerra de Rusia contra Ucrania.",
+    importance_for_us: "Es la alianza de seguridad colectiva más antigua y profunda de EE. UU. (OTAN), y la UE es su principal socio comercial y de inversión combinado; la guerra en Ucrania y la competencia con Rusia definen la agenda de seguridad europea, mientras el comercio, la energía y la regulación tecnológica definen la agenda económica.",
+    mechanisms: ["OTAN (Artículo 5)", "relación comercial y de inversión EE. UU.-UE", "coordinación de sanciones a Rusia", "asistencia militar a Ucrania", "cooperación tecnológica y de exportación"],
+    key_actors: ["Estados Unidos", "Reino Unido", "Alemania", "Francia", "Polonia"],
+    competitors: ["Rusia (guerra en Ucrania, presión sobre el flanco oriental de la OTAN)"],
+    strategic_countries: {
+      "United Kingdom": { level: "alta", mechanisms: ["OTAN", "relación especial bilateral", "Five Eyes"], note: "Socio de seguridad e inteligencia más cercano de EE. UU. en la región." },
+      "Germany": { level: "alta", mechanisms: ["OTAN", "comercio e inversión UE-EE. UU."], note: "Mayor economía europea y ancla industrial de la relación transatlántica." },
+      "France": { level: "alta", mechanisms: ["OTAN", "cooperación militar"], note: "Potencia nuclear y militar clave de la OTAN en Europa occidental." },
+      "Poland": { level: "alta", mechanisms: ["OTAN", "presencia militar estadounidense rotatoria"], note: "Estado del flanco oriental de la OTAN con fuerte presencia militar estadounidense." },
+      "Italy": { level: "significativa", mechanisms: ["OTAN", "comercio UE-EE. UU."], note: "Socio de la OTAN con bases militares estadounidenses relevantes en el Mediterráneo." },
+      "Spain": { level: "significativa", mechanisms: ["OTAN", "bases navales compartidas"], note: "Aloja instalaciones navales y aéreas estadounidenses clave para el Mediterráneo y el Atlántico." },
+      "Netherlands": { level: "significativa", mechanisms: ["OTAN", "comercio e inversión tecnológica"], note: "Socio comercial y tecnológico de primer nivel, sede de infraestructura logística europea clave." },
+      "Romania": { level: "significativa", mechanisms: ["OTAN", "presencia militar estadounidense"], note: "Estado del flanco oriental de la OTAN con presencia militar estadounidense creciente." },
+      "Turkey": { level: "compartida", mechanisms: ["OTAN"], note: "Miembro de la OTAN con una política exterior independiente que genera fricciones recurrentes con Washington." },
+      "Hungary": { level: "compartida", mechanisms: ["OTAN", "UE"], note: "Miembro de la OTAN y la UE con posiciones divergentes de EE. UU. frente a Rusia." },
+      "Ukraine": { level: "compartida", mechanisms: ["asistencia militar y financiera estadounidense", "apoyo de la UE"], note: "No es miembro de la OTAN; recibe fuerte respaldo occidental mientras enfrenta la invasión rusa, en un espacio de disputa directa con Moscú." },
+      "Russia": { level: "limitada", mechanisms: ["sanciones económicas", "aislamiento diplomático"], note: "Principal competidor estratégico de EE. UU. en la región; la influencia estadounidense sobre Rusia es mínima, ejercida solo mediante sanciones y presión diplomática." }
+    },
+    current_situation: "En 2026 la guerra de Rusia contra Ucrania continúa como el eje central de la seguridad europea, con la OTAN reforzando su flanco oriental y EE. UU. coordinando con la UE sanciones económicas y asistencia militar a Kiev, en un contexto de debate transatlántico sobre el reparto de la carga de defensa.",
+    recent_events: [
+      "La OTAN mantiene una presencia militar reforzada en Polonia, Rumania y los Estados bálticos frente a la amenaza rusa.",
+      "EE. UU. y la Unión Europea coordinan regímenes de sanciones económicas contra Rusia desde 2022, ampliados en rondas sucesivas.",
+      "Turquía y Hungría mantienen posiciones divergentes de la línea de Washington frente a Rusia dentro de la propia OTAN."
+    ],
+    sources: [
+      { name: "NATO — Official site", url: "https://www.nato.int/" },
+      { name: "U.S. Department of State — Europe and Eurasia", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-european-and-eurasian-affairs/" },
+      { name: "European Union — External Action", url: "https://www.eeas.europa.eu/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "indo_pacifico": {
+    name: "Indo-Pacífico",
+    icon: "🌏",
+    level: "Zona de gran importancia estratégica y de intensa competencia con China",
+    description: "La región de mayor competencia estratégica a largo plazo para EE. UU., donde Washington sostiene una red de alianzas y asociaciones de seguridad (Japón, Corea del Sur, Australia, Filipinas, AUKUS, QUAD) frente al ascenso de China, sin ejercer control sobre la región en su conjunto.",
+    importance_for_us: "Concentra las principales rutas comerciales marítimas del mundo, las cadenas de suministro de semiconductores y manufactura avanzada, y es el escenario central de la competencia estratégica de EE. UU. con China, incluida la disputa sobre Taiwán y la libertad de navegación en el Mar de China Meridional.",
+    mechanisms: ["tratados de defensa mutua (Japón, Corea del Sur, Filipinas, Australia)", "AUKUS", "QUAD", "cooperación tecnológica y de semiconductores", "presencia naval estadounidense"],
+    key_actors: ["Estados Unidos", "Japón", "Corea del Sur", "Australia", "Filipinas", "India"],
+    competitors: ["China (Mar de China Meridional, Taiwán, iniciativas comerciales regionales como el RCEP)"],
+    strategic_countries: {
+      "Japan": { level: "alta", mechanisms: ["tratado de defensa mutua", "QUAD"], note: "Aliado de tratado más profundo de EE. UU. en la región, con presencia militar estadounidense permanente." },
+      "South Korea": { level: "alta", mechanisms: ["tratado de defensa mutua", "presencia militar estadounidense"], note: "Aliado de tratado con fuerte presencia militar estadounidense frente a Corea del Norte." },
+      "Australia": { level: "alta", mechanisms: ["AUKUS", "QUAD", "tratado ANZUS"], note: "Socio de seguridad de mayor profundidad tecnológica y militar en el Indo-Pacífico." },
+      "Philippines": { level: "alta", mechanisms: ["tratado de defensa mutua", "acuerdo de cooperación de defensa reforzada"], note: "Aliado de tratado con acceso militar estadounidense ampliado frente a tensiones con China en el Mar de China Meridional." },
+      "India": { level: "significativa", mechanisms: ["QUAD", "cooperación tecnológica y de defensa"], note: "Socio estratégico creciente, pero mantiene una política de autonomía estratégica y no es aliado formal." },
+      "Singapore": { level: "significativa", mechanisms: ["acceso naval y logístico estadounidense"], note: "Socio de seguridad y logística clave, sin ser aliado de tratado formal.", noPolygon: true },
+      "Vietnam": { level: "significativa", mechanisms: ["asociación estratégica integral (2023)"], note: "Profundiza la cooperación con EE. UU. mientras mantiene vínculos económicos y políticos con China." },
+      "Indonesia": { level: "significativa", mechanisms: ["cooperación de defensa y comercio"], note: "Mayor economía de la ASEAN, mantiene una política exterior no alineada entre EE. UU. y China." },
+      "Taiwan": { level: "compartida", mechanisms: ["apoyo de seguridad estadounidense no formalizado en tratado"], note: "EE. UU. mantiene una política de 'ambigüedad estratégica'; es el principal punto de disputa directa con China en la región." },
+      "Thailand": { level: "compartida", mechanisms: ["tratado de defensa mutua histórico"], note: "Aliado de tratado histórico que ha profundizado vínculos económicos y militares con China." },
+      "Malaysia": { level: "compartida", mechanisms: ["cooperación comercial y de defensa puntual"], note: "Mantiene una postura de no alineamiento entre EE. UU. y China." },
+      "China": { level: "limitada", mechanisms: ["diálogo diplomático y económico bilateral"], note: "Principal competidor estratégico de EE. UU. en la región; la influencia estadounidense sobre China es mínima y se ejerce mediante diplomacia, aranceles y controles a la exportación." }
+    },
+    current_situation: "Hacia 2026, EE. UU. profundiza su red de alianzas en el Indo-Pacífico —incluida la cooperación de submarinos nucleares de AUKUS y la coordinación del QUAD— mientras China expande su presencia naval y su influencia comercial regional a través del RCEP, en un contexto de tensión sostenida en el Mar de China Meridional y el estrecho de Taiwán.",
+    recent_events: [
+      "AUKUS avanza en la fase de transferencia de capacidades de submarinos de propulsión nuclear entre EE. UU., Reino Unido y Australia.",
+      "Filipinas ha ampliado el acceso militar estadounidense a bases adicionales en el marco del Acuerdo de Cooperación de Defensa Reforzada (EDCA).",
+      "Las tensiones en el Mar de China Meridional y el estrecho de Taiwán continúan como los principales puntos de fricción entre EE. UU. y China en la región."
+    ],
+    sources: [
+      { name: "U.S. Department of Defense — Indo-Pacific Strategy", url: "https://www.defense.gov/" },
+      { name: "U.S. Department of State — East Asian and Pacific Affairs", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-east-asian-and-pacific-affairs/" },
+      { name: "ASEAN — Official site", url: "https://asean.org/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "medio_oriente": {
+    name: "Medio Oriente",
+    icon: "🕌",
+    level: "Influencia significativa mediante alianzas y presencia militar, con Irán como principal competidor",
+    description: "Una región donde EE. UU. mantiene alianzas de seguridad profundas (Israel, Arabia Saudita, EAU) y presencia militar permanente ligada a la seguridad energética y la libertad de navegación en el Golfo Pérsico, sin ejercer control sobre la región en su conjunto y en competencia directa con Irán.",
+    importance_for_us: "La seguridad energética global, la libertad de navegación en el Golfo Pérsico y el Estrecho de Ormuz, la seguridad de Israel y la contención de la influencia iraní son los ejes centrales del interés estadounidense en la región.",
+    mechanisms: ["alianzas de seguridad bilaterales", "bases militares (Qatar, Baréin)", "venta de armamento", "diplomacia (Acuerdos de Abraham)", "sanciones a Irán"],
+    key_actors: ["Estados Unidos", "Israel", "Arabia Saudita", "Emiratos Árabes Unidos", "Qatar"],
+    competitors: ["Irán (proxies regionales, programa nuclear)", "Rusia (vínculos con Siria e Irán)"],
+    strategic_countries: {
+      "Israel": { level: "alta", mechanisms: ["asistencia militar y de inteligencia", "Acuerdos de Abraham"], note: "Socio de seguridad más cercano de EE. UU. en la región." },
+      "Saudi Arabia": { level: "alta", mechanisms: ["venta de armamento", "cooperación energética y de seguridad"], note: "Socio estratégico clave en seguridad energética y equilibrio regional frente a Irán." },
+      "United Arab Emirates": { level: "alta", mechanisms: ["Acuerdos de Abraham", "cooperación militar y comercial"], note: "Socio comercial y de seguridad de rápido crecimiento en el Golfo." },
+      "Qatar": { level: "alta", mechanisms: ["base aérea de Al Udeid", "mediación diplomática"], note: "Aloja la mayor base militar estadounidense en la región." },
+      "Bahrain": { level: "alta", mechanisms: ["sede de la Quinta Flota de EE. UU."], note: "Aloja el cuartel general naval estadounidense para el Golfo Pérsico.", noPolygon: true },
+      "Jordan": { level: "significativa", mechanisms: ["asistencia militar y económica"], note: "Socio de seguridad estable en un entorno regional volátil." },
+      "Kuwait": { level: "significativa", mechanisms: ["presencia militar estadounidense"], note: "Socio de seguridad con presencia militar estadounidense desde la Guerra del Golfo." },
+      "Egypt": { level: "significativa", mechanisms: ["asistencia militar", "control del Canal de Suez"], note: "Receptor histórico de asistencia militar estadounidense y actor clave en el tránsito marítimo del Suez." },
+      "Iraq": { level: "compartida", mechanisms: ["cooperación militar residual"], note: "Espacio de disputa de influencia directa entre EE. UU. e Irán a través de facciones políticas y milicias alineadas con Teherán." },
+      "Iran": { level: "limitada", mechanisms: ["sanciones económicas", "diplomacia indirecta"], note: "Principal competidor estratégico de EE. UU. en la región; la influencia estadounidense sobre Irán es mínima y se ejerce solo mediante sanciones y presión militar disuasiva." },
+      "Syria": { level: "limitada", mechanisms: ["sanciones", "presencia militar residual antiterrorista"], note: "Influencia estadounidense muy limitada tras años de guerra civil e influencia rusa e iraní." }
+    },
+    current_situation: "Hacia 2026, EE. UU. sostiene su presencia militar en el Golfo Pérsico y su respaldo a Israel y a los socios del Golfo, en un contexto de tensión intermitente con Irán en el Estrecho de Ormuz y de esfuerzos diplomáticos por ampliar los Acuerdos de Abraham a nuevos Estados árabes.",
+    recent_events: [
+      "EE. UU. mantiene una presencia naval reforzada en el Golfo Pérsico y el Estrecho de Ormuz ante episodios de tensión con Irán.",
+      "Los Acuerdos de Abraham continúan como el principal marco diplomático estadounidense para normalizar relaciones entre Israel y Estados árabes.",
+      "Arabia Saudita y los Emiratos Árabes Unidos diversifican sus relaciones de seguridad y económicas más allá de EE. UU., incluida su participación en BRICS."
+    ],
+    sources: [
+      { name: "U.S. Department of State — Near Eastern Affairs", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-near-eastern-affairs/" },
+      { name: "U.S. Department of Defense — CENTCOM", url: "https://www.centcom.mil/" },
+      { name: "The White House", url: "https://www.whitehouse.gov/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "africa": {
+    name: "África",
+    icon: "🌍",
+    level: "Influencia limitada y desigual, en competencia creciente con China",
+    description: "Un continente heterogéneo donde la influencia estadounidense varía enormemente entre países y es superada en volumen comercial y de infraestructura por China en buena parte del continente, mientras Rusia expande su presencia en seguridad en algunos Estados del Sahel.",
+    importance_for_us: "El acceso a minerales críticos (cobalto, litio, tierras raras) para cadenas de suministro tecnológicas, la seguridad frente al terrorismo yihadista en el Sahel y el Cuerno de África, y la competencia con China por comercio, inversión e infraestructura son los ejes centrales del interés estadounidense.",
+    mechanisms: ["AGOA (Ley de Crecimiento y Oportunidad para África)", "AFRICOM (cooperación antiterrorista)", "asistencia para el desarrollo (USAID)", "diplomacia de minerales críticos"],
+    key_actors: ["Estados Unidos", "Marruecos", "Kenia", "Nigeria", "Sudáfrica"],
+    competitors: ["China (comercio, infraestructura, minería)", "Rusia (seguridad y presencia militar en el Sahel)"],
+    strategic_countries: {
+      "Morocco": { level: "significativa", mechanisms: ["Acuerdos de Abraham", "cooperación militar histórica"], note: "Socio de seguridad de larga data en el norte de África." },
+      "Kenya": { level: "significativa", mechanisms: ["designación de aliado principal no perteneciente a la OTAN", "cooperación antiterrorista (AFRICOM)"], note: "Socio de seguridad clave en el Cuerno de África frente al terrorismo yihadista." },
+      "Nigeria": { level: "compartida", mechanisms: ["cooperación en seguridad", "comercio energético"], note: "Mayor economía africana, con fuerte presencia comercial china y participación como país socio de BRICS." },
+      "South Africa": { level: "compartida", mechanisms: ["AGOA", "diálogo diplomático"], note: "Miembro pleno de BRICS con política exterior no alineada entre EE. UU. y las potencias rivales." },
+      "Ethiopia": { level: "compartida", mechanisms: ["asistencia para el desarrollo"], note: "Sede de la Unión Africana, con fuerte inversión china en infraestructura y participación en BRICS." },
+      "Djibouti": { level: "compartida", mechanisms: ["base militar estadounidense (Camp Lemonnier)"], note: "Aloja simultáneamente la única base militar permanente de China en el extranjero y una base estadounidense clave, siendo el ejemplo más directo de competencia militar en el continente." },
+      "Dem. Rep. Congo": { level: "limitada", mechanisms: ["diplomacia de minerales críticos"], note: "El sector minero de cobalto y coltán está dominado por inversión china; la influencia estadounidense es limitada pese a su relevancia para cadenas de suministro tecnológicas." },
+      "Somalia": { level: "limitada", mechanisms: ["cooperación antiterrorista (AFRICOM)"], note: "Estado frágil donde la presencia estadounidense se limita a operaciones antiterroristas puntuales." },
+      "Sudan": { level: "limitada", mechanisms: ["diplomacia humanitaria"], note: "Conflicto interno con influencia externa limitada y disputada entre varios actores regionales." }
+    },
+    current_situation: "Hacia 2026, China mantiene su posición como mayor socio comercial de África en su conjunto, mientras EE. UU. concentra su influencia en cooperación de seguridad puntual (Sahel, Cuerno de África) y en una diplomacia creciente en torno al acceso a minerales críticos, en un continente que actúa de forma cada vez más independiente frente a las potencias externas.",
+    recent_events: [
+      "La Unión Africana, con sede en Etiopía, opera como miembro permanente del G20 desde 2023, reforzando la voz diplomática africana en foros globales.",
+      "China continúa siendo el principal socio comercial de África en su conjunto, con fuerte presencia en infraestructura y minería.",
+      "Rusia mantiene presencia de seguridad privada y militar en varios Estados del Sahel, en competencia directa con la influencia occidental."
+    ],
+    sources: [
+      { name: "U.S. Department of State — African Affairs", url: "https://www.state.gov/bureaus-offices/under-secretary-for-political-affairs/bureau-of-african-affairs/" },
+      { name: "U.S. Africa Command (AFRICOM)", url: "https://www.africom.mil/" },
+      { name: "African Union — Official site", url: "https://au.int/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  },
+  "artico": {
+    name: "Ártico",
+    icon: "🧊",
+    level: "Zona estratégica emergente de competencia creciente con Rusia y China",
+    description: "Una región de creciente relevancia estratégica a medida que el cambio climático abre nuevas rutas marítimas y facilita el acceso a recursos, donde EE. UU. proyecta influencia a través de Alaska y sus aliados árticos (Canadá, Noruega, Dinamarca/Groenlandia, Islandia), frente a la militarización rusa y el interés declarado de China como 'Estado cercano al Ártico'.",
+    importance_for_us: "El Ártico combina recursos energéticos y minerales, nuevas rutas marítimas por el deshielo, y una dimensión de seguridad directa a través de Alaska; Rusia mantiene la mayor costa ártica y la ha militarizado extensamente, mientras China busca un papel económico y científico en la región pese a no ser un Estado ártico.",
+    mechanisms: ["Consejo Ártico", "OTAN (a través de sus miembros árticos)", "presencia militar en Alaska", "cooperación con Canadá (NORAD)", "diplomacia sobre Groenlandia"],
+    key_actors: ["Estados Unidos (Alaska)", "Canadá", "Noruega", "Dinamarca / Groenlandia", "Islandia"],
+    competitors: ["Rusia (mayor costa ártica, militarización)", "China ('Estado cercano al Ártico', interés económico y científico)"],
+    strategic_countries: {
+      "Canada": { level: "alta", mechanisms: ["NORAD", "OTAN", "Consejo Ártico"], note: "Socio ártico más cercano de EE. UU., con defensa aeroespacial integrada a través de NORAD." },
+      "Greenland": { level: "alta", mechanisms: ["base espacial de Pituffik (ex Thule)", "diplomacia con Dinamarca"], note: "Territorio autónomo danés que aloja una instalación militar y espacial estadounidense de importancia estratégica creciente para la vigilancia ártica." },
+      "Norway": { level: "alta", mechanisms: ["OTAN", "cooperación de defensa en el Ártico"], note: "Aliado de la OTAN con el flanco ártico más activo frente a la presencia militar rusa en la península de Kola." },
+      "Iceland": { level: "significativa", mechanisms: ["OTAN", "posición estratégica en el paso GIUK"], note: "Posición estratégica en el paso marítimo Groenlandia-Islandia-Reino Unido, clave para el monitoreo naval del Atlántico Norte." },
+      "Russia": { level: "limitada", mechanisms: ["diplomacia limitada", "monitoreo militar"], note: "Posee la mayor costa ártica del mundo y ha militarizado extensamente la región; es el principal competidor estratégico de EE. UU. en el Ártico, con influencia estadounidense mínima sobre su conducta." }
+    },
+    current_situation: "Hacia 2026, el deshielo ártico intensifica el interés estratégico de EE. UU., Rusia y China por nuevas rutas marítimas y recursos, mientras Washington refuerza su cooperación con Canadá, Noruega y Dinamarca —incluida la relevancia creciente de Groenlandia para la vigilancia espacial y misilística— frente a la militarización rusa de su costa ártica.",
+    recent_events: [
+      "La base espacial de Pituffik, en Groenlandia, mantiene su relevancia creciente para la vigilancia de misiles y el monitoreo espacial estadounidense.",
+      "Rusia continúa modernizando su infraestructura militar en la península de Kola y su flota de rompehielos árticos.",
+      "China mantiene su autodefinición como 'Estado cercano al Ártico' y su interés en la Ruta Marítima del Norte, pese a no tener territorio ártico propio."
+    ],
+    sources: [
+      { name: "U.S. Department of Defense — Arctic Strategy", url: "https://www.defense.gov/" },
+      { name: "U.S. Department of State — Arctic Affairs", url: "https://www.state.gov/" },
+      { name: "Government of Canada — Arctic and Northern Policy", url: "https://www.rcaanc-cirnac.gc.ca/" }
+    ],
+    updated: "11 de septiembre de 2026"
+  }
+};
+
 function getFlagEmoji(countryCode) {
   if (!countryCode || countryCode.length !== 2) return countryCode;
   const codePoints = countryCode
@@ -5911,6 +6221,7 @@ let compareCountry = null;
 let activeCategory = 'all';
 let selectedOrg = null;
 let selectedBloque = null;
+let selectedZona = null;
 let countryPaths = {};
 let worldData = null;
 
@@ -5980,6 +6291,7 @@ function initApp() {
   setupContinentNav();
   setupOrgMenu();
   setupBloquesMenu();
+  setupZonasMenu();
 
   // Tooltip
   tooltip = document.getElementById('tooltip');
@@ -6393,6 +6705,11 @@ function showInfoPanel(name, info) {
 
   if (activeCategory === 'bloques' && selectedBloque) {
     showBloqueCountryPanel(name, selectedBloque);
+    return;
+  }
+
+  if (activeCategory === 'zonas' && selectedZona) {
+    showZonaCountryPanel(name, selectedZona);
     return;
   }
 
@@ -7176,6 +7493,60 @@ function selectBloque(bloqueId) {
   }
 }
 
+// ============================================================
+// ZONAS DE INFLUENCIA — MENÚ LATERAL (selección de una zona a la vez)
+// ============================================================
+
+function setupZonasMenu() {
+  document.querySelectorAll('.zona-item').forEach(item => {
+    item.addEventListener('click', () => selectZona(item.dataset.zona));
+  });
+}
+
+function toggleZonasMenu(show) {
+  const menu = document.getElementById('zonas-menu');
+  if (!menu) return;
+  if (show) {
+    menu.classList.add('open');
+  } else {
+    menu.classList.remove('open');
+  }
+}
+
+function closeZonasMenu() {
+  selectedZona = null;
+  document.querySelectorAll('.zona-item').forEach(item => item.classList.remove('active'));
+  activeCategory = 'all';
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  const worldPill = document.querySelector('.cat-pill[data-cat="all"]');
+  if (worldPill) worldPill.classList.add('active');
+  applyCategory('all');
+}
+
+function selectZona(zonaId) {
+  if (selectedZona === zonaId) {
+    // Volver a seleccionar la zona activa la desactiva
+    selectedZona = null;
+  } else {
+    selectedZona = zonaId;
+  }
+  document.querySelectorAll('.zona-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.zona === selectedZona);
+  });
+
+  // Recolorear el mapa de inmediato con la nueva selección
+  if (activeCategory === 'zonas') {
+    applyCategory('zonas');
+  }
+
+  // Mostrar la ficha de la zona recién activada, o cerrar el panel al desactivar
+  if (selectedZona) {
+    showZonaPanel(selectedZona);
+  } else {
+    closePanel();
+  }
+}
+
 function selectOrganization(orgId) {
   if (selectedOrg === orgId) {
     // Volver a seleccionar la organización activa la desactiva
@@ -7794,6 +8165,174 @@ function showBloqueCountryPanel(name, bloqueId) {
   }
 }
 
+function showZonaPanel(zonaId) {
+  const zona = ZONAS_INFLUENCIA_DB[zonaId];
+  if (!zona) return;
+  const panel = document.getElementById('info-panel');
+  const color = ZONA_LEVEL_COLORS.alta;
+
+  const panelFlag = document.getElementById('panel-flag');
+  panelFlag.textContent = zona.icon || '🌐';
+  panelFlag.className = 'panel-flag';
+  document.getElementById('panel-name').textContent = zona.name;
+  document.getElementById('panel-capital').textContent = 'Zona de influencia geopolítica';
+
+  const badge = document.getElementById('panel-relation');
+  badge.textContent = zona.level || 'Zona de influencia';
+  badge.style.background = color + '26';
+  badge.style.color = color;
+  badge.style.border = `1px solid ${color}55`;
+
+  let html = `
+    <div class="panel-section animate-in">
+      <div class="panel-section-title" style="text-transform:uppercase;">Descripción</div>
+      <div class="panel-section-content">${zona.description || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.04s;border-left:3px solid ${color};padding-left:10px;">
+      <div class="panel-section-title" style="color:${color};text-transform:uppercase;">🇺🇸 ¿Por qué es importante para EE. UU.?</div>
+      <div class="panel-section-content" style="font-weight:600;">${zona.importance_for_us || '—'}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.08s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Mecanismos de influencia</div>
+      <div class="panel-tags">${(zona.mechanisms || []).map(m => `<span class="panel-tag">${m}</span>`).join('')}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.1s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Actores clave</div>
+      <div class="panel-tags">${(zona.key_actors || []).map(a => `<span class="panel-tag">${a}</span>`).join('')}</div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.12s">
+      <div class="panel-section-title" style="text-transform:uppercase;">Competencia estratégica</div>
+      <div class="panel-section-content">
+        <ul style="margin:0 0 0 16px; padding:0;">
+          ${(zona.competitors || []).map(c => `<li>${c}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+    <div class="panel-section animate-in" style="animation-delay:0.16s">
+      <div class="panel-section-title" style="color: var(--accent-orange); font-weight: bold;">SITUACIÓN ACTUAL Y ACONTECIMIENTOS RECIENTES</div>
+      <div class="panel-section-content">
+        <p style="margin-bottom:8px;">${zona.current_situation || '—'}</p>
+        <div style="margin-bottom:8px; border-left: 2px solid var(--accent-cyan); padding-left: 8px; background: rgba(34,211,238,0.05);">
+          <strong>Acontecimientos recientes:</strong>
+          <ul style="margin:4px 0 0 16px; padding:0;">
+            ${(zona.recent_events || []).map(e => `<li>${e}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    </div>`;
+
+  if (zona.sources && zona.sources.length > 0) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.2s">
+      <div class="panel-section-content" style="font-size:0.8rem; color:#94a3b8;"><strong>Fuentes:</strong> ${zona.sources.map(s => `<a href="${s.url}" target="_blank" style="color:var(--accent-cyan); text-decoration:none;">${s.name}</a>`).join(', ')}</div>
+    </div>`;
+  }
+  if (zona.updated) {
+    html += `<div class="panel-section animate-in" style="animation-delay:0.22s">
+      <div class="panel-section-content" style="font-size:0.75rem; color:#64748b;">🗓️ Actualizado: ${zona.updated}</div>
+    </div>`;
+  }
+
+  document.getElementById('panel-body').innerHTML = html;
+  panel.classList.add('open');
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
+function showZonaCountryPanel(name, zonaId) {
+  const zona = ZONAS_INFLUENCIA_DB[zonaId];
+  if (!zona) return;
+  const info = GEO_DB.countries[name] || {};
+  const flag = info.identity ? info.identity.flag : info.flag;
+  const name_es = info.identity ? info.identity.name_es : (info.name_es || name);
+  const capital = info.identity ? info.identity.capital : info.capital;
+  const region = info.identity ? info.identity.region : info.region;
+
+  const panelFlag = document.getElementById('panel-flag');
+  panelFlag.textContent = getFlagEmoji(flag) || (zona.icon || '🌐');
+  panelFlag.className = 'panel-flag';
+  document.getElementById('panel-name').textContent = name_es;
+  document.getElementById('panel-capital').textContent = capital ? `Capital: ${capital} • ${region || ''}` : (region || '');
+
+  const badge = document.getElementById('panel-relation');
+  const entry = zona.strategic_countries && zona.strategic_countries[name];
+
+  let html;
+  if (entry) {
+    const color = ZONA_LEVEL_COLORS[entry.level] || ZONA_LEVEL_COLORS.limitada;
+    const levelLabel = ZONA_LEVEL_LABELS[entry.level] || 'Relevancia regional';
+    badge.textContent = `🌐 ${levelLabel}`;
+    badge.style.background = color + '26';
+    badge.style.color = color;
+    badge.style.border = `1px solid ${color}55`;
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid ${color};padding-left:10px;">
+        <div class="panel-section-title" style="color:${color};text-transform:uppercase;">🌐 Influencia geopolítica</div>
+        <div class="panel-section-content">
+          <p style="margin-bottom:6px;"><strong>Zona seleccionada:</strong> ${zona.name}</p>
+          <p style="margin-bottom:6px;"><strong>Nivel de influencia:</strong> ${levelLabel}</p>
+        </div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.04s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Mecanismos relevantes</div>
+        <div class="panel-tags">${(entry.mechanisms || []).map(m => `<span class="panel-tag">${m}</span>`).join('')}</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.06s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Importancia estratégica</div>
+        <div class="panel-section-content">${zona.importance_for_us}</div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.08s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Competidores relevantes</div>
+        <div class="panel-section-content">
+          <ul style="margin:0 0 0 16px; padding:0;">
+            ${(zona.competitors || []).map(c => `<li>${c}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.1s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Explicación breve</div>
+        <div class="panel-section-content">${entry.note || '—'}</div>
+      </div>`;
+  } else {
+    badge.textContent = `🌐 ${zona.name}`;
+    badge.style.background = 'rgba(100,116,139,0.15)';
+    badge.style.color = '#94a3b8';
+    badge.style.border = '1px solid rgba(100,116,139,0.35)';
+
+    html = `
+      <div class="panel-section animate-in" style="border-left:3px solid #64748b;padding-left:10px;">
+        <div class="panel-section-title" style="color:#94a3b8;text-transform:uppercase;">🌐 Influencia geopolítica</div>
+        <div class="panel-section-content">
+          <p style="margin-bottom:6px;"><strong>Zona seleccionada:</strong> ${zona.name}</p>
+          <p>Participación o relevancia regional, pero sin clasificación específica de influencia estadounidense.</p>
+        </div>
+      </div>
+      <div class="panel-section animate-in" style="animation-delay:0.05s">
+        <div class="panel-section-title" style="text-transform:uppercase;">Sobre esta zona</div>
+        <div class="panel-section-content">${zona.description}</div>
+      </div>`;
+  }
+
+  document.getElementById('panel-body').innerHTML = html;
+  document.getElementById('info-panel').classList.add('open');
+  if (window.innerWidth <= 768) {
+    hideTooltip();
+    const legend = document.getElementById('map-legend');
+    const controls = document.getElementById('controls');
+    const overlay = document.getElementById('overlay');
+    if (legend) legend.style.display = 'none';
+    if (controls) controls.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+  }
+}
+
 function applyCategory(cat) {
   g.selectAll('.country-path').each(function(d) {
     const name = d.properties.name;
@@ -7882,10 +8421,16 @@ function applyCategory(cat) {
       }
     }
     else if (cat === 'zonas') {
-      // General zones based on relation
-      if (info && info.relation === 'ally') el.style('fill', 'rgba(37,99,235,0.6)').style('opacity', 1);
-      else if (info && info.relation === 'adversary') el.style('fill', 'rgba(220,38,38,0.6)').style('opacity', 1);
-      else el.style('opacity', 0.15);
+      // El resaltado depende exclusivamente de la zona elegida en el
+      // menú lateral (selectedZona) y del nivel de influencia asignado a
+      // cada país dentro de esa zona (NO de GEO_DB.relation / ally-adversary).
+      const zona = selectedZona ? ZONAS_INFLUENCIA_DB[selectedZona] : null;
+      const entry = zona && zona.strategic_countries ? zona.strategic_countries[name] : null;
+      if (entry) {
+        el.style('fill', ZONA_LEVEL_COLORS[entry.level] || ZONA_LEVEL_COLORS.limitada).style('opacity', 1);
+      } else {
+        el.style('opacity', 0.15);
+      }
     }
     else if (cat === 'territorios') {
       if (info && info.strategic_territories) el.style('fill', '#0891b2').style('opacity', 1);
@@ -7908,6 +8453,15 @@ function applyCategory(cat) {
 
   // Bloques Económicos side menu: only show when bloques is active
   toggleBloquesMenu(cat === 'bloques');
+
+  // Zonas de Influencia side menu: only show when zonas is active.
+  // A diferencia de Organizaciones/Bloques, al salir de esta categoría
+  // se limpia por completo la selección de zona (requisito específico).
+  if (cat !== 'zonas') {
+    selectedZona = null;
+    document.querySelectorAll('.zona-item').forEach(item => item.classList.remove('active'));
+  }
+  toggleZonasMenu(cat === 'zonas');
 
   // Ensure markers stay on top after category updates
   g.selectAll('.mesh-borders').raise();
@@ -8000,9 +8554,25 @@ function updateLegend(cat) {
               <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div>🔴 Adversario / amenaza militar</div>
               <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div>🟠 Rival regional</div>`;
       break;
-    case 'zonas':
-      html = `<div class="legend-title">Zonas de Influencia</div>`;
+    case 'zonas': {
+      const zona = selectedZona ? ZONAS_INFLUENCIA_DB[selectedZona] : null;
+      if (zona) {
+        html = `
+          <div class="legend-title">${zona.icon || '🌐'} ${zona.name}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.alta}"></div>${ZONA_LEVEL_LABELS.alta}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.significativa}"></div>${ZONA_LEVEL_LABELS.significativa}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.compartida}"></div>${ZONA_LEVEL_LABELS.compartida}</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${ZONA_LEVEL_COLORS.limitada}"></div>${ZONA_LEVEL_LABELS.limitada}</div>
+          <div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">${zona.level}</div>
+        `;
+      } else {
+        html = `
+          <div class="legend-title">🌐 Zonas de Influencia</div>
+          <div class="legend-item" style="opacity:0.7; cursor:default;">Selecciona una zona en el menú lateral</div>
+        `;
+      }
       break;
+    }
     case 'territorios':
       html = `<div class="legend-title">Territorios Estratégicos</div>
               <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Punto de Control</div>`;
