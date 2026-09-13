@@ -1333,6 +1333,14 @@ body {
         <div class="territorio-item-label">🧭 Espacios polares / árticos</div>
         <div class="territorio-item-desc">Espacios polares de importancia para defensa, rutas y competencia.</div>
       </div>
+      <div class="territorio-item" data-territorio="nodos_maritimos">
+        <div class="territorio-item-label">⚓ Nodos marítimos estratégicos</div>
+        <div class="territorio-item-desc">Corredores y puntos marítimos de valor militar o logístico más allá de estrechos y canales clásicos.</div>
+      </div>
+      <div class="territorio-item" data-territorio="espacios_maritimos">
+        <div class="territorio-item-label">🌐 Espacios marítimos estratégicos</div>
+        <div class="territorio-item-desc">Extensiones marítimas con relevancia geopolítica, comercial o de seguridad más allá de un punto único.</div>
+      </div>
     </div>
   </div>
 </aside>
@@ -4121,6 +4129,55 @@ const GEO_DB = {
       risk_scenarios: "Una escalada mayor en el Mar Negro o una decisión de Turquía de cerrar el estrecho geopolíticamente aislaría a Rusia y Ucrania del Mediterráneo, con impacto severo en exportaciones de grano y energía.",
       updated: "9 Sep 2026",
       sources: "Autoridades marítimas turcas, Reuters, BIMCO, Agencia Francesa de Prensa"
+    },
+    {
+      name: "Brecha GIUK (Groenlandia-Islandia-Reino Unido)",
+      name_short: "Brecha GIUK",
+      coords: [-11, 63],
+      icon: "🔱",
+      type: "corridor",
+      risk: "MEDIO",
+      risk_color: "#0ea5e9",
+      what: "Corredor de mar abierto entre Groenlandia, Islandia y el Reino Unido que conecta el Atlántico Norte con el mar de Noruega y el Ártico. No es un estrecho ni un canal físico, sino una franja marítima de valor estratégico militar.",
+      strategic: "Ruta obligada para que la flota submarina y de superficie rusa del norte, con base en la península de Kola, acceda al Atlántico Norte. Desde la Guerra Fría, su vigilancia ha sido un pilar de la estrategia de la OTAN para contener el acceso naval ruso al Atlántico.",
+      countries: ["Islandia", "Reino Unido", "Dinamarca (Groenlandia)", "Noruega", "Estados Unidos"],
+      commercial: "Es sobre todo un corredor de valor militar y de seguridad marítima más que de tráfico comercial masivo, aunque forma parte de las rutas marítimas del Atlántico Norte.",
+      energy: "No es una ruta energética comparable en volumen a los grandes chokepoints petroleros; su importancia es fundamentalmente militar y de vigilancia naval.",
+      military: "Vigilado por la OTAN mediante patrulla marítima y capacidades de guerra antisubmarina; EE. UU. y el Reino Unido mantienen el seguimiento del tránsito de submarinos rusos hacia el Atlántico Norte a través de esta franja.",
+      situation_current: "⚡ VIGILANCIA REFORZADA: la OTAN ha reforzado la vigilancia aeronaval del Atlántico Norte, incluida la Brecha GIUK, ante el incremento de la actividad submarina de la Flota del Norte rusa, en un contexto de tensión más amplia entre la OTAN y Rusia.",
+      verified_facts: [
+        "El Mando Marítimo Aliado de la OTAN (MARCOM) identifica el Atlántico Norte, incluida la Brecha GIUK, como un área de interés reforzado ante la actividad submarina rusa.",
+        "La OTAN mantiene misiones regulares de patrulla marítima y guerra antisubmarina en el Atlántico Norte."
+      ],
+      interpretation: "Más de tres décadas después del fin de la Guerra Fría, la Brecha GIUK sigue siendo uno de los espacios marítimos de mayor relevancia para la disuasión submarina occidental frente a Rusia.",
+      risk_scenarios: "Un incremento sostenido de la actividad submarina rusa sin una respuesta occidental proporcional erosionaría la capacidad de la OTAN de rastrear el tránsito submarino hacia el Atlántico Norte.",
+      updated: "13 de septiembre de 2026",
+      sources: "NATO Allied Maritime Command (MARCOM), U.S. Navy"
+    },
+    {
+      name: "Mar de China Meridional",
+      name_short: "Mar de China Merid.",
+      coords: [114, 12],
+      icon: "🌐",
+      type: "sea_area",
+      risk: "ALTO",
+      risk_color: "#be123c",
+      what: "Espacio marítimo semicerrado entre el sudeste asiático, China y Filipinas, con reclamaciones de soberanía superpuestas de China, Vietnam, Filipinas, Malasia, Brunéi y Taiwán sobre distintas islas, arrecifes y aguas.",
+      strategic: "Ruta marítima por la que transita una parte muy significativa del comercio mundial, incluido gran parte del comercio energético hacia Asia Oriental; es también un espacio central en la competencia estratégica entre EE. UU. y China por la libertad de navegación.",
+      countries: ["China", "Vietnam", "Filipinas", "Malasia", "Brunéi", "Taiwán", "Indonesia"],
+      commercial: "Corredor marítimo clave entre el océano Índico y el Pacífico occidental, con una parte muy significativa del comercio exterior de China, Japón, Corea del Sur y el sudeste asiático.",
+      energy: "Ruta de tránsito de una porción significativa del petróleo y GNL importados por China, Japón y Corea del Sur; contiene además reservas de hidrocarburos en disputa entre los Estados ribereños.",
+      military: "EE. UU. realiza regularmente Operaciones de Libertad de Navegación (FONOPs) para cuestionar las reclamaciones marítimas expansivas de China; China ha construido y militarizado islas artificiales en el archipiélago de las Spratly. Estas instalaciones se documentan de forma independiente en la categoría de instalaciones militares cuando corresponde, y no forman parte de esta ficha de espacio marítimo.",
+      situation_current: "⚠️ TENSIÓN PERSISTENTE: continúan los incidentes entre buques chinos y filipinos en torno a Second Thomas Shoal (Ayungin) y otras características disputadas, junto con FONOPs regulares de EE. UU. y sus aliados que cuestionan las reclamaciones marítimas de China basadas en la 'línea de nueve trazos'.",
+      verified_facts: [
+        "La Corte Permanente de Arbitraje de La Haya determinó en 2016 que la 'línea de nueve trazos' de China carece de fundamento en el derecho internacional (caso Filipinas c. China); China no reconoce el fallo.",
+        "EE. UU. mantiene un programa regular de Operaciones de Libertad de Navegación (FONOPs) en el Mar de China Meridional.",
+        "Se han registrado episodios recurrentes de confrontación entre guardacostas y buques de China y Filipinas en torno a Second Thomas Shoal."
+      ],
+      interpretation: "El Mar de China Meridional combina una disputa de soberanía multilateral no resuelta con una competencia estratégica directa entre EE. UU. y China por la libertad de navegación, lo que lo convierte en uno de los espacios marítimos de mayor riesgo de fricción militar del mundo.",
+      risk_scenarios: "Un incidente naval o aéreo entre fuerzas chinas y de un aliado tratado de EE. UU. (Filipinas) podría escalar rápidamente dado el compromiso de defensa mutua entre Washington y Manila.",
+      updated: "13 de septiembre de 2026",
+      sources: "Permanent Court of Arbitration, U.S. Department of Defense, U.S. Indo-Pacific Command"
     }
   ],
 
@@ -6317,7 +6374,9 @@ const TERRITORIO_CATEGORY_COLORS = {
   chokepoints: "#ef4444",
   canales_corredores: "#3b82f6",
   posiciones_insulares: "#22c55e",
-  espacios_polares: "#67e8f9"
+  espacios_polares: "#67e8f9",
+  nodos_maritimos: "#8b5cf6",
+  espacios_maritimos: "#f472b6"
 };
 
 const TERRITORIOS_ESTRATEGICOS_DB = {
@@ -6793,19 +6852,27 @@ function renderStrategicLocations() {
 
   // Dentro de la categoría 'territorios', el menú lateral filtra estos
   // marcadores (que pertenecen a GEO_DB.strategicLocations, no a
-  // TERRITORIOS_ESTRATEGICOS_DB): 'chokepoints' muestra solo los estrechos
-  // (type === 'strait'), 'canales_corredores' solo los canales
-  // (type === 'canal'), y el resto de categorías del menú (territorios de
-  // EE. UU., posiciones insulares, espacios polares) no tienen relación con
-  // estrechos/canales y ocultan estos marcadores por completo. Sin selección
-  // en el menú (selectedTerritorio null) o en cualquier otra categoría, se
-  // conserva el comportamiento original de mostrar los 6 siempre.
+  // TERRITORIOS_ESTRATEGICOS_DB) por su campo "type": 'chokepoints' muestra
+  // solo estrechos (type === 'strait'), 'canales_corredores' solo canales
+  // (type === 'canal'), 'nodos_maritimos' solo corredores marítimos
+  // (type === 'corridor', p. ej. la Brecha GIUK) y 'espacios_maritimos' solo
+  // espacios marítimos amplios (type === 'sea_area', p. ej. el Mar de China
+  // Meridional). El resto de categorías del menú (territorios de EE. UU.,
+  // posiciones insulares, espacios polares) no tienen relación con
+  // strategicLocations y ocultan estos marcadores por completo. Sin
+  // selección en el menú (selectedTerritorio null) o en cualquier otra
+  // categoría de la app, se conserva el comportamiento original de mostrar
+  // siempre todos los strategicLocations.
   let visibleStrategicLocations = GEO_DB.strategicLocations;
   if (activeCategory === 'territorios' && selectedTerritorio) {
     if (selectedTerritorio === 'chokepoints') {
       visibleStrategicLocations = GEO_DB.strategicLocations.filter(l => l.type === 'strait');
     } else if (selectedTerritorio === 'canales_corredores') {
       visibleStrategicLocations = GEO_DB.strategicLocations.filter(l => l.type === 'canal');
+    } else if (selectedTerritorio === 'nodos_maritimos') {
+      visibleStrategicLocations = GEO_DB.strategicLocations.filter(l => l.type === 'corridor');
+    } else if (selectedTerritorio === 'espacios_maritimos') {
+      visibleStrategicLocations = GEO_DB.strategicLocations.filter(l => l.type === 'sea_area');
     } else {
       visibleStrategicLocations = [];
     }
@@ -6827,20 +6894,45 @@ function renderStrategicLocations() {
       .style('cursor', 'pointer')
       .style('pointer-events', 'all');
 
-    // Invisible hit area (large for mobile/touch)
+    // Invisible hit area (large for mobile/touch; más ancha para espacios
+    // marítimos amplios como el Mar de China Meridional, que llevan un halo
+    // visual más grande).
     group.append('circle')
-      .attr('r', 18)
+      .attr('r', loc.type === 'sea_area' ? 34 : 18)
       .attr('fill', 'transparent')
       .attr('stroke', 'none');
 
-    // Forma diferenciada: los estrechos/chokepoints (type "strait") usan un
-    // círculo; los canales (type "canal") usan un rombo. Así la distinción
-    // 🚢 chokepoint vs 🌊 canal no depende únicamente del emoji.
+    // Forma diferenciada por tipo, para que la distinción no dependa
+    // únicamente del emoji: estrechos/chokepoints ("strait") = círculo;
+    // canales ("canal") = rombo; nodos/corredores marítimos ("corridor",
+    // p. ej. la Brecha GIUK) = triángulo; espacios marítimos amplios
+    // ("sea_area", p. ej. el Mar de China Meridional) = halo circular difuso
+    // que evoca una extensión de mar, no un punto único.
     if (loc.type === 'canal') {
       group.append('rect')
         .attr('x', -10).attr('y', -10)
         .attr('width', 20).attr('height', 20)
         .attr('transform', 'rotate(45)')
+        .attr('fill', 'rgba(15,23,42,0.85)')
+        .attr('stroke', loc.risk_color || '#7c3aed')
+        .attr('stroke-width', 2);
+    } else if (loc.type === 'corridor') {
+      group.append('polygon')
+        .attr('points', '0,-13 11,7 -11,7')
+        .attr('fill', 'rgba(15,23,42,0.85)')
+        .attr('stroke', loc.risk_color || '#7c3aed')
+        .attr('stroke-width', 2);
+    } else if (loc.type === 'sea_area') {
+      group.append('circle')
+        .attr('r', 28)
+        .attr('fill', loc.risk_color || '#7c3aed')
+        .attr('fill-opacity', 0.10)
+        .attr('stroke', loc.risk_color || '#7c3aed')
+        .attr('stroke-width', 1.2)
+        .attr('stroke-dasharray', '4,3')
+        .attr('stroke-opacity', 0.55);
+      group.append('circle')
+        .attr('r', 13)
         .attr('fill', 'rgba(15,23,42,0.85)')
         .attr('stroke', loc.risk_color || '#7c3aed')
         .attr('stroke-width', 2);
@@ -9376,7 +9468,9 @@ function updateLegend(cat) {
         chokepoints: { icon: '🚢', label: 'Chokepoint marítimo' },
         canales_corredores: { icon: '🌊', label: 'Canal / corredor' },
         posiciones_insulares: { icon: '🏝️', label: 'Posición insular' },
-        espacios_polares: { icon: '🧭', label: 'Espacio polar / ártico' }
+        espacios_polares: { icon: '🧭', label: 'Espacio polar / ártico' },
+        nodos_maritimos: { icon: '⚓', label: 'Nodo marítimo estratégico' },
+        espacios_maritimos: { icon: '🌐', label: 'Espacio marítimo estratégico' }
       };
       if (selectedTerritorio && territorioMeta[selectedTerritorio]) {
         const meta = territorioMeta[selectedTerritorio];
@@ -9385,6 +9479,10 @@ function updateLegend(cat) {
           count = GEO_DB.strategicLocations.filter(l => l.type === 'strait').length;
         } else if (selectedTerritorio === 'canales_corredores') {
           count = GEO_DB.strategicLocations.filter(l => l.type === 'canal').length;
+        } else if (selectedTerritorio === 'nodos_maritimos') {
+          count = GEO_DB.strategicLocations.filter(l => l.type === 'corridor').length;
+        } else if (selectedTerritorio === 'espacios_maritimos') {
+          count = GEO_DB.strategicLocations.filter(l => l.type === 'sea_area').length;
         } else {
           count = Object.values(TERRITORIOS_ESTRATEGICOS_DB).filter(t => t.categories.includes(selectedTerritorio)).length;
         }
@@ -9400,6 +9498,8 @@ function updateLegend(cat) {
           <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.canales_corredores}"></div>🌊 Canal / corredor</div>
           <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.posiciones_insulares}"></div>🏝️ Posición insular</div>
           <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.espacios_polares}"></div>🧭 Espacio polar / ártico</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.nodos_maritimos}"></div>⚓ Nodo marítimo estratégico</div>
+          <div class="legend-item"><div class="legend-dot" style="background:${TERRITORIO_CATEGORY_COLORS.espacios_maritimos}"></div>🌐 Espacio marítimo estratégico</div>
           <div style="font-size:10px; color:var(--text-secondary); margin-top:6px; line-height:1.3; opacity:0.8;">Selecciona una categoría en el menú lateral para explorarla en detalle.</div>
         `;
       }
